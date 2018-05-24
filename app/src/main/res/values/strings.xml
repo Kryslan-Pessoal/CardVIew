@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Práticas Padrão</string>
+
+    <string name="SegundaTela">Segunda tela</string>
+
+    <string name="configuracao">Configuração</string>
+</resources>

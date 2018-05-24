@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -71,6 +72,6 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
         Toast.makeText(getActivity(), "Position: " +position, Toast.LENGTH_SHORT).show();
 
         PraticasAdapter adapter = (PraticasAdapter) mRecyclerView.getAdapter();
-        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista. 
+        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
     }
 }

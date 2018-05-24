@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.Praticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -80,6 +82,14 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getNome());
         myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumero());
+
+        try {
+            YoYo.with(Techniques.Landing)
+                    .duration(700)
+                    .playOn(myViewHolder.itemView);
+        }catch (Exception e){
+
+        }
     }
 
     @Override

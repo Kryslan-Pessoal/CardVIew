@@ -77,14 +77,18 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
         //myViewHolder.praticaIlustrativa.setImageResource();
         String url = mList.get(positionList).getUrlImagem();
-        Picasso.get().load(mList.get(positionList).getUrlImagem()).into(myViewHolder.praticaIlustrativa);
+        Picasso.get().load(mList.get(positionList)
+                .getUrlImagem())
+                .resize(1280, 720)
+                .centerCrop()
+                .into(myViewHolder.praticaIlustrativa);
         //myViewHolder.praticaIlustrativa.setImageBitmap(imgPraticaIlutrativa);
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getNome());
         myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumero());
 
         try {
-            YoYo.with(Techniques.Landing)
+            YoYo.with(Techniques.FadeIn)
                     .duration(700)
                     .playOn(myViewHolder.itemView);
         }catch (Exception e){

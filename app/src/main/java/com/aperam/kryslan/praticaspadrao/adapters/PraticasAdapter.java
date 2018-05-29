@@ -1,19 +1,24 @@
 package com.aperam.kryslan.praticaspadrao.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.Praticas;
+import com.aperam.kryslan.praticaspadrao.fragments.PraticasFragment;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -75,16 +80,36 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int positionList) {  //Vincula nossos dados com a view. (Seta o valor de cada 'mList' com uma view)
         Log.i("LOG", "onBindViewHolder()");
 
-        //myViewHolder.praticaIlustrativa.setImageResource();
-        String url = mList.get(positionList).getUrlImagem();
-        Picasso.get().load(mList.get(positionList).getUrlImagem()).into(myViewHolder.praticaIlustrativa);
+        Context c = myViewHolder.praticaIlustrativa.getContext();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+        int deviceWidth = displayMetrics.widthPixels;
+        Double a = (deviceWidth * 0.55);
+        int b= a.intValue();
+        int deviceHeight = b;
+
+        ViewGroup.LayoutParams layoutParams = myViewHolder.praticaIlustrativa.getLayoutParams();
+        layoutParams.height = deviceHeight;
+        layoutParams.width = deviceWidth;
+        myViewHolder.praticaIlustrativa.setLayoutParams(layoutParams);
+
+        Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
+                .getUrlImagem())
+                .resize(1280, 720)
+                .centerCrop()
+                .into(myViewHolder.praticaIlustrativa);
+
+
+
         //myViewHolder.praticaIlustrativa.setImageBitmap(imgPraticaIlutrativa);
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getNome());
         myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumero());
 
         try {
-            YoYo.with(Techniques.Landing)
+            YoYo.with(Techniques.FadeIn)
                     .duration(700)
                     .playOn(myViewHolder.itemView);
         }catch (Exception e){

@@ -26,7 +26,6 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
     private RecyclerView mRecyclerView;
     private List<Praticas> mList;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.

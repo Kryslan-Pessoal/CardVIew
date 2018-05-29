@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.Praticas;
@@ -80,20 +81,29 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int positionList) {  //Vincula nossos dados com a view. (Seta o valor de cada 'mList' com uma view)
         Log.i("LOG", "onBindViewHolder()");
 
-        Context c = myViewHolder.praticaIlustrativa.getContext();
+
+        //Redimenciona a imagem de acordo com o tamanho da tela.
+        Context c = myViewHolder.praticaIlustrativa.getContext();  // Pega o contexto da activity para usar mais a frente.
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
-        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
-        int deviceWidth = displayMetrics.widthPixels;
-        Double a = (deviceWidth * 0.55);
-        int b= a.intValue();
-        int deviceHeight = b;
+        if (windowmanager != null) {  //Para evitar erros, apenas redimenciona a imagem caso o windowmanager exista.
+            windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
 
-        ViewGroup.LayoutParams layoutParams = myViewHolder.praticaIlustrativa.getLayoutParams();
-        layoutParams.height = deviceHeight;
-        layoutParams.width = deviceWidth;
-        myViewHolder.praticaIlustrativa.setLayoutParams(layoutParams);
+            int deviceWidth = displayMetrics.widthPixels;  //largura da tela.
+            Double larguraBaseadaNaAltura = (deviceWidth * 0.55);  //Cria a largura baseada na altura para a imagem ficar exatamante ajustada a tela.
+            int deviceHeight= larguraBaseadaNaAltura.intValue();  //Converte para int pois não aceita em double.
+
+            ViewGroup.LayoutParams layoutParams = myViewHolder.praticaIlustrativa.getLayoutParams();  //Coloca as novas alturas e larguras no View.
+            layoutParams.height = deviceHeight;
+            layoutParams.width = deviceWidth;
+            myViewHolder.praticaIlustrativa.setLayoutParams(layoutParams);
+        }else{
+            Toast toast = Toast.makeText(c,"Tamanho da tela indefinido.",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+
 
         Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
                 .getUrlImagem())
@@ -109,7 +119,7 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
         myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumero());
 
         try {
-            YoYo.with(Techniques.FadeIn)
+            YoYo.with(Techniques.FadeIn)  //Defina a animação na hora de carregar cada Card.
                     .duration(700)
                     .playOn(myViewHolder.itemView);
         }catch (Exception e){

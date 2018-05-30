@@ -5,16 +5,16 @@ public class Praticas {
     private String nome;
     private String numero;
     private String urlImagem;
-    private String link;
+    private String numeroId;
 
     //Usado como parâmetros.
     //private String areaEmitente;
 
-    public Praticas(String nome, String numero, String urlImagem, String link){
+    public Praticas(String nome, String numero, String urlImagem, String numeroId){
         this.nome = nome;
         this.numero = numero;
         this.urlImagem = urlImagem;
-        this.link = link;
+        this.numeroId = numeroId;
     }
 
     public String getNome(){
@@ -38,10 +38,10 @@ public class Praticas {
         this.urlImagem = urlImagem;
     }
 
-    public String getLink(){
-        return link;
+    public String getNumeroId(){
+        return numeroId;
     }
-    public void setLink(String link){
-        this.link = link;
+    public void setNumeroId(String numeroId){
+        this.numeroId = numeroId;
     }
 }

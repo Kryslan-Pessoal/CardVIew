@@ -56,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Praticas> getSetPraticasList(int qtd){
         String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};
-        String[] numero = new String[]{"n40", "n20"};
+        String[] numero = new String[]{"27", "27"};
         String[] urlImagem = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
-        String[] link = new String[]{" ", " "};
+        String[] numeroId = new String[]{"PPA 27-0008", "PPA27-0007"};
         List<Praticas> listAux = new ArrayList<>();
 
         for(int i=0; i<qtd; i++){
-            Praticas p = new Praticas(nome[i % nome.length], numero[i % nome.length], urlImagem[i % nome.length], link[i % nome.length]);
+            Praticas p = new Praticas(nome[i % nome.length], numero[i % nome.length], urlImagem[i % nome.length], numeroId[i % nome.length]);
             listAux.add(p);
         }
         return(listAux);

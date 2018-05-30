@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,41 +84,47 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
         //Redimenciona a imagem de acordo com o tamanho da tela.
         Context c = myViewHolder.imagemIlustrativa.getContext();  // Pega o contexto da activity para usar mais a frente.
 
+        //Cria o tamanho das imagens e dos Cards baseado na largura da tela do dispositivo em questão.
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        int larguraFrag;
         if (windowmanager != null) {  //Para evitar erros, apenas redimenciona a imagem caso o windowmanager exista.
             windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
             int larguraDispositivo = displayMetrics.widthPixels;
 
-            int larguraFrag;
             if(larguraDispositivo < 720){
                 larguraFrag = larguraDispositivo;
             }else{
-                larguraFrag = 720;
+                larguraFrag = 720;  //Caso o dispositivo seja muito grande (maior que 720pixels) os tamanhos dos cards e imagens não irão passar de 720, para não esticar demais a imagem.
             }
 
-            Double larguraImagemAux = (larguraFrag*0.926);
-            int larguraImagem = larguraImagemAux.intValue();
-            Double alturaImagemAux = (larguraImagem * 0.55);
-            int alturaImagem = alturaImagemAux.intValue();
-            ViewGroup.LayoutParams layoutParamsImagem = myViewHolder.imagemIlustrativa.getLayoutParams();
-
-            layoutParamsImagem.width = larguraImagem;
-            layoutParamsImagem.height = alturaImagem;
-            myViewHolder.imagemIlustrativa.setLayoutParams(layoutParamsImagem);
-
-            Double larguraCardAux = (larguraImagem*0.9745);
-            int larguraCard = larguraCardAux.intValue();
-            ViewGroup.LayoutParams layoutParamsCard = myViewHolder.cardView.getLayoutParams();
-            layoutParamsCard.width = larguraCard;
-            layoutParamsCard.height = 100;
-            myViewHolder.cardView.setLayoutParams(layoutParamsCard);
-
-
         }else{
-            Toast toast = Toast.makeText(c,"Tamanho da tela indefinido.",Toast.LENGTH_SHORT);
-            toast.show();  //OLHAR DEPOIS CASO CAIA AQUI.
+            Toast toast = Toast.makeText(c,"Tamanho da tela indefinido. \n(Talvez as imagens não fiquem bem ajustadas).",Toast.LENGTH_LONG);
+            toast.show();
+            larguraFrag = 720;
         }
+
+        //Dimensões das imgens.
+        Double larguraImagemAux = (larguraFrag*0.926);  //A imagem deve ser +-7% menor do que o fragment.
+        int larguraImagem = larguraImagemAux.intValue();
+        Double alturaImagemAux = (larguraImagem * 0.55);  //A largura da imagem é equivalente a 55% de sua altura (para ficar melhor ajustada).
+        int alturaImagem = alturaImagemAux.intValue();
+        ViewGroup.LayoutParams layoutParamsImagem = myViewHolder.imagemIlustrativa.getLayoutParams();
+
+        layoutParamsImagem.width = larguraImagem;
+        layoutParamsImagem.height = alturaImagem;
+        myViewHolder.imagemIlustrativa.setLayoutParams(layoutParamsImagem);
+
+        //Dimensões dos cards.
+        Double larguraCardAux = (larguraImagem*0.9745);  //O card deve ser +-3% menor do que a imagem.
+        int larguraCard = larguraCardAux.intValue();
+        ViewGroup.LayoutParams layoutParamsCard = myViewHolder.cardView.getLayoutParams();
+        layoutParamsCard.width = larguraCard;
+
+        DisplayMetrics realmetrics = new DisplayMetrics();
+        windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
+        layoutParamsCard.height = 140;
+        myViewHolder.cardView.setLayoutParams(layoutParamsCard);
 
         Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
                 .getUrlImagem())
@@ -125,12 +132,10 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
                 .centerCrop()
                 .into(myViewHolder.imagemIlustrativa);
 
-
-
         //myViewHolder.imagemIlustrativa.setImageBitmap(imgPraticaIlutrativa);
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getNome());
-        myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumero());
+        myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumeroId());
 
         try {
             YoYo.with(Techniques.FadeIn)  //Defina a animação na hora de carregar cada Card.

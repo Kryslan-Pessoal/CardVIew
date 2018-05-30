@@ -2,6 +2,7 @@ package com.aperam.kryslan.praticaspadrao.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -49,6 +50,7 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{  //Responsável por controlar os cardViews, deletando os que não aparecem na tela para preservar memória
         public ImageView imagemIlustrativa;
+        public CardView cardView;
         public TextView nomeNoCard;
         public TextView numeroNoCard;
 
@@ -57,9 +59,10 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
         public MyViewHolder(View itemView){
             super(itemView);
 
-            imagemIlustrativa = (ImageView) itemView.findViewById(R.id.imagem_ilustrativa);
-            nomeNoCard = (TextView) itemView.findViewById(R.id.nome);
-            numeroNoCard = (TextView) itemView.findViewById(R.id.numero);
+            imagemIlustrativa = itemView.findViewById(R.id.imagem_ilustrativa);
+            cardView = itemView.findViewById(R.id.card_view_adapter);
+            nomeNoCard = itemView.findViewById(R.id.nome);
+            numeroNoCard = itemView.findViewById(R.id.numero);
 
             itemView.setOnClickListener(this);
         }
@@ -86,20 +89,31 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
             windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
             int larguraDispositivo = displayMetrics.widthPixels;
 
-            int alturaImagem, larguraImagem = larguraDispositivo;
+            int larguraFrag;
             if(larguraDispositivo < 720){
-                Double alturaBaseadaNaLargura = (larguraDispositivo * 0.55);
-                alturaImagem = alturaBaseadaNaLargura.intValue();
+                larguraFrag = larguraDispositivo;
             }else{
-                larguraImagem = 720;
-                alturaImagem = 396;
+                larguraFrag = 720;
             }
 
+            Double larguraImagemAux = (larguraFrag*0.926);
+            int larguraImagem = larguraImagemAux.intValue();
+            Double alturaImagemAux = (larguraImagem * 0.55);
+            int alturaImagem = alturaImagemAux.intValue();
             ViewGroup.LayoutParams layoutParamsImagem = myViewHolder.imagemIlustrativa.getLayoutParams();
 
             layoutParamsImagem.width = larguraImagem;
             layoutParamsImagem.height = alturaImagem;
             myViewHolder.imagemIlustrativa.setLayoutParams(layoutParamsImagem);
+
+            Double larguraCardAux = (larguraImagem*0.9745);
+            int larguraCard = larguraCardAux.intValue();
+            ViewGroup.LayoutParams layoutParamsCard = myViewHolder.cardView.getLayoutParams();
+            layoutParamsCard.width = larguraCard;
+            layoutParamsCard.height = 100;
+            myViewHolder.cardView.setLayoutParams(layoutParamsCard);
+
+
         }else{
             Toast toast = Toast.makeText(c,"Tamanho da tela indefinido.",Toast.LENGTH_SHORT);
             toast.show();  //OLHAR DEPOIS CASO CAIA AQUI.

@@ -62,7 +62,7 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
         public MyViewHolder(View itemView){
             super(itemView);
 
-            praticaIlustrativa = (ImageView) itemView.findViewById(R.id.pratica_ilustrativa);
+            praticaIlustrativa = (ImageView) itemView.findViewById(R.id.imagem_ilustrativa);
             nomeNoCard = (TextView) itemView.findViewById(R.id.nome);
             numeroNoCard = (TextView) itemView.findViewById(R.id.numero);
 
@@ -100,7 +100,7 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
             myViewHolder.praticaIlustrativa.setLayoutParams(layoutParams);
         }else{
             Toast toast = Toast.makeText(c,"Tamanho da tela indefinido.",Toast.LENGTH_SHORT);
-            toast.show();
+            toast.show();  //OLHAR DEPOIS CASO CAIA AQUI.
         }
 
 

@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -210,13 +209,25 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Praticas> getSetPraticasList(int qtd){
         String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};
-        String[] numero = new String[]{"27", "27"};
+        String[] numeroSetor = new String[]{"27", "27"};
+        String[] areaEmitente = new String[]{"Logística Integrada", "Logística Integrada"};
+        String[] autor = new String[]{"CRISTINA BORGES P. M. ALTO", "CRISTINA BORGES P. M. ALTO"};
+        String[] processo = new String[]{"Logística de Transporte", "Logística de Transporte"};
         String[] urlImagem = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
+        String[] urlDocumento = new String[]{"https://drive.google.com/open?id=1IK_eTLIkkuC30U7lUwbUFHEUjLYThT7_7D4_NCWLhZE", "https://drive.google.com/open?id=1x2XoDPLHRAyH9vej5gCen53YFUL_BncmPGLQ6bp5igY"};
         String[] numeroId = new String[]{"PPA 27-0008", "PPA27-0007"};
         List<Praticas> listAux = new ArrayList<>();
 
         for(int i=0; i<qtd; i++){
-            Praticas p = new Praticas(nome[i % nome.length], numero[i % nome.length], urlImagem[i % nome.length], numeroId[i % nome.length]);
+            Praticas p = new Praticas(
+                    nome[i % nome.length],
+                    numeroSetor[i % nome.length],
+                    areaEmitente[i % nome.length],
+                    autor[i % nome.length],
+                    processo[i % nome.length],
+                    urlImagem[i % nome.length],
+                    urlDocumento[i % nome.length],
+                    numeroId[i % nome.length]);
             listAux.add(p);
         }
         return(listAux);

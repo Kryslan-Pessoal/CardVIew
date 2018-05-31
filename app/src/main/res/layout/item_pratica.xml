@@ -40,7 +40,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/nome"
+                android:id="@+id/titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -50,11 +50,11 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/numero"
+                android:id="@+id/numeroSetor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_below="@+id/nome"
+                android:layout_below="@+id/titulo"
                 android:layout_marginTop="6dp"
                 android:paddingStart="16dp"
                 android:textColor="@color/SecondText"
@@ -93,7 +93,7 @@
                 app:srcCompat="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/nome"
+                android:id="@+id/titulo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -107,7 +107,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
             <TextView
-                android:id="@+id/numero"
+                android:id="@+id/numeroSetor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

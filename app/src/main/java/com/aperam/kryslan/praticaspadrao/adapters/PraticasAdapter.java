@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,8 +61,8 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
             imagemIlustrativa = itemView.findViewById(R.id.imagem_ilustrativa);
             cardView = itemView.findViewById(R.id.card_view_adapter);
-            nomeNoCard = itemView.findViewById(R.id.nome);
-            numeroNoCard = itemView.findViewById(R.id.numero);
+            nomeNoCard = itemView.findViewById(R.id.titulo);
+            numeroNoCard = itemView.findViewById(R.id.numeroSetor);
 
             itemView.setOnClickListener(this);
         }
@@ -137,7 +136,7 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
         //myViewHolder.imagemIlustrativa.setImageBitmap(imgPraticaIlutrativa);
 
-        myViewHolder.nomeNoCard.setText(mList.get(positionList).getNome());
+        myViewHolder.nomeNoCard.setText(mList.get(positionList).getTitulo());
         myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumeroId());
 
         try {

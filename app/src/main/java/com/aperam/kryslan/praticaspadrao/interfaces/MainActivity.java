@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*if(savedInstanceState != null){
+            mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
+
+        }else{
+            listPraticas = getSetPraticasList(50);
+        }*/
+
         mToolbar = findViewById(R.id.my_toolbar);  //Cria a toolbar.
         //mToolbar.setTitle("(Nome da activity)");
         setSupportActionBar(mToolbar);
@@ -138,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerDrawer)
                 .build();
 
-        listCategorias = getSetCategoryList();
+        listCategorias = getSetCategoryList(); //Aqui é onde desenha os dados no drawer.
         if(listCategorias != null && listCategorias.size() > 0){
             for(int i = 0; i < listCategorias.size(); i++ ){
                 drawer.addItem(listCategorias.get(i));
@@ -167,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // CATEGORIAS
-    private List<PrimaryDrawerItem> getSetCategoryList(){
+    private List<PrimaryDrawerItem> getSetCategoryList(){  //Cria a lista de categorias que ficará no drawer.
         String[] nomes = new String[]{
                 getResources().getString(R.string.areaEminente),
                 getResources().getString(R.string.areasRelacionadas),
@@ -207,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         return(list);
     }
 
-    public List<Praticas> getSetPraticasList(int qtd){
+    public List<Praticas> getSetPraticasList(int qtd){  //Informações que ficação nos Cards.
         String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};
         String[] numeroSetor = new String[]{"27", "27"};
         String[] areaEmitente = new String[]{"Logística Integrada", "Logística Integrada"};
@@ -215,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         String[] processo = new String[]{"Logística de Transporte", "Logística de Transporte"};
         String[] urlImagem = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
         String[] urlDocumento = new String[]{"https://drive.google.com/open?id=1IK_eTLIkkuC30U7lUwbUFHEUjLYThT7_7D4_NCWLhZE", "https://drive.google.com/open?id=1x2XoDPLHRAyH9vej5gCen53YFUL_BncmPGLQ6bp5igY"};
-        String[] numeroId = new String[]{"PPA 27-0008", "PPA27-0007"};
+        int[] numeroId = new int[]{270008, 270007};
         List<Praticas> listAux = new ArrayList<>();
 
         for(int i=0; i<qtd; i++){
@@ -232,4 +239,14 @@ public class MainActivity extends AppCompatActivity {
         }
         return(listAux);
     }
+
+    /*@Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("mItemDrawerSelected", mItemDrawerSelected);
+        outState.putInt("mProfileDrawerSelected", mProfileDrawerSelected);
+        outState.putParcelableArrayList("listCars", (ArrayList<Car>) listCars);
+        outState = navigationDrawerLeft.saveInstanceState(outState);
+        outState = headerNavigationLeft.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }*/
 }

@@ -137,7 +137,10 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
         //myViewHolder.imagemIlustrativa.setImageBitmap(imgPraticaIlutrativa);
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getTitulo());
-        myViewHolder.numeroNoCard.setText(mList.get(positionList).getNumeroId());
+        int numeroIdPraticaAux = mList.get(positionList).getNumeroId();  //O número da prática vem como inteiro, deixamos ela como String e mais "apresentável" para o usuário.
+        String numeroIdPratica = String.valueOf(numeroIdPraticaAux);
+        numeroIdPratica = "PPA " + numeroIdPratica.substring(0,2) + "-" + numeroIdPratica.substring(2, numeroIdPratica.length());
+        myViewHolder.numeroNoCard.setText(numeroIdPratica);
 
         try {
             YoYo.with(Techniques.FadeIn)  //Defina a animação na hora de carregar cada Card.

@@ -1,7 +1,8 @@
 package com.aperam.kryslan.praticaspadrao.interfaces;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,8 +10,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
@@ -27,8 +28,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +35,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private AccountHeader headerDrawer;
+    private int mItemDrawerSelected;
+    private int mProfileDrawerSelected;
+
+    private List<PrimaryDrawerItem> listCategorias;
+    private List<Praticas> listPraticas;
 
     private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){
 
@@ -50,14 +54,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar mToolbar = findViewById(R.id.my_toolbar);  //Cria a toolbar.
+        mToolbar = findViewById(R.id.my_toolbar);  //Cria a toolbar.
+        //mToolbar.setTitle("(Nome da activity)");
         setSupportActionBar(mToolbar);
 
         //FRAGMENT
         PraticasFragment frag = (PraticasFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
         if(frag == null){  //Se o fragment não existir, cria e infla ele na tela inicial.
             frag = new PraticasFragment();
-            android.support.v4.app.FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
             pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
             pt.commit();
         }
@@ -97,8 +102,31 @@ public class MainActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Toast.makeText(MainActivity.this, "Clique curto" + position, Toast.LENGTH_LONG).show();
-                        return false;
+                        Fragment frag = null;
+                        //mItemDrawerSelected = i;
+
+                        /*if(i == 0){ // ALL CARS
+                            frag = new CarFragment();
+                        }
+                        else if(i == 1){ // LUXURY CAR
+                            frag = new LuxuryCarFragment();
+                        }
+                        else if(i == 2){ // SPORT CAR
+                            frag = new SportCarFragment();
+                        }
+                        else if(i == 3){ // OLD CAR
+                            frag = new OldCarFragment();
+                        }
+                        else if(i == 4){ // POPULAR CAR
+                            frag = new PopularCarFragment();
+                        }
+
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                        ft.commit();
+
+                        mToolbar.setTitle( ((PrimaryDrawerItem) iDrawerItem).getName() );*/
+                        return false;  //Faz o drawer fechar ou não.
                     }
                 })
                 .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
@@ -111,16 +139,13 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerDrawer)
                 .build();
 
-
-
-
-        drawer.addItem(new PrimaryDrawerItem().withName(R.string.areaEminente).withIcon(R.drawable.area_eminente));
-        drawer.addItem(new PrimaryDrawerItem().withName(R.string.areasRelacionadas).withIcon(R.drawable.areas_relacionadas));
-        drawer.addItem(new PrimaryDrawerItem().withName(R.string.autor).withIcon(R.drawable.autor));
-        drawer.addItem(new PrimaryDrawerItem().withName(R.string.dataDeVigencia).withIcon(R.drawable.data_de_vigencia));
-        drawer.addItem(new PrimaryDrawerItem().withName(R.string.nivel).withIcon(R.drawable.nivel));
-        drawer.addItem(new PrimaryDrawerItem().withName(R.string.processo).withIcon(R.drawable.processo));
-        drawer.addItem(new PrimaryDrawerItem().withName(R.string.restrito).withIcon(R.drawable.restrito));
+        listCategorias = getSetCategoryList();
+        if(listCategorias != null && listCategorias.size() > 0){
+            for(int i = 0; i < listCategorias.size(); i++ ){
+                drawer.addItem(listCategorias.get(i));
+            }
+            drawer.setSelection(mItemDrawerSelected);
+        }
         drawer.addItem(new DividerDrawerItem());
         drawer.addItem(new PrimaryDrawerItem().withName(R.string.configuracoes).withIcon(R.drawable.settings));
         drawer.addItem(new SwitchDrawerItem().withName("Lista resumida").withChecked(false).withOnCheckedChangeListener(mOnCheckedChangeListener));
@@ -140,6 +165,47 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);  //Caso venha algum id desconhecido (só para não dar erro).
         }
+    }
+
+    // CATEGORIAS
+    private List<PrimaryDrawerItem> getSetCategoryList(){
+        String[] nomes = new String[]{
+                getResources().getString(R.string.areaEminente),
+                getResources().getString(R.string.areasRelacionadas),
+                getResources().getString(R.string.autor),
+                getResources().getString(R.string.dataDeVigencia),
+                getResources().getString(R.string.nivel),
+                getResources().getString(R.string.processo),
+                getResources().getString(R.string.restrito)};
+        int[] icons = new int[]{
+                R.drawable.area_eminente,
+                R.drawable.areas_relacionadas,
+                R.drawable.autor,
+                R.drawable.data_de_vigencia,
+                R.drawable.nivel,
+                R.drawable.processo,
+                R.drawable.restrito };
+        int[] iconsSelected = new int[]{
+                R.drawable.area_eminente_selected,
+                R.drawable.areas_relacionadas_selected,
+                R.drawable.autor_selected,
+                R.drawable.data_de_vigencia_selected,
+                R.drawable.nivel_selected,
+                R.drawable.processo_selected,
+                R.drawable.restrito_selected};
+        List<PrimaryDrawerItem> list = new ArrayList<>();
+
+        for(int i = 0; i < nomes.length; i++){
+            PrimaryDrawerItem aux = new PrimaryDrawerItem();
+            aux.withName( nomes[i] );
+            aux.withIcon(getResources().getDrawable(icons[i]));
+            aux.withTextColor(getResources().getColor(R.color.PrimaryText));
+            aux.withSelectedIcon(getResources().getDrawable(iconsSelected[i]));
+            aux.withSelectedTextColor(getResources().getColor(R.color.colorPrimary));
+
+            list.add( aux );
+        }
+        return(list);
     }
 
     public List<Praticas> getSetPraticasList(int qtd){

@@ -123,7 +123,7 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
         DisplayMetrics realmetrics = new DisplayMetrics();
         windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
-        layoutParamsCard.height = 140;
+        layoutParamsCard.height = 120;
         myViewHolder.cardView.setLayoutParams(layoutParamsCard);
 
         Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.

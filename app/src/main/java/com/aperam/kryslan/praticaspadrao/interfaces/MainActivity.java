@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.Praticas;
 import com.aperam.kryslan.praticaspadrao.fragments.PraticasFragment;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    //private Drawer drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
             pt.commit();
         }
+        new DrawerBuilder().withActivity(this).build();
     }
 
     @Override

@@ -7,5 +7,7 @@
     <color name="PrimaryText">#000000</color>
     <color name="SecondText">#9999</color>
 
+    <color name="colorDivider">#ccc</color>
+
     <color name="cinzaEscuro">#666666</color>
 </resources>

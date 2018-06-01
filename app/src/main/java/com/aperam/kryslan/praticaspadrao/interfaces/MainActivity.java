@@ -44,7 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
-            Toast.makeText(MainActivity.this, "onCheckedChanged"+(isChecked? "true" : "false"), Toast.LENGTH_SHORT).show();
+            PraticasFragment frag = new PraticasFragment();
+            Bundle args = new Bundle();
+            if (isChecked) {
+                args.putBoolean("formatoLista", true);
+            }else{
+                args.putBoolean("formatoLista", false);
+            }
+            frag.setArguments(args);
+            FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
+            pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
+            pt.commit();
         }
     };
 
@@ -65,9 +75,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         //FRAGMENT
+        Bundle args = new Bundle();
+
         PraticasFragment frag = (PraticasFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
         if(frag == null){  //Se o fragment não existir, cria e infla ele na tela inicial.
             frag = new PraticasFragment();
+            frag.setArguments(args);
             FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
             pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
             pt.commit();

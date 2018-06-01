@@ -30,6 +30,7 @@ dependencies {
 
     //recicleView
     implementation 'com.android.support:recyclerview-v7:27.1.1'  //Referente as cardViews.
+    implementation 'com.android.support:cardview-v7:27.1.1'
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'  //Permite colocar imagem no cardView através de um link (URL) da internet de uma imagem.
@@ -42,5 +43,14 @@ dependencies {
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
-    implementation 'com.android.support:cardview-v7:27.1.1'
+    //MaterialDrawer
+    implementation("com.mikepenz:materialdrawer:6.0.7@aar") {
+        transitive = true
+    }
+    //Suporte para MaterialDrawer
+    implementation "com.android.support:support-annotations:27.1.1"
+    implementation "com.android.support:design:27.1.1"
+
+    //MaterialDialog
+    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
 }

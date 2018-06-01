@@ -1,7 +1,22 @@
+<!--    <string name=""></string>    -->
 <resources>
-    <string name="app_name">Práticas Padrão</string>
 
+    <string name="app_name">(Sou + Seguro)</string>
+
+    <!-- A -->
+    <string name="areaEminente">Área Eminente</string>
+    <string name="areasRelacionadas">Áreas Relacionadas</string>
+    <string name="autor">Autor</string>
+    <string name="dataDeVigencia">Data de Vigência</string>
+    <string name="nivel">Nível</string>
+    <string name="processo">Processo</string>
+    <string name="restrito">Restrito</string>
+
+    <!-- C -->
+    <string name="configuracao">Configuração</string>
+    <string name="configuracoes">Configurações</string>
+
+    <!-- S -->
     <string name="SegundaTela">Segunda tela</string>
 
-    <string name="configuracao">Configuração</string>
 </resources>

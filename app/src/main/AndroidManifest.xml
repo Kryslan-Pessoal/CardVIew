@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".interfaces.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,10 +22,10 @@
         <activity
             android:name=".interfaces.SecondActivity"
             android:label="Segunda Activity"
-            android:parentActivityName="com.aperam.kryslan.praticaspadrao.interfaces.MainActivity">
+            android:parentActivityName="com.aperam.kryslan.praticaspadrao.MainActivity">
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aperam.kryslan.praticaspadrao.interfaces.MainActivity"/>
+                android:value="com.aperam.kryslan.praticaspadrao.MainActivity"/>
         </activity>
     </application>
 

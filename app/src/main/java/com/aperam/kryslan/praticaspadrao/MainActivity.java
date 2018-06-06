@@ -1,8 +1,12 @@
-package com.aperam.kryslan.praticaspadrao.interfaces;
+package com.aperam.kryslan.praticaspadrao;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,9 +17,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.Praticas;
 import com.aperam.kryslan.praticaspadrao.fragments.PraticasFragment;
+import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -85,6 +89,44 @@ public class MainActivity extends AppCompatActivity {
             pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
             pt.commit();
         }
+
+        TabLayout tabLayout = findViewById(R.id.tab);
+//        String[] tabs = {"Núcleo 20","Núcleo 21","Núcleo 22","Núcleo 23","Núcleo 24","Núcleo 25","Núcleo 26","Núcleo 27","Núcleo 28"};
+        for (int i=0; i<29; i++) {
+            tabLayout.addTab(tabLayout.newTab (). setText("Núcleo " + (i+1)));
+        }
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        final ViewPager viewPager = findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter() {
+            @Override
+            public int getCount() {
+                return 0;
+            }
+
+            @Override
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+                return false;
+            }
+        };
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         //HEADER
         headerDrawer = new AccountHeaderBuilder()
@@ -204,14 +246,14 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.nivel,
                 R.drawable.processo,
                 R.drawable.restrito };
-        int[] iconsSelected = new int[]{
-                R.drawable.area_eminente_selected,
-                R.drawable.areas_relacionadas_selected,
-                R.drawable.autor_selected,
-                R.drawable.data_de_vigencia_selected,
-                R.drawable.nivel_selected,
-                R.drawable.processo_selected,
-                R.drawable.restrito_selected};
+//        int[] iconsSelected = new int[]{
+//                R.drawable.area_eminente_selected,
+//                R.drawable.areas_relacionadas_selected,
+//                R.drawable.autor_selected,
+//                R.drawable.data_de_vigencia_selected,
+//                R.drawable.nivel_selected,
+//                R.drawable.processo_selected,
+//                R.drawable.restrito_selected};
         List<PrimaryDrawerItem> list = new ArrayList<>();
 
         for(int i = 0; i < nomes.length; i++){
@@ -219,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             aux.withName( nomes[i] );
             aux.withIcon(getResources().getDrawable(icons[i]));
             aux.withTextColor(getResources().getColor(R.color.PrimaryText));
-            aux.withSelectedIcon(getResources().getDrawable(iconsSelected[i]));
+//            aux.withSelectedIcon(getResources().getDrawable(iconsSelected[i]));
             aux.withSelectedTextColor(getResources().getColor(R.color.colorPrimary));
 
             list.add( aux );

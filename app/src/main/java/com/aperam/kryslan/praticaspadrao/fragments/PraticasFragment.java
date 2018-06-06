@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.PraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.Praticas;
-import com.aperam.kryslan.praticaspadrao.interfaces.MainActivity;
+import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
 
         boolean formatoLista = getArguments().getBoolean("formatoLista");
 
-        mList = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(3);  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        mList = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(94);  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         PraticasAdapter adapter = new PraticasAdapter(getActivity(), mList, formatoLista);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

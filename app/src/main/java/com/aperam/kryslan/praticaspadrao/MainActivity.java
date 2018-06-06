@@ -1,4 +1,4 @@
-package com.aperam.kryslan.praticaspadrao.interfaces;
+package com.aperam.kryslan.praticaspadrao;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.Praticas;
 import com.aperam.kryslan.praticaspadrao.fragments.PraticasFragment;
+import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -204,14 +204,14 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.nivel,
                 R.drawable.processo,
                 R.drawable.restrito };
-        int[] iconsSelected = new int[]{
-                R.drawable.area_eminente_selected,
-                R.drawable.areas_relacionadas_selected,
-                R.drawable.autor_selected,
-                R.drawable.data_de_vigencia_selected,
-                R.drawable.nivel_selected,
-                R.drawable.processo_selected,
-                R.drawable.restrito_selected};
+//        int[] iconsSelected = new int[]{
+//                R.drawable.area_eminente_selected,
+//                R.drawable.areas_relacionadas_selected,
+//                R.drawable.autor_selected,
+//                R.drawable.data_de_vigencia_selected,
+//                R.drawable.nivel_selected,
+//                R.drawable.processo_selected,
+//                R.drawable.restrito_selected};
         List<PrimaryDrawerItem> list = new ArrayList<>();
 
         for(int i = 0; i < nomes.length; i++){
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
             aux.withName( nomes[i] );
             aux.withIcon(getResources().getDrawable(icons[i]));
             aux.withTextColor(getResources().getColor(R.color.PrimaryText));
-            aux.withSelectedIcon(getResources().getDrawable(iconsSelected[i]));
+//            aux.withSelectedIcon(getResources().getDrawable(iconsSelected[i]));
             aux.withSelectedTextColor(getResources().getColor(R.color.colorPrimary));
 
             list.add( aux );

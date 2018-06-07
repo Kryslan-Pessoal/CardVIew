@@ -2,7 +2,6 @@ package com.aperam.kryslan.praticaspadrao.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.renderscript.Type;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.PraticasAdapter;
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.areaEmitenteBD;
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
@@ -26,6 +26,7 @@ import java.util.Objects;
 public class PraticasFragment extends Fragment implements RecyclerViewOnClickListenerHack {
     private RecyclerView mRecyclerView;
     private List<PraticasCards> mList;
+
 
 
     @Override
@@ -65,7 +66,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
 
         boolean formatoLista = getArguments().getBoolean("formatoLista");
 
-        mList = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(3);  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        mList = areaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         PraticasAdapter adapter = new PraticasAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
@@ -95,7 +96,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
         public RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvhack){
-            mContext = c;  //O contexto do app recebe o que foi passado.
+            mContext = c;
             mRecyclerViewOnClickListenerHack = rvhack;
 
             mGestureDetector = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener(){  //É chamado em onInterceptTouchEvent.

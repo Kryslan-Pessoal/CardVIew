@@ -36,7 +36,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.domain.BD.GetTabsBd;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetTabsBd;
+
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
@@ -236,14 +237,14 @@ public class MainActivity extends AppCompatActivity {
     private List<PrimaryDrawerItem> getSetCategoryList(){  //Cria a lista de categorias que ficará no drawer.
         String[] nomes = GetTabsBd(contextoMain);
         int[] icons = new int[]{
-                R.drawable.estrela_cheia,
                 R.drawable.area_eminente,
                 R.drawable.areas_relacionadas,
                 R.drawable.autor,
                 R.drawable.data_de_vigencia,
                 R.drawable.nivel,
                 R.drawable.processo,
-                R.drawable.restrito };
+                R.drawable.restrito,
+                R.drawable.estrela_cheia};
 //        int[] iconsSelected = new int[]{
 //                R.drawable.area_eminente_selected,
 //                R.drawable.areas_relacionadas_selected,
@@ -267,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
         return(list);
     }
 
-    public List<PraticasCards> getSetPraticasList(int qtd){  //Informações que ficação nos Cards.
+    public List<PraticasCards> getSetPraticasList(int qtd){  //Informações que ficará nos Cards.
         String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};
         String[] numeroSetor = new String[]{"27", "27"};
         String[] areaEmitente = new String[]{"Logística Integrada", "Logística Integrada"};

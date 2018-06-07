@@ -14,8 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.PraticasAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.areaEmitenteBD;
+import com.aperam.kryslan.praticaspadrao.domain.AreaEmitente;
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
@@ -23,11 +24,11 @@ import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerH
 import java.util.List;
 import java.util.Objects;
 
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.areaEmitenteBD.GetAreaEmitenteBd;
+
 public class PraticasFragment extends Fragment implements RecyclerViewOnClickListenerHack {
     private RecyclerView mRecyclerView;
-    private List<PraticasCards> mList;
-
-
+    private List<AreaEmitente> mList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
@@ -46,29 +47,37 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
                 super.onScrolled(recyclerView, dx, dy);
 
                 LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                PraticasAdapter adapter = (PraticasAdapter) mRecyclerView.getAdapter();
+                CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
 
                 int l = llm.findLastCompletelyVisibleItemPosition();
 
-                if(mList.size() == l + 1){
-                    List<PraticasCards> listaAux = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(10);  //Define a quantidade que será criado a cada rolagem
+                if(mList.size() == l + 1){  //MODIFICAR PRA MAIS DEPOIS.
+                    List<AreaEmitente> listaAux = GetAreaEmitenteBd(recyclerView.getContext());  //Define a quantidade que será criado a cada rolagem
                     for (int i = 0; i < listaAux.size(); i++) {
-                        adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em PraticasAdapter no método AddListItem.
+                        adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em CardAdapter no método AddListItem.
                     }
                 }
             }
         });
+
+        LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
+
+        List<AreaEmitente> listaAux = GetAreaEmitenteBd(container.getContext());
+        for (int i = 0; i < 1; i++) {
+            adapter.addListItem(listaAux.get(i), 0);  //pra add itens a lista vai em CardAdapter no método AddListItem.
+        }
         mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), mRecyclerView, this));
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        boolean formatoLista = getArguments().getBoolean("formatoLista");
+        //boolean formatoLista = getArguments().getBoolean("formatoLista");
 
-        mList = areaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        PraticasAdapter adapter = new PraticasAdapter(getActivity(), mList);
-        //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+        mList = GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        //CardAdapter adapter = new CardAdapter(getActivity(), mList);
+        adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em CardAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 
         return view;
@@ -78,7 +87,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Toast.makeText(getActivity(), "onClickListener(): " +position, Toast.LENGTH_SHORT).show();
 
-//        PraticasAdapter adapter = (PraticasAdapter) mRecyclerView.getAdapter();
+//        CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
     }
 
@@ -86,7 +95,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
     public void onLongPressClickListener(View view, int position) {  //Aqui define o que acontece ao clicar e segurar em cada card.
         Toast.makeText(getActivity(), "onLongPressClickListener: " +position, Toast.LENGTH_SHORT).show();
 
-//        PraticasAdapter adapter = (PraticasAdapter) mRecyclerView.getAdapter();
+//        CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
     }
 

@@ -5,12 +5,14 @@ public class AreaEmitente {
     private int id;
     private String foto;
     private String areaEmitente;
+    private int numero;
     //private String link;
 
-    public AreaEmitente(int id, String foto, String areaEmitente){
+    public AreaEmitente(int id, String foto, String areaEmitente, int numero){
         this.id = id;
         this.foto = foto;
         this.areaEmitente = areaEmitente;
+        this.numero = numero;
         //this.link = link;
     }
 
@@ -38,6 +40,13 @@ public class AreaEmitente {
         this.areaEmitente = areaEmitente;
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
     /*public String getLink() {
         return link;
     }

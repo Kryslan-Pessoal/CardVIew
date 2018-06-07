@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.domain.AreaEmitente;
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.daimajia.androidanimations.library.Techniques;
@@ -23,12 +24,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyViewHolder>{
-    private List<PraticasCards> mList;
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
+    private List<AreaEmitente> mList;
     private LayoutInflater mLayoutInflater;
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-    public PraticasAdapter(Context c,List<PraticasCards> lista){
+    public CardAdapter(Context c, List<AreaEmitente> lista){
         mList = lista;
         mLayoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -36,11 +37,9 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //só é chamado na hora de criar uma nova view (novo cardo).
-        Log.i("LOG", "onCreateViewHolder()");
-
-        View v = mLayoutInflater.inflate(R.layout.item_pratica, viewGroup, false);  //viewGroup é o recyclerView(extenção) | o false é pois estamos recebendo os parâmetros do recyclerView, e vamos adicionar mais coisas.
-        MyViewHolder mvh = new MyViewHolder(v);
-        return mvh;
+        //Log.i("LOG", "onCreateViewHolder()");
+        View v = mLayoutInflater.inflate(R.layout.item_indice_card, viewGroup, false);  //viewGroup é o recyclerView(extenção) | o false é pois estamos recebendo os parâmetros do recyclerView, e vamos adicionar mais coisas.
+        return new MyViewHolder(v);
     }
 
     public void removeListItem(int position){
@@ -53,7 +52,6 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
         public CardView cardView;
         public TextView nomeNoCard;
         public TextView numeroNoCard;
-
 
 
         public MyViewHolder(View itemView){
@@ -77,9 +75,6 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int positionList) {  //Vincula nossos dados com a view. (Seta o valor de cada 'mList' com uma view)
-        Log.i("LOG", "onBindViewHolder()");
-
-
         //Redimenciona a imagem de acordo com o tamanho da tela.
         Context c = myViewHolder.imagemIlustrativa.getContext();  // Pega o contexto da activity para usar mais a frente.
 
@@ -122,25 +117,32 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
 
         DisplayMetrics realmetrics = new DisplayMetrics();
         Float valor = displayMetrics.xdpi;
-        Double valorFinalAux =  valor * 0.36;
+
+        int numeroIdPratica = mList.get(positionList).getNumero();  //Se for exibição do tipo Área emitente, não terá o número, então a altura do carde será ligeiramente menor.
+        Double valorFinalAux;
+        if(numeroIdPratica == 0) {
+            valorFinalAux = valor * 0.3;
+        }else{
+            valorFinalAux = valor * 0.36;
+        }
         int valorFinal = valorFinalAux.intValue();
-        windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
+        if (windowmanager != null) {
+            windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
+        }
         layoutParamsCard.height = valorFinal;
         myViewHolder.cardView.setLayoutParams(layoutParamsCard);
 
-        Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
+        /*Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
                 .getUrlImagem())
                 .resize(1280, 720)
                 .centerCrop()
-                .into(myViewHolder.imagemIlustrativa);
+                .into(myViewHolder.imagemIlustrativa);*/
 
-        //myViewHolder.imagemIlustrativa.setImageBitmap(imgPraticaIlutrativa);
-
-        myViewHolder.nomeNoCard.setText(mList.get(positionList).getTitulo());
-        int numeroIdPraticaAux = mList.get(positionList).getNumeroId();  //O número da prática vem como inteiro, deixamos ela como String e mais "apresentável" para o usuário.
-        String numeroIdPratica = String.valueOf(numeroIdPraticaAux);
-        numeroIdPratica = "PPA " + numeroIdPratica.substring(0,2) + "-" + numeroIdPratica.substring(2, numeroIdPratica.length());
-        myViewHolder.numeroNoCard.setText(numeroIdPratica);
+        myViewHolder.imagemIlustrativa.setImageResource(R.drawable.laminacao_a_quente);
+        myViewHolder.nomeNoCard.setText(mList.get(positionList).getAreaEmitente());
+        if(numeroIdPratica != 0) {
+            myViewHolder.numeroNoCard.setText(numeroIdPratica);
+        }
 
         try {
             YoYo.with(Techniques.FadeIn)  //Defina a animação na hora de carregar cada Card.
@@ -160,7 +162,7 @@ public class PraticasAdapter extends RecyclerView.Adapter<PraticasAdapter.MyView
         mRecyclerViewOnClickListenerHack = r;  //Está adicionando o parâmetro de clique de entrada ao hack para ativar o click.
     }
 
-    public void addListItem(PraticasCards p, int position){
+    public void addListItem(AreaEmitente p, int position){
         mList.add(p);
         notifyItemInserted(position);
     }

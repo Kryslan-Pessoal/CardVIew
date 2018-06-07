@@ -32,6 +32,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialize.holder.StringHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,31 +168,37 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectedItem(1)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                    public boolean onItemClick(View view, int i, IDrawerItem drawerItem) {
                         Fragment frag = null;
                         //mItemDrawerSelected = i;
 
-                        /*if(i == 0){ // ALL CARS
-                            frag = new CarFragment();
-                        }
-                        else if(i == 1){ // LUXURY CAR
+                        //if(i == 0){ //Área Emitente
+                            frag = new PraticasFragment();
+                        //}
+                        /*else if(i == 1){ //Áreas relacionadas
                             frag = new LuxuryCarFragment();
                         }
-                        else if(i == 2){ // SPORT CAR
+                        else if(i == 2){ //Autor
                             frag = new SportCarFragment();
                         }
-                        else if(i == 3){ // OLD CAR
+                        else if(i == 3){ //Data de vigência
                             frag = new OldCarFragment();
                         }
-                        else if(i == 4){ // POPULAR CAR
+                        else if(i == 4){ //Nível
                             frag = new PopularCarFragment();
                         }
+                        else if(i == 5){ //Processo
+                            frag = new PopularCarFragment();
+                        }
+                        else if(i == 6){ //Restrito
+                            frag = new PopularCarFragment();
+                        }*/
 
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                         ft.commit();
-
-                        mToolbar.setTitle( ((PrimaryDrawerItem) iDrawerItem).getName() );*/
+                        //CharSequence a = ((PrimaryDrawerItem)drawerItem).getName();
+                        //mToolbar.setTitle();tle(a);
                         return false;  //Faz o drawer fechar ou não.
                     }
                 })

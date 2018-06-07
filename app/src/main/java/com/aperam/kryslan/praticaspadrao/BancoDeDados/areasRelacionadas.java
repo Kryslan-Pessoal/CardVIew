@@ -7,6 +7,7 @@ import com.aperam.kryslan.praticaspadrao.domain.AreaEmitente;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidInt;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.areaEmitenteBD.GetId;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidString;
 
@@ -16,6 +17,7 @@ public class areasRelacionadas {
         int[] id = GetId(27);
         String[] foto = GetVoidString(27);
         String[] areaEmitente = GetAreasEminetesNucle();
+        int[] numero = GetVoidInt(27);
         //String[] link = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
         List<AreaEmitente> listAux = new ArrayList<>();
 
@@ -23,7 +25,8 @@ public class areasRelacionadas {
             AreaEmitente p = new AreaEmitente(
                     id[i % id.length],
                     foto[i % foto.length],
-                    areaEmitente[i % areaEmitente.length]);
+                    areaEmitente[i % areaEmitente.length],
+                    numero[i % numero.length]);
             //link[i % link.length]);
             listAux.add(p);
         }

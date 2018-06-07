@@ -60,24 +60,17 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
             }
         });
 
-        LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-        CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
-
-        List<AreaEmitente> listaAux = GetAreaEmitenteBd(container.getContext());
-        for (int i = 0; i < 1; i++) {
-            adapter.addListItem(listaAux.get(i), 0);  //pra add itens a lista vai em CardAdapter no método AddListItem.
-        }
         mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), mRecyclerView, this));
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        //boolean formatoLista = getArguments().getBoolean("formatoLista");
+        boolean formatoLista = getArguments().getBoolean("formatoLista");
 
-        mList = GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        //CardAdapter adapter = new CardAdapter(getActivity(), mList);
-        adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em CardAdapter para o clique na lista.
+        mList = areaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        CardAdapter adapter = new CardAdapter(getActivity(), mList);
+        //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 
         return view;

@@ -120,15 +120,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
 
         int numeroIdPratica = mList.get(positionList).getNumero();  //Se for exibição do tipo Área emitente, não terá o número, então a altura do carde será ligeiramente menor.
         Double valorFinalAux;
-        if(numeroIdPratica == 0) {
-            valorFinalAux = valor * 0.3;
-        }else{
+        //if(numeroIdPratica == 0) {
+//            valorFinalAux = valor * 0.3;
+//        }else{
             valorFinalAux = valor * 0.36;
-        }
+//        }
         int valorFinal = valorFinalAux.intValue();
-        if (windowmanager != null) {
+//        if (windowmanager != null) {
             windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
-        }
+//        }
         layoutParamsCard.height = valorFinal;
         myViewHolder.cardView.setLayoutParams(layoutParamsCard);
 

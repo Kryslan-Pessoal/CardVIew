@@ -1,9 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.domain;
 
-import android.os.Parcel;
-
-public class Praticas{
-    //O que vai aparecer no RecyclerView.
+public class PraticasCards {
     private String titulo;
     private String numeroSetor;
     private String areaEmitente;
@@ -13,10 +10,8 @@ public class Praticas{
     private String urlDocumento;
     private int numeroId;
 
-    //Usado como parâmetros.
-    //private String areaEmitente;
 
-    public Praticas(String titulo, String numeroSetor, String areaEmitente, String autor, String processo, String urlImagem, String urlDocumento, int numeroId){
+    public PraticasCards(String titulo, String numeroSetor, String areaEmitente, String autor, String processo, String urlImagem, String urlDocumento, int numeroId){
         this.titulo = titulo;
         this.numeroSetor = numeroSetor;
         this.areaEmitente = areaEmitente;
@@ -90,7 +85,7 @@ public class Praticas{
     }
 
     //PARCELABLE
-    public Praticas(Parcel parcel){  //Só está escrevendo os objetos.
+    public PraticasCards(Parcel parcel){  //Só está escrevendo os objetos.
         setTitulo(parcel.readString());
         setNumeroSetor(parcel.readString());
         setAreaEmitente(parcel.readString());
@@ -112,15 +107,15 @@ public class Praticas{
         dest.writeString(getUrlDocumento());
         dest.writeInt(getNumeroId());
     }
-    public static final Parcelable.Creator<Praticas> CREATOR = new Parcelable.Creator<Praticas>(){
+    public static final Parcelable.Creator<PraticasCards> CREATOR = new Parcelable.Creator<PraticasCards>(){
         @Override
-        public Praticas createFromParcel(Parcel source) {  //Chamar esta entidade para pegar os dados.
-            return new Praticas(source);
+        public PraticasCards createFromParcel(Parcel source) {  //Chamar esta entidade para pegar os dados.
+            return new PraticasCards(source);
         }
 
         @Override
-        public Praticas[] newArray(int size) {
-            return new Praticas[size];
+        public PraticasCards[] newArray(int size) {
+            return new PraticasCards[size];
         }
     };*/
 }

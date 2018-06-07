@@ -16,6 +16,9 @@
     <string name="configuracao">Configuração</string>
     <string name="configuracoes">Configurações</string>
 
+    <!-- D -->
+    <string name="favoritos">Favoritos</string>
+
     <!-- S -->
     <string name="SegundaTela">Segunda tela</string>
 

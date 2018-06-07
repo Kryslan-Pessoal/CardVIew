@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.PraticasAdapter;
-import com.aperam.kryslan.praticaspadrao.domain.Praticas;
+import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 
@@ -24,7 +24,7 @@ import java.util.Objects;
 
 public class PraticasFragment extends Fragment implements RecyclerViewOnClickListenerHack {
     private RecyclerView mRecyclerView;
-    private List<Praticas> mList;
+    private List<PraticasCards> mList;
 
 
     @Override
@@ -49,7 +49,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
                 int l = llm.findLastCompletelyVisibleItemPosition();
 
                 if(mList.size() == l + 1){
-                    List<Praticas> listaAux = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(10);  //Define a quantidade que será criado a cada rolagem
+                    List<PraticasCards> listaAux = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(10);  //Define a quantidade que será criado a cada rolagem
                     for (int i = 0; i < listaAux.size(); i++) {
                         adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em PraticasAdapter no método AddListItem.
                     }
@@ -64,7 +64,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
 
         boolean formatoLista = getArguments().getBoolean("formatoLista");
 
-        mList = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(3);  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        mList = ((MainActivity) Objects.requireNonNull(getActivity())).getSetPraticasList(94);  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         PraticasAdapter adapter = new PraticasAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

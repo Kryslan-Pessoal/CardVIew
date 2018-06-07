@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -17,7 +18,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.aperam.kryslan.praticaspadrao.domain.Praticas;
+import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.fragments.PraticasFragment;
 import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -35,6 +36,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.domain.BD.GetTabsBd;
+
 public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private AccountHeader headerDrawer;
@@ -42,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private int mProfileDrawerSelected;
 
     private List<PrimaryDrawerItem> listCategorias;
-    private List<Praticas> listPraticas;
+    private List<PraticasCards> listPraticas;
+
+    private Context contextoMain = this;
 
     private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){
 
@@ -91,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         TabLayout tabLayout = findViewById(R.id.tab);
-//        String[] tabs = {"Núcleo 20","Núcleo 21","Núcleo 22","Núcleo 23","Núcleo 24","Núcleo 25","Núcleo 26","Núcleo 27","Núcleo 28"};
-        for (int i=0; i<29; i++) {
-            tabLayout.addTab(tabLayout.newTab (). setText("Núcleo " + (i+1)));
+        String[] nomesTabs = GetTabsBd(contextoMain);
+        for (String tabName:nomesTabs) {
+            tabLayout.addTab(tabLayout.newTab (). setText(tabName));
         }
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
@@ -164,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Fragment frag = null;
+                        //List a = drawerItem.;
                         //mItemDrawerSelected = i;
 
                         /*if(i == 0){ // ALL CARS
@@ -230,15 +236,9 @@ public class MainActivity extends AppCompatActivity {
 
     // CATEGORIAS
     private List<PrimaryDrawerItem> getSetCategoryList(){  //Cria a lista de categorias que ficará no drawer.
-        String[] nomes = new String[]{
-                getResources().getString(R.string.areaEminente),
-                getResources().getString(R.string.areasRelacionadas),
-                getResources().getString(R.string.autor),
-                getResources().getString(R.string.dataDeVigencia),
-                getResources().getString(R.string.nivel),
-                getResources().getString(R.string.processo),
-                getResources().getString(R.string.restrito)};
+        String[] nomes = GetTabsBd(contextoMain);
         int[] icons = new int[]{
+                R.drawable.estrela_vazia,
                 R.drawable.area_eminente,
                 R.drawable.areas_relacionadas,
                 R.drawable.autor,
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
         return(list);
     }
 
-    public List<Praticas> getSetPraticasList(int qtd){  //Informações que ficação nos Cards.
+    public List<PraticasCards> getSetPraticasList(int qtd){  //Informações que ficação nos Cards.
         String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};
         String[] numeroSetor = new String[]{"27", "27"};
         String[] areaEmitente = new String[]{"Logística Integrada", "Logística Integrada"};
@@ -278,10 +278,10 @@ public class MainActivity extends AppCompatActivity {
         String[] urlImagem = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
         String[] urlDocumento = new String[]{"https://drive.google.com/open?id=1IK_eTLIkkuC30U7lUwbUFHEUjLYThT7_7D4_NCWLhZE", "https://drive.google.com/open?id=1x2XoDPLHRAyH9vej5gCen53YFUL_BncmPGLQ6bp5igY"};
         int[] numeroId = new int[]{270008, 270007};
-        List<Praticas> listAux = new ArrayList<>();
+        List<PraticasCards> listAux = new ArrayList<>();
 
         for(int i=0; i<qtd; i++){
-            Praticas p = new Praticas(
+            PraticasCards p = new PraticasCards(
                     nome[i % nome.length],
                     numeroSetor[i % nome.length],
                     areaEmitente[i % nome.length],

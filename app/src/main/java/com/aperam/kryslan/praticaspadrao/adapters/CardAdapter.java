@@ -1,6 +1,10 @@
 package com.aperam.kryslan.praticaspadrao.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +26,9 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
@@ -82,7 +89,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
         int larguraFrag;
-        if (windowmanager != null) {  //Para evitar erros, apenas redimenciona a imagem caso o windowmanager exista.
+        if (windowmanager != null) {  //Para evitar erros, redimenciona a imagem apenas se o windowmanager exista.
             windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
             int larguraDispositivo = displayMetrics.widthPixels;
 
@@ -91,7 +98,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
             }else{
                 larguraFrag = 720;  //Caso o dispositivo seja muito grande (maior que 720pixels) os tamanhos dos cards e imagens não irão passar de 720, para não esticar demais a imagem.
             }
-
         }else{
             Toast toast = Toast.makeText(c,"Tamanho da tela indefinido. \n(Talvez as imagens não fiquem bem ajustadas).",Toast.LENGTH_LONG);
             toast.show();
@@ -126,23 +132,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
             valorFinalAux = valor * 0.36;
 //        }
         int valorFinal = valorFinalAux.intValue();
-//        if (windowmanager != null) {
+        if (windowmanager != null) {
             windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
-//        }
+        }
         layoutParamsCard.height = valorFinal;
         myViewHolder.cardView.setLayoutParams(layoutParamsCard);
 
-        /*Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
-                .getUrlImagem())
+        Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
+                .getFotoUrl())
                 .resize(1280, 720)
                 .centerCrop()
-                .into(myViewHolder.imagemIlustrativa);*/
+                .into(myViewHolder.imagemIlustrativa);
 
-        myViewHolder.imagemIlustrativa.setImageResource(R.drawable.laminacao_a_quente);
-        myViewHolder.nomeNoCard.setText(mList.get(positionList).getAreaEmitente());
-        if(numeroIdPratica != 0) {
-            myViewHolder.numeroNoCard.setText(numeroIdPratica);
-        }
+
+        myViewHolder.nomeNoCard.setText(mList.get(positionList).getAreaEmitente());//mList.get(positionList).getAreaEmitente());
+        //if(numeroIdPratica != 0) {
+//            myViewHolder.numeroNoCard.setText(numeroIdPratica);
+//        }
 
         try {
             YoYo.with(Techniques.FadeIn)  //Defina a animação na hora de carregar cada Card.
@@ -166,5 +172,4 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
         mList.add(p);
         notifyItemInserted(position);
     }
-
 }

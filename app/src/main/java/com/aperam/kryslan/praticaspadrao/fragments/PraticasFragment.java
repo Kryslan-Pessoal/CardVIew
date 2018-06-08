@@ -46,17 +46,17 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
+                /*LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();  //Implementar caso queira que a lista continue gerando se chegar no final dela (no caso repetindo os valores).
 
-                int l = llm.findLastCompletelyVisibleItemPosition();
+                //int l = llm.findLastCompletelyVisibleItemPosition();
 
                 if(mList.size() == l + 1){  //MODIFICAR PRA MAIS DEPOIS.
                     List<AreaEmitente> listaAux = GetAreaEmitenteBd(recyclerView.getContext());  //Define a quantidade que será criado a cada rolagem
                     for (int i = 0; i < listaAux.size(); i++) {
                         adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em CardAdapter no método AddListItem.
                     }
-                }
+                }*/
             }
         });
 
@@ -66,7 +66,7 @@ public class PraticasFragment extends Fragment implements RecyclerViewOnClickLis
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        boolean formatoLista = getArguments().getBoolean("formatoLista");
+//        boolean formatoLista = getArguments().getBoolean("formatoLista");
 
         mList = areaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         CardAdapter adapter = new CardAdapter(getActivity(), mList);

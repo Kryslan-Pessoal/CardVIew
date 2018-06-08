@@ -3,14 +3,14 @@ package com.aperam.kryslan.praticaspadrao.domain;
 public class AreaEmitente {
 
     private int id;
-    private String foto;
+    private String fotoUrl;
     private String areaEmitente;
     private int numero;
     //private String link;
 
-    public AreaEmitente(int id, String foto, String areaEmitente, int numero){
+    public AreaEmitente(int id, String fotoUrl, String areaEmitente, int numero){
         this.id = id;
-        this.foto = foto;
+        this.fotoUrl = fotoUrl;
         this.areaEmitente = areaEmitente;
         this.numero = numero;
         //this.link = link;
@@ -24,12 +24,12 @@ public class AreaEmitente {
         this.id = id;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getFotoUrl() {
+        return fotoUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setFotoUrl(String fotoUrl) {
+        this.fotoUrl = fotoUrl;
     }
 
     public String getAreaEmitente() {

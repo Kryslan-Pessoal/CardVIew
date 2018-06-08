@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         //FRAGMENT
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
 
         PraticasFragment frag = (PraticasFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
         if(frag == null){  //Se o fragment não existir, cria e infla ele na tela inicial.
@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //if(i == 0){ //Área Emitente
                             frag = new PraticasFragment();
+                        frag.setArguments(args);
                         //}
                         /*else if(i == 1){ //Áreas relacionadas
                             frag = new LuxuryCarFragment();

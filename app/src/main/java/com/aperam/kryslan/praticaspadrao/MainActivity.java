@@ -23,6 +23,7 @@ import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.fragments.AreaEmitenteFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AreasRelacionadasFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AutorFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.DataDeVigenciaFrag;
 import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private List<PrimaryDrawerItem> listCategorias;
     private List<PraticasCards> listPraticas;
     private TabLayout tabLayout;
+
+    private Drawer drawer;
 
     private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){
 
@@ -125,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                drawer.setSelection( tab.getPosition() - 1 , true);
             }
 
             @Override
@@ -163,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         //NAVIGATIONDRAWER
-        Drawer drawer = new DrawerBuilder()
+        drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolbar)
                 .withDisplayBelowStatusBar(true)
@@ -181,16 +185,31 @@ public class MainActivity extends AppCompatActivity {
 
                         if(i == 1){ //Área Emitente
                             frag = new AreaEmitenteFrag();
+                            frag.setArguments(args);
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                            ft.commit();
                         }
                         /*else if(i == 1){ //Áreas relacionadas
                             frag = new AreasRelacionadasFrag();
                         }*/
                         else if(i == 3){ //Autor
                             frag = new AutorFrag();
+                            frag.setArguments(args);
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                            ft.commit();
                         }
-                        /*else if(i == 3){ //Data de vigência
-                            frag = new OldCarFragment();
-                        }
+                        else if(i == 4){ //Data de vigência
+                            frag = new DataDeVigenciaFrag();
+                            frag.setArguments(args);
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                            ft.commit();
+                        }/*
                         else if(i == 4){ //Nível
                             frag = new PopularCarFragment();
                         }
@@ -210,11 +229,7 @@ public class MainActivity extends AppCompatActivity {
                                 }, 100);
 
 
-                        frag.setArguments(args);
 
-                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                        ft.commit();
 
                         //Vai mudar o título baseado na aba.
                         StringHolder tituloNoDrawer = ((PrimaryDrawerItem)drawerItem).getName();  //Pega o nome do item selecionado no Drawer.

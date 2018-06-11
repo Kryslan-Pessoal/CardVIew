@@ -111,15 +111,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
                 windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
                 int larguraDispositivo = displayMetrics.widthPixels;
 
-                if(larguraDispositivo < 720){
+                if(larguraDispositivo < 1080){
                     larguraFrag = larguraDispositivo;
                 }else{
-                    larguraFrag = 720;  //Caso o dispositivo seja muito grande (maior que 720pixels) os tamanhos dos cards e imagens não irão passar de 720, para não esticar demais a imagem.
+                    larguraFrag = 1080;  //Caso o dispositivo seja muito grande (maior que 720pixels) os tamanhos dos cards e imagens não irão passar de 720, para não esticar demais a imagem.
                 }
             }else{
                 Toast toast = Toast.makeText(c,"Tamanho da tela indefinido. \n(Talvez as imagens não fiquem bem ajustadas).",Toast.LENGTH_LONG);
                 toast.show();
-                larguraFrag = 720;
+                larguraFrag = 1080;
             }
 
             //Dimensões das imgens.

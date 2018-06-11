@@ -2,6 +2,7 @@ package com.aperam.kryslan.praticaspadrao;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<PrimaryDrawerItem> listCategorias;
     private List<PraticasCards> listPraticas;
+    private TabLayout tabLayout;
 
     private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){
 
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //TABs
-        TabLayout tabLayout = findViewById(R.id.tab);
+        final TabLayout tabLayout = findViewById(R.id.tab);
         String[] nomesTabs = GetTabsBd(contextoMain);
         for (String tabName:nomesTabs) {
             tabLayout.addTab(tabLayout.newTab (). setText(tabName));
@@ -135,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        this.tabLayout = tabLayout;
 
         //HEADER
         headerDrawer = new AccountHeaderBuilder()
@@ -170,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectedItem(1)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
-                    public boolean onItemClick(View view, int i, IDrawerItem drawerItem) {
+                    public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
 //                        mViewPager.setCurrentItem( i );
                         Fragment frag = null;
                         //mItemDrawerSelected = i;
@@ -197,6 +200,16 @@ public class MainActivity extends AppCompatActivity {
                         else if(i == 6){ //Restrito
                             frag = new PopularCarFragment();
                         }*/
+
+                        new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
+                                new Runnable(){
+                                    @Override
+                                    public void run() {
+                                        tabLayout.getTabAt(i-1).select();
+                                    }
+                                }, 100);
+
+
                         frag.setArguments(args);
 
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

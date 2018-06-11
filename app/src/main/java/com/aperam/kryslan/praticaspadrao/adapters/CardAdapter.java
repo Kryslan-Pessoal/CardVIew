@@ -173,12 +173,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getTextoPrincipal());  //Está fora pois é chamado em todos os casos.
 
-        try {
-            YoYo.with(Techniques.FadeIn)  //Defina a animação na hora de carregar cada Card.
-                    .duration(700)
-                    .playOn(myViewHolder.itemView);
-        }catch (Exception e){
+        if(tipoLista.equals("card")) {
+            try {
+                YoYo.with(Techniques.FadeInUp)  //Defina a animação na hora de carregar cada Card.
+                        .duration(700)
+                        .playOn(myViewHolder.itemView);
+            } catch (Exception e) {
 
+            }
         }
     }
 

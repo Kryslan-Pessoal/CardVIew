@@ -1,17 +1,17 @@
 package com.aperam.kryslan.praticaspadrao.domain;
 
-public class AreaEmitente {
+public class IndiceRecycleView {
 
     private int id;
     private String fotoUrl;
-    private String areaEmitente;
+    private String textoPrincipal;
     private int numero;
     //private String link;
 
-    public AreaEmitente(int id, String fotoUrl, String areaEmitente, int numero){
+    public IndiceRecycleView(int id, String fotoUrl, String textoPrincipal, int numero){
         this.id = id;
         this.fotoUrl = fotoUrl;
-        this.areaEmitente = areaEmitente;
+        this.textoPrincipal = textoPrincipal;
         this.numero = numero;
         //this.link = link;
     }
@@ -32,12 +32,12 @@ public class AreaEmitente {
         this.fotoUrl = fotoUrl;
     }
 
-    public String getAreaEmitente() {
-        return areaEmitente;
+    public String getTextoPrincipal() {
+        return textoPrincipal;
     }
 
-    public void setAreaEmitente(String areaEmitente) {
-        this.areaEmitente = areaEmitente;
+    public void setTextoPrincipal(String textoPrincipal) {
+        this.textoPrincipal = textoPrincipal;
     }
 
     public int getNumero() {

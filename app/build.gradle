@@ -49,7 +49,7 @@ dependencies {
     }
     //Suporte para MaterialDrawer
     implementation "com.android.support:support-annotations:27.1.1"
-    implementation "com.android.support:design:27.1.1"
+    implementation "com.android.support:design:27.1.1"  //Também dá suporte para o RecycleView
 
     //MaterialDialog
     implementation "com.afollestad.material-dialogs:core:0.9.6.0"

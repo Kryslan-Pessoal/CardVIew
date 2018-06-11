@@ -2,27 +2,24 @@ package com.aperam.kryslan.praticaspadrao.BancoDeDados;
 
 import android.content.Context;
 
-import com.aperam.kryslan.praticaspadrao.domain.AreaEmitente;
+import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetTabsBd;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidInt;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidString;
 
-public class areaEmitenteBD {
+public class AreaEmitenteBD {
 
-    public static List<AreaEmitente> GetAreaEmitenteBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+    public static List<IndiceRecycleView> GetAreaEmitenteBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetId(27);
         String[] foto = GetFotosAreasEminetes();
         String[] areaEmitente = GetAreasEminetes();
         int[] numero = GetVoidInt(27);
-        //String[] link = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
-        List<AreaEmitente> listAux = new ArrayList<>();
+        List<IndiceRecycleView> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
-            AreaEmitente p = new AreaEmitente(
+            IndiceRecycleView p = new IndiceRecycleView(
                     id[i % id.length],
                     foto[i % foto.length],
                     areaEmitente[i % areaEmitente.length],
@@ -105,4 +102,5 @@ public class areaEmitenteBD {
                 "https://drive.google.com/uc?id=1en4GHyi0PekuS24mX9Y1B2ndkrDVZXs7",
                 "https://drive.google.com/uc?id=1ug4G1d3v4i1LBTmJA4nFAxSFsqjKE4X9"};
     }
+
 }

@@ -3,6 +3,12 @@ package com.aperam.kryslan.praticaspadrao.BancoDeDados;
 import android.content.Context;
 
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.GetId;
 
 public class BD {
     //Menus (sumários)
@@ -19,323 +25,342 @@ public class BD {
     }
 
     public static String[] GetAutorBd(){
-        return new String[]{"ABNER LUCIO F DUTRA" +
-                "Adão Cordeiro de Azevedo" +
-                "ADILSON A GONCALVES" +
-                "ADIR SOARES DE M JUNIOR" +
-                "ADJACIR DE SOUSA" +
-                "Administrador Docnix" +
-                "ADRIANO HENRIQUE SILVA" +
-                "Adriano Oliveira Vago" +
-                "AGNALDO PAULO DA SILVA" +
-                "Agnaldo Pinto Fiuza" +
-                "AGNALDO SILVA CARVALHO" +
-                "Ailton Costa de Azevedo" +
-                "AILTON RODRIGUES DO PRADO" +
-                "ALCY DIAS RODRIGUES" +
-                "ALESCIANO G SILVA PEREIRA" +
-                "ALEXANDRE VELOSO VIEIRA" +
-                "ALINE SOARES N ALVARENGA" +
-                "Altieres Fernando Gomes Carneiro" +
-                "AMARILDO FERREIRA DOS SANTOS#181940" +
-                "ANDERSON JONNE SANT ANA" +
-                "Andre Luiz Pires de Figueiredo" +
-                "Angelica Fabiana Batista P de" +
-                "Angelo Antonio Gonçalves Coelho" +
-                "ANGELO FERREIRA COSTA" +
-                "ANGELO ROSA DA SILVA" +
-                "ANTONIO CARLOS DE ASSIS" +
-                "ANTONY WILLIAM DE ALMEIDA" +
-                "ARISIO DE ABREU BARBOSA" +
-                "ARLEN CARNEIRO DE ARAUJO" +
-                "BRUNO CORDEIRO COSTA" +
-                "BRUNO DE ALMEIDA MIRANDA" +
-                "CAIO DE PAULA CAMARGO PISANO" +
-                "CARINE DE OLIVEIRA MAIA" +
-                "CARLOS A A DE OLIVEIRA" +
-                "CARLOS ALBERTO MOURAO" +
-                "CARLOS HENRIQUE DE CASTRO" +
-                "Carlos Oliveira Costa" +
-                "CELIA MARIA S RODRIGUES" +
-                "CHARLES SILVA MAGALHAES" +
-                "CHARLSTON N RIBEIRO" +
-                "CLAUDIANO Z FONTOURA" +
-                "Claudilene Aparecida Alves Pena" +
-                "CLAUDIMAR P DOS SANTOS" +
-                "CLAUDIO M DE ALCANTARA" +
-                "Claudio Roberto de Paula" +
-                "CLAUDIO SILVA MIRANDA" +
-                "CLAUDIO TEIXEIRA GOMES" +
-                "Cleberson Marcelo dos Santos" +
-                "CLEIDE C DA S FAUSTINI" +
-                "CLEONICE M ALVES FREITAS" +
-                "CLINGER FELIX SANTIAGO" +
-                "CRISTIAN C DE FREITAS" +
-                "CRISTINA BORGES P M ALTO" +
-                "CYNTIA RENATA VALERIANO DE OLIVEIRA" +
-                "DALTON HERINGER DE SOUZA" +
-                "Darleny Fernandes Vieira" +
-                "DENISE A BARCELOS ASSIS" +
-                "DILSON P DE MELO" +
-                "DIOGO FERREIRA DE CASTRO" +
-                "DIONATAN M A MARINHO" +
-                "DOUGLAS FERREIRA DE SOUSA" +
-                "EDILSON MARCIO NOGUEIRA" +
-                "EDILSON S CAVALIERI" +
-                "EDMAR G PATROCINIO" +
-                "EDNA LEITE SILVA" +
-                "EDNEI ARAUJO CLARA" +
-                "EDSON AMORIM" +
-                "EDSON JOSE ALVES" +
-                "EDSON MOURA OLIVEIRA" +
-                "EDUARDO LUIZ G TEIXEIRA" +
-                "EDUARDO MILAGRES DA SILVA" +
-                "EDVAL SOARES DE SOUZA" +
-                "ELIAS CARLOS LOPES" +
-                "ELISA DAS GRACAS S LEVI" +
-                "Elvio Goncalves do Nascimento" +
-                "ELYSE PENHA P S E SILVA" +
-                "EMILIANA C M ARTHUSO" +
-                "ENILBER LUCAS SILVA" +
-                "ERICH FABIANY SANTOS" +
-                "ERLI APARECIDO DE PAULA JUNIOR" +
-                "ERMELINO VIEIRA COURA" +
-                "EURONIDES V P FILHO" +
-                "Ezio Vinicius Santos" +
-                "FABIANO SOUSA ARAUJO¹" +
-                "FABIO DE ASSIS VALENTE" +
-                "Fabio Gomes Pacheco" +
-                "FABIO GOMES PACHECO#365458" +
-                "FABRICIO L DE ALCANTARA" +
-                "Fausto Figueiredo Gomes" +
-                "FELIPE GRATIVOL LIMA" +
-                "FELLIPE H BRITO CARVALHO" +
-                "FERNANDA DE SA OLIVEIRA LIZARDO¹" +
-                "FERNANDO ALVES ALVARENGA" +
-                "FILEMON SILVA MENDES" +
-                "FILIPE SOARES PONTES" +
-                "FLAMARION ANICIO BATISTA" +
-                "Flavia Adalgisa Magalhaes Santos" +
-                "FLAVIO ANTONIO RIBEIRO" +
-                "FLAVIO APARECIDO LIMA DE ANDRADE" +
-                "FLAVIO BARCELOS MORAIS" +
-                "FLAVIO DA SILVA" +
-                "FRANCISCO DUARTE FERREIRA" +
-                "FRANCISCO GONCALVES LIMA" +
-                "GABRIEL RODRIGUES LUZIA" +
-                "GAVYLAM SILVA DE ALMEIDA" +
-                "Geirson Neves Gandra" +
-                "GEOVANY SANTIAGO SOARES" +
-                "Geraldo aparecido leandro" +
-                "GERALDO APARECIDO S SOUSA" +
-                "GERALDO DE ASSIS SILVA" +
-                "GERALDO M DA SILVEIRA" +
-                "GERALDO MARCOS DE SOUZA" +
-                "GIL NEY CHAVES ULHOA" +
-                "GILBERTH B DE O ALVES" +
-                "GILBERTO DE ALMEIDA" +
-                "GILCESAR G S N DE AVILA" +
-                "GILSON JUSTO REIS" +
-                "GLAUBER F BATISTA" +
-                "GLAUTIERE PAIVA GOMES" +
-                "GUILHERME F BARBOSA COURA" +
-                "HELITON MARTINS REIS" +
-                "HELTON ALMEIDA NEVES" +
-                "HERMAN SAVIO DE SOUZA" +
-                "HUGLESLEI V M SILVA" +
-                "HUMBERTO DE O ARAUJO" +
-                "HUMBERTO SOUSA BARCELOS" +
-                "IRIMAR NOVAES SILVA#360940" +
-                "IVANILSON BISPO DE ALMEIDA" +
-                "IVONILSON F DE ALMEIDA" +
-                "JANE DE L FERRAZ BARRILAO" +
-                "JANEIR RIBEIRO DUTRA" +
-                "JEAN ALVES DE SOUZA" +
-                "JEANDERSON E MUNIZ SILVA" +
-                "JENNER COSTA FERREIRA" +
-                "Jessica Aparecida Cordeiro" +
-                "JOAO BOSCO F PACIFICO" +
-                "JOAO GERALDO ALVES" +
-                "JOAO KENEDE MAGALHAES" +
-                "Joao Paulo Gomes Moreira" +
-                "JOAQUIM GOMES DE SOUZA" +
-                "JOSE BENIGNO DE ASSIS" +
-                "JOSE CARLOS MARTINS SILVA" +
-                "JOSE CARLOS ROSA DA SILVA" +
-                "JOSE GERALDO DE C AMERICO" +
-                "JOSE GERALDO DOS SANTOS" +
-                "Jose Luiz de Matos" +
-                "JOSE R DE OLIVEIRA" +
-                "JOSE RENATO SILVA NUNES" +
-                "JOSE RIBEIRO DE A FILHO" +
-                "JOSE ROBERTO DA CRUZ" +
-                "JOSE ROBERTO SIMAO" +
-                "JOSE ROMARIO DE F MOTA" +
-                "Josimar Mendes Araujo" +
-                "JOYCE FRANCELE ROCHA GOMES" +
-                "JULIO CESAR C CALDEIRA" +
-                "JUSAEL DE ALMEIDA" +
-                "KEYFERSON G FERREIRA" +
-                "KLEBER M DE OLIVEIRA" +
-                "Kleolvane Carlos Figueiredo de Paula" +
-                "Leila Miriam Oliveira" +
-                "LEONARDO A FERNANDES" +
-                "LEONARDO DE A HORACIO" +
-                "LEONARDO DE A RIBEIRO" +
-                "LINCOLN DOS S RODRIGUES" +
-                "LUCELIO MIRANDA" +
-                "LUCIANA NASCIMENTO OLIVEIRA FAVARATO" +
-                "Luciano Fernandes Viana" +
-                "LUCIANO M DA SILVA" +
-                "Lucimar Aparecida dos Reis Gomes#20160801" +
-                "Lucio Asai Bailo" +
-                "LUIS CARLOS ASSUNCAO" +
-                "LUIS CLAUDIO B TORRES" +
-                "LUIZ ANDRE DE OLIVEIRA¹" +
-                "LUIZ CLAUDIO ANDRE PINTO" +
-                "MAGDA REGINA S PLAIS" +
-                "MAGNO GOMES FRADE" +
-                "MARCELO FERREIRA COSTA" +
-                "MARCELO LOPES M BORGES" +
-                "MARCELO SEIXAS VIEIRA" +
-                "MARCELO SOUZA PEREIRA" +
-                "MARCIA A MIRANDA DE ASSIS" +
-                "MARCIO A G FERNANDES" +
-                "MARCIO FERREIRA RODRIGUES" +
-                "MARCO AURELIO DE A NEIVA" +
-                "MARCO SERGIO C DO ROSARIO" +
-                "MARCOS AURELIO S PEDROSA" +
-                "MARCUS HAROLDO R FERREIRA" +
-                "MARCUS MICHEL ELIAS" +
-                "MARDLIRIO JOSE MARTINS" +
-                "MARIA DE J DE P FREITAS" +
-                "Maria do Socorro de Souza Lima" +
-                "MARIA REGINA B MENDES" +
-                "MARIO SERGIO MOURAO" +
-                "MARLI GERONIMA" +
-                "MARLON BUENO FELIX" +
-                "MAURICIO CESAR PEREIRA RODRIGUES" +
-                "Michele Cristina Marques Rosa" +
-                "MICHELLA F BEZERRA BARONY" +
-                "Milane Mendes de Macedo" +
-                "MILTON ASSIS DA SILVA" +
-                "Milton Pereira dos Santos Junior" +
-                "MOISES J L DA SILVA" +
-                "NAGYLA FRIGULHA DE M LIMA" +
-                "NELSON LUCAS ALVES JUNIOR" +
-                "NEY SOUSA MOREIRA" +
-                "NILDOMAR SOARES FERREIRA" +
-                "NILTON CESAR LOURENCO" +
-                "NIVALDO FERREIRA SILVA" +
-                "Nivaldo Santos da Silva" +
-                "Nucleo Acabamento de Laminados a Quente" +
-                "Nucleo Acabamento e Servicos em Inox" +
-                "Nucleo Centro de Pesquisa" +
-                "Nucleo da Engenharia de Manutencao" +
-                "Nucleo Gestao Ambiental" +
-                "Nucleo Gestao Estrategica" +
-                "Nucleo Laminacao de Inox" +
-                "Nucleo Laminacao de Siliciosos" +
-                "Nucleo Laminacao Tiras a Quente" +
-                "Nucleo Metrologia" +
-                "Nucleo Posto Medico" +
-                "Nucleo Reducao" +
-                "Nucleo Transporte Externo" +
-                "Nucleo Utilidades" +
-                "ORISRAK ALVES DORNELAS" +
-                "Osvaldo Pires Ferreira" +
-                "OTAVIO A DA C TEIXEIRA" +
-                "PATRICIA ZELIA DE ASSIS" +
-                "PATRICK QUINTAO VIEIRA" +
-                "Paulino Cordeiro de Oliveira" +
-                "PAULO CESAR GONCALVES" +
-                "PAULO H DOS SANTOS" +
-                "PAULO HENRIQUE DE OLIVEIRA MAIA#197370" +
-                "PAULO JOSE DE SOUZA" +
-                "PAULO JUNIO DE S BARBOSA" +
-                "PAULO RICARDO MUSSI OLIVEIRA" +
-                "PEDRO GONCALVES DOS REIS" +
-                "PEDRO HENRIQUE B SOUZA" +
-                "Polibio Martins Nogueira" +
-                "RAFAEL LOPES F PENEDO" +
-                "Rafaella Pereira" +
-                "Raquel Alves Correia" +
-                "RAQUEL MENDONCA DE FARIA" +
-                "RAVENY CRISTINY ASSIS FRANCISQUINI" +
-                "RAYLANDER ROCHA PESSOA" +
-                "Regilsllainy Cobucci Pena" +
-                "REGINA CELIA DE MELO" +
-                "REINALDO DE OLIVEIRA CRUZ" +
-                "REINALDO O G JUNIOR" +
-                "REINALDO SANTOS SILVA" +
-                "REINALDO SILVANO SANTOS#235641" +
-                "RENATO A DE A SANTANA" +
-                "Ricardo Antonio Ferreira de Oliveira" +
-                "RICARDO JOSE G COSTA" +
-                "RICHARD ANDRE PERDIGAO" +
-                "RIVA ULTIMO DE C MOREIRA" +
-                "ROBERTA SILVA NUNES" +
-                "ROBERTO JUNIOR G LEITE" +
-                "ROBERTO ROSA LUPPI" +
-                "ROBSON DE SOUZA BARCELOS" +
-                "ROBSON GUIMARAES LOPES" +
-                "ROBSON MARTINS" +
-                "ROBSON WANDER SILVA SOUZA" +
-                "Rodolfo Manoel Lemes da Costa" +
-                "RODRIGO BARONY BRUZI" +
-                "ROGERIO RUIZ SANCHEZ" +
-                "Romario Emiliano Barbosa Olimpo" +
-                "ROMILSON FREITAS SOUZA" +
-                "RONALDO C DE OLIVEIRA" +
-                "Ronielly Lemos.#20160827" +
-                "RONILDO RODRIGUES SOUSA" +
-                "RONILDSON G MONTEIRO" +
-                "RONNE FERREIRA PIRES" +
-                "RUBENS DA SILVA MOURA" +
-                "RUBENS GOMES PESSOA" +
-                "SANDEY NOVY ARAUJO ROCHA" +
-                "SANDRO M SOUSA FELIX" +
-                "SANNCLEY AUGUSTO RUFINO" +
-                "SERGIO BRUM LUGAO" +
-                "SERGIO MIRANDA DA SILVA" +
-                "Sergio Ricardo Martins" +
-                "Sergio Silveira de Vasconcellos Aprigio Junior" +
-                "SHEYLLA LIMA SOUZA" +
-                "SHIRLLENY F DE LIMA SOUZA" +
-                "SIDLEY RAMOS BARCELOS" +
-                "Silas Roberto Machado Vilela" +
-                "SILVERIO SANTANA FONTES" +
-                "SILVIMAR GONCALVES CAMPOS" +
-                "SOLANGE VALENTIM PEREIRA" +
-                "STELO ALEIXO DE C FILHO" +
-                "TALES WALLACE SOUZA" +
-                "TANIA M A DOS S G PESSOA" +
-                "TEOFILO M DE S SANTOS" +
-                "THAIS APARECIDA CASTRO DA SILVA" +
-                "THIAGO V DE O BARBOSA" +
-                "TIAGO BATISTA DOS SANTOS" +
-                "TIAGO M DE O EGIDIO" +
-                "Tony Terra Beraldo" +
-                "VAGNER M DE CARVALHO" +
-                "VALQUIRIA CARVALHO ARDUINI" +
-                "Vanessa Marques da Silva" +
-                "VERA LUCIA GASQUEL COELHO#386772" +
-                "VICENTE SANTALUCIA" +
-                "VICTOR M C DE OLIVEIRA" +
-                "VINICIUS M DE CARVALHO" +
-                "VIVALDO GERALDO DINIZ" +
-                "WALDER BENVINDO OLIVEIRA CARVALHO" +
-                "Waldmir de Assis Castro" +
-                "WALTON FERNANDES DA SILVA" +
-                "WANDERLEY V DE FARIA" +
-                "WANDERNY MENDES RIBEIRO" +
-                "WANDERSON SILVA MARQUES" +
-                "WELINGTON MADUREIRA SILVA" +
-                "Wellisson Ferreira" +
-                "WESLEY DE CARVALHO SILVA" +
-                "WILD GONCALVES DE SOUZA" +
-                "WILLIAM CLAYTON A ALMEIDA" +
+        return new String[]{"ABNER LUCIO F DUTRA",
+                "Adão Cordeiro de Azevedo",
+                "ADILSON A GONCALVES",
+                "ADIR SOARES DE M JUNIOR",
+                "ADJACIR DE SOUSA",
+                "Administrador Docnix",
+                "ADRIANO HENRIQUE SILVA",
+                "Adriano Oliveira Vago",
+                "AGNALDO PAULO DA SILVA",
+                "Agnaldo Pinto Fiuza",
+                "AGNALDO SILVA CARVALHO",
+                "Ailton Costa de Azevedo",
+                "AILTON RODRIGUES DO PRADO",
+                "ALCY DIAS RODRIGUES",
+                "ALESCIANO G SILVA PEREIRA",
+                "ALEXANDRE VELOSO VIEIRA",
+                "ALINE SOARES N ALVARENGA",
+                "Altieres Fernando Gomes Carneiro",
+                "AMARILDO FERREIRA DOS SANTOS#181940",
+                "ANDERSON JONNE SANT ANA",
+                "Andre Luiz Pires de Figueiredo",
+                "Angelica Fabiana Batista P de",
+                "Angelo Antonio Gonçalves Coelho",
+                "ANGELO FERREIRA COSTA",
+                "ANGELO ROSA DA SILVA",
+                "ANTONIO CARLOS DE ASSIS",
+                "ANTONY WILLIAM DE ALMEIDA",
+                "ARISIO DE ABREU BARBOSA",
+                "ARLEN CARNEIRO DE ARAUJO",
+                "BRUNO CORDEIRO COSTA",
+                "BRUNO DE ALMEIDA MIRANDA",
+                "CAIO DE PAULA CAMARGO PISANO",
+                "CARINE DE OLIVEIRA MAIA",
+                "CARLOS A A DE OLIVEIRA",
+                "CARLOS ALBERTO MOURAO",
+                "CARLOS HENRIQUE DE CASTRO",
+                "Carlos Oliveira Costa",
+                "CELIA MARIA S RODRIGUES",
+                "CHARLES SILVA MAGALHAES",
+                "CHARLSTON N RIBEIRO",
+                "CLAUDIANO Z FONTOURA",
+                "Claudilene Aparecida Alves Pena",
+                "CLAUDIMAR P DOS SANTOS",
+                "CLAUDIO M DE ALCANTARA",
+                "Claudio Roberto de Paula",
+                "CLAUDIO SILVA MIRANDA",
+                "CLAUDIO TEIXEIRA GOMES",
+                "Cleberson Marcelo dos Santos",
+                "CLEIDE C DA S FAUSTINI",
+                "CLEONICE M ALVES FREITAS",
+                "CLINGER FELIX SANTIAGO",
+                "CRISTIAN C DE FREITAS",
+                "CRISTINA BORGES P M ALTO",
+                "CYNTIA RENATA VALERIANO DE OLIVEIRA",
+                "DALTON HERINGER DE SOUZA",
+                "Darleny Fernandes Vieira",
+                "DENISE A BARCELOS ASSIS",
+                "DILSON P DE MELO",
+                "DIOGO FERREIRA DE CASTRO",
+                "DIONATAN M A MARINHO",
+                "DOUGLAS FERREIRA DE SOUSA",
+                "EDILSON MARCIO NOGUEIRA",
+                "EDILSON S CAVALIERI",
+                "EDMAR G PATROCINIO",
+                "EDNA LEITE SILVA",
+                "EDNEI ARAUJO CLARA",
+                "EDSON AMORIM",
+                "EDSON JOSE ALVES",
+                "EDSON MOURA OLIVEIRA",
+                "EDUARDO LUIZ G TEIXEIRA",
+                "EDUARDO MILAGRES DA SILVA",
+                "EDVAL SOARES DE SOUZA",
+                "ELIAS CARLOS LOPES",
+                "ELISA DAS GRACAS S LEVI",
+                "Elvio Goncalves do Nascimento",
+                "ELYSE PENHA P S E SILVA",
+                "EMILIANA C M ARTHUSO",
+                "ENILBER LUCAS SILVA",
+                "ERICH FABIANY SANTOS",
+                "ERLI APARECIDO DE PAULA JUNIOR",
+                "ERMELINO VIEIRA COURA",
+                "EURONIDES V P FILHO",
+                "Ezio Vinicius Santos",
+                "FABIANO SOUSA ARAUJO¹",
+                "FABIO DE ASSIS VALENTE",
+                "Fabio Gomes Pacheco",
+                "FABIO GOMES PACHECO#365458",
+                "FABRICIO L DE ALCANTARA",
+                "Fausto Figueiredo Gomes",
+                "FELIPE GRATIVOL LIMA",
+                "FELLIPE H BRITO CARVALHO",
+                "FERNANDA DE SA OLIVEIRA LIZARDO¹",
+                "FERNANDO ALVES ALVARENGA",
+                "FILEMON SILVA MENDES",
+                "FILIPE SOARES PONTES",
+                "FLAMARION ANICIO BATISTA",
+                "Flavia Adalgisa Magalhaes Santos",
+                "FLAVIO ANTONIO RIBEIRO",
+                "FLAVIO APARECIDO LIMA DE ANDRADE",
+                "FLAVIO BARCELOS MORAIS",
+                "FLAVIO DA SILVA",
+                "FRANCISCO DUARTE FERREIRA",
+                "FRANCISCO GONCALVES LIMA",
+                "GABRIEL RODRIGUES LUZIA",
+                "GAVYLAM SILVA DE ALMEIDA",
+                "Geirson Neves Gandra",
+                "GEOVANY SANTIAGO SOARES",
+                "Geraldo aparecido leandro",
+                "GERALDO APARECIDO S SOUSA",
+                "GERALDO DE ASSIS SILVA",
+                "GERALDO M DA SILVEIRA",
+                "GERALDO MARCOS DE SOUZA",
+                "GIL NEY CHAVES ULHOA",
+                "GILBERTH B DE O ALVES",
+                "GILBERTO DE ALMEIDA",
+                "GILCESAR G S N DE AVILA",
+                "GILSON JUSTO REIS",
+                "GLAUBER F BATISTA",
+                "GLAUTIERE PAIVA GOMES",
+                "GUILHERME F BARBOSA COURA",
+                "HELITON MARTINS REIS",
+                "HELTON ALMEIDA NEVES",
+                "HERMAN SAVIO DE SOUZA",
+                "HUGLESLEI V M SILVA",
+                "HUMBERTO DE O ARAUJO",
+                "HUMBERTO SOUSA BARCELOS",
+                "IRIMAR NOVAES SILVA#360940",
+                "IVANILSON BISPO DE ALMEIDA",
+                "IVONILSON F DE ALMEIDA",
+                "JANE DE L FERRAZ BARRILAO",
+                "JANEIR RIBEIRO DUTRA",
+                "JEAN ALVES DE SOUZA",
+                "JEANDERSON E MUNIZ SILVA",
+                "JENNER COSTA FERREIRA",
+                "Jessica Aparecida Cordeiro",
+                "JOAO BOSCO F PACIFICO",
+                "JOAO GERALDO ALVES",
+                "JOAO KENEDE MAGALHAES",
+                "Joao Paulo Gomes Moreira",
+                "JOAQUIM GOMES DE SOUZA",
+                "JOSE BENIGNO DE ASSIS",
+                "JOSE CARLOS MARTINS SILVA",
+                "JOSE CARLOS ROSA DA SILVA",
+                "JOSE GERALDO DE C AMERICO",
+                "JOSE GERALDO DOS SANTOS",
+                "Jose Luiz de Matos",
+                "JOSE R DE OLIVEIRA",
+                "JOSE RENATO SILVA NUNES",
+                "JOSE RIBEIRO DE A FILHO",
+                "JOSE ROBERTO DA CRUZ",
+                "JOSE ROBERTO SIMAO",
+                "JOSE ROMARIO DE F MOTA",
+                "Josimar Mendes Araujo",
+                "JOYCE FRANCELE ROCHA GOMES",
+                "JULIO CESAR C CALDEIRA",
+                "JUSAEL DE ALMEIDA",
+                "KEYFERSON G FERREIRA",
+                "KLEBER M DE OLIVEIRA",
+                "Kleolvane Carlos Figueiredo de Paula",
+                "Leila Miriam Oliveira",
+                "LEONARDO A FERNANDES",
+                "LEONARDO DE A HORACIO",
+                "LEONARDO DE A RIBEIRO",
+                "LINCOLN DOS S RODRIGUES",
+                "LUCELIO MIRANDA",
+                "LUCIANA NASCIMENTO OLIVEIRA FAVARATO",
+                "Luciano Fernandes Viana",
+                "LUCIANO M DA SILVA",
+                "Lucimar Aparecida dos Reis Gomes#20160801",
+                "Lucio Asai Bailo",
+                "LUIS CARLOS ASSUNCAO",
+                "LUIS CLAUDIO B TORRES",
+                "LUIZ ANDRE DE OLIVEIRA¹",
+                "LUIZ CLAUDIO ANDRE PINTO",
+                "MAGDA REGINA S PLAIS",
+                "MAGNO GOMES FRADE",
+                "MARCELO FERREIRA COSTA",
+                "MARCELO LOPES M BORGES",
+                "MARCELO SEIXAS VIEIRA",
+                "MARCELO SOUZA PEREIRA",
+                "MARCIA A MIRANDA DE ASSIS",
+                "MARCIO A G FERNANDES",
+                "MARCIO FERREIRA RODRIGUES",
+                "MARCO AURELIO DE A NEIVA",
+                "MARCO SERGIO C DO ROSARIO",
+                "MARCOS AURELIO S PEDROSA",
+                "MARCUS HAROLDO R FERREIRA",
+                "MARCUS MICHEL ELIAS",
+                "MARDLIRIO JOSE MARTINS",
+                "MARIA DE J DE P FREITAS",
+                "Maria do Socorro de Souza Lima",
+                "MARIA REGINA B MENDES",
+                "MARIO SERGIO MOURAO",
+                "MARLI GERONIMA",
+                "MARLON BUENO FELIX",
+                "MAURICIO CESAR PEREIRA RODRIGUES",
+                "Michele Cristina Marques Rosa",
+                "MICHELLA F BEZERRA BARONY",
+                "Milane Mendes de Macedo",
+                "MILTON ASSIS DA SILVA",
+                "Milton Pereira dos Santos Junior",
+                "MOISES J L DA SILVA",
+                "NAGYLA FRIGULHA DE M LIMA",
+                "NELSON LUCAS ALVES JUNIOR",
+                "NEY SOUSA MOREIRA",
+                "NILDOMAR SOARES FERREIRA",
+                "NILTON CESAR LOURENCO",
+                "NIVALDO FERREIRA SILVA",
+                "Nivaldo Santos da Silva",
+                "Nucleo Acabamento de Laminados a Quente",
+                "Nucleo Acabamento e Servicos em Inox",
+                "Nucleo Centro de Pesquisa",
+                "Nucleo da Engenharia de Manutencao",
+                "Nucleo Gestao Ambiental",
+                "Nucleo Gestao Estrategica",
+                "Nucleo Laminacao de Inox",
+                "Nucleo Laminacao de Siliciosos",
+                "Nucleo Laminacao Tiras a Quente",
+                "Nucleo Metrologia",
+                "Nucleo Posto Medico",
+                "Nucleo Reducao",
+                "Nucleo Transporte Externo",
+                "Nucleo Utilidades",
+                "ORISRAK ALVES DORNELAS",
+                "Osvaldo Pires Ferreira",
+                "OTAVIO A DA C TEIXEIRA",
+                "PATRICIA ZELIA DE ASSIS",
+                "PATRICK QUINTAO VIEIRA",
+                "Paulino Cordeiro de Oliveira",
+                "PAULO CESAR GONCALVES",
+                "PAULO H DOS SANTOS",
+                "PAULO HENRIQUE DE OLIVEIRA MAIA#197370",
+                "PAULO JOSE DE SOUZA",
+                "PAULO JUNIO DE S BARBOSA",
+                "PAULO RICARDO MUSSI OLIVEIRA",
+                "PEDRO GONCALVES DOS REIS",
+                "PEDRO HENRIQUE B SOUZA",
+                "Polibio Martins Nogueira",
+                "RAFAEL LOPES F PENEDO",
+                "Rafaella Pereira",
+                "Raquel Alves Correia",
+                "RAQUEL MENDONCA DE FARIA",
+                "RAVENY CRISTINY ASSIS FRANCISQUINI",
+                "RAYLANDER ROCHA PESSOA",
+                "Regilsllainy Cobucci Pena",
+                "REGINA CELIA DE MELO",
+                "REINALDO DE OLIVEIRA CRUZ",
+                "REINALDO O G JUNIOR",
+                "REINALDO SANTOS SILVA",
+                "REINALDO SILVANO SANTOS#235641",
+                "RENATO A DE A SANTANA",
+                "Ricardo Antonio Ferreira de Oliveira",
+                "RICARDO JOSE G COSTA",
+                "RICHARD ANDRE PERDIGAO",
+                "RIVA ULTIMO DE C MOREIRA",
+                "ROBERTA SILVA NUNES",
+                "ROBERTO JUNIOR G LEITE",
+                "ROBERTO ROSA LUPPI",
+                "ROBSON DE SOUZA BARCELOS",
+                "ROBSON GUIMARAES LOPES",
+                "ROBSON MARTINS",
+                "ROBSON WANDER SILVA SOUZA",
+                "Rodolfo Manoel Lemes da Costa",
+                "RODRIGO BARONY BRUZI",
+                "ROGERIO RUIZ SANCHEZ",
+                "Romario Emiliano Barbosa Olimpo",
+                "ROMILSON FREITAS SOUZA",
+                "RONALDO C DE OLIVEIRA",
+                "Ronielly Lemos.#20160827",
+                "RONILDO RODRIGUES SOUSA",
+                "RONILDSON G MONTEIRO",
+                "RONNE FERREIRA PIRES",
+                "RUBENS DA SILVA MOURA",
+                "RUBENS GOMES PESSOA",
+                "SANDEY NOVY ARAUJO ROCHA",
+                "SANDRO M SOUSA FELIX",
+                "SANNCLEY AUGUSTO RUFINO",
+                "SERGIO BRUM LUGAO",
+                "SERGIO MIRANDA DA SILVA",
+                "Sergio Ricardo Martins",
+                "Sergio Silveira de Vasconcellos Aprigio Junior",
+                "SHEYLLA LIMA SOUZA",
+                "SHIRLLENY F DE LIMA SOUZA",
+                "SIDLEY RAMOS BARCELOS",
+                "Silas Roberto Machado Vilela",
+                "SILVERIO SANTANA FONTES",
+                "SILVIMAR GONCALVES CAMPOS",
+                "SOLANGE VALENTIM PEREIRA",
+                "STELO ALEIXO DE C FILHO",
+                "TALES WALLACE SOUZA",
+                "TANIA M A DOS S G PESSOA",
+                "TEOFILO M DE S SANTOS",
+                "THAIS APARECIDA CASTRO DA SILVA",
+                "THIAGO V DE O BARBOSA",
+                "TIAGO BATISTA DOS SANTOS",
+                "TIAGO M DE O EGIDIO",
+                "Tony Terra Beraldo",
+                "VAGNER M DE CARVALHO",
+                "VALQUIRIA CARVALHO ARDUINI",
+                "Vanessa Marques da Silva",
+                "VERA LUCIA GASQUEL COELHO#386772",
+                "VICENTE SANTALUCIA",
+                "VICTOR M C DE OLIVEIRA",
+                "VINICIUS M DE CARVALHO",
+                "VIVALDO GERALDO DINIZ",
+                "WALDER BENVINDO OLIVEIRA CARVALHO",
+                "Waldmir de Assis Castro",
+                "WALTON FERNANDES DA SILVA",
+                "WANDERLEY V DE FARIA",
+                "WANDERNY MENDES RIBEIRO",
+                "WANDERSON SILVA MARQUES",
+                "WELINGTON MADUREIRA SILVA",
+                "Wellisson Ferreira",
+                "WESLEY DE CARVALHO SILVA",
+                "WILD GONCALVES DE SOUZA",
+                "WILLIAM CLAYTON A ALMEIDA",
                 "WILSON PEREIRA"};
+    }
+
+    public static List<IndiceRecycleView> GetAutorListBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetId(306);  //Futuramente criar clase para cada um em domain.
+        String[] foto = GetVoidString(306);
+        String[] textoPrincipal = GetAutorBd();
+        int[] numero = GetVoidInt(306);
+        List<IndiceRecycleView> listAux = new ArrayList<>();
+
+        for (int i = 0; i < id.length; i++) {
+            IndiceRecycleView p = new IndiceRecycleView(
+                    id[i % id.length],
+                    foto[i % foto.length],
+                    textoPrincipal[i % textoPrincipal.length],
+                    numero[i % numero.length]);
+            //link[i % link.length]);
+            listAux.add(p);
+        }
+        return listAux;
     }
 
     public static String[] GetProcessoBd(){

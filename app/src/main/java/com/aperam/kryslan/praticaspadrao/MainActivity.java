@@ -19,7 +19,9 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
-import com.aperam.kryslan.praticaspadrao.fragments.PraticasFragment;
+import com.aperam.kryslan.praticaspadrao.fragments.AreaEmitenteFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.AreasRelacionadasFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.AutorFrag;
 import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
-            PraticasFragment frag = new PraticasFragment();
+            AreaEmitenteFrag frag = new AreaEmitenteFrag();
             Bundle args = new Bundle();
             if (isChecked) {
                 args.putBoolean("formatoLista", true);
@@ -86,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
         //FRAGMENT
         final Bundle args = new Bundle();
 
-        PraticasFragment frag = (PraticasFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
+        AreaEmitenteFrag frag = (AreaEmitenteFrag) getSupportFragmentManager().findFragmentByTag("mainFrag");
         if(frag == null){  //Se o fragment não existir, cria e infla ele na tela inicial.
-            frag = new PraticasFragment();
+            frag = new AreaEmitenteFrag();
             frag.setArguments(args);
             FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
             pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
@@ -169,20 +171,21 @@ public class MainActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int i, IDrawerItem drawerItem) {
+//                        mViewPager.setCurrentItem( i );
                         Fragment frag = null;
                         //mItemDrawerSelected = i;
 
-                        //if(i == 0){ //Área Emitente
-                            frag = new PraticasFragment();
-                        frag.setArguments(args);
-                        //}
+
+                        if(i == 1){ //Área Emitente
+                            frag = new AreaEmitenteFrag();
+                        }
                         /*else if(i == 1){ //Áreas relacionadas
-                            frag = new LuxuryCarFragment();
+                            frag = new AreasRelacionadasFrag();
+                        }*/
+                        else if(i == 3){ //Autor
+                            frag = new AutorFrag();
                         }
-                        else if(i == 2){ //Autor
-                            frag = new SportCarFragment();
-                        }
-                        else if(i == 3){ //Data de vigência
+                        /*else if(i == 3){ //Data de vigência
                             frag = new OldCarFragment();
                         }
                         else if(i == 4){ //Nível
@@ -194,13 +197,17 @@ public class MainActivity extends AppCompatActivity {
                         else if(i == 6){ //Restrito
                             frag = new PopularCarFragment();
                         }*/
+                        frag.setArguments(args);
 
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                         ft.commit();
-                        //CharSequence a = ((PrimaryDrawerItem)drawerItem).getName();
-                        //mToolbar.setTitle();tle(a);
-                        return false;  //Faz o drawer fechar ou não.
+
+                        //Vai mudar o título baseado na aba.
+                        StringHolder tituloNoDrawer = ((PrimaryDrawerItem)drawerItem).getName();  //Pega o nome do item selecionado no Drawer.
+                        String titulo = tituloNoDrawer.getText(contextoMain);
+                        mToolbar.setTitle(titulo);
+                        return false;  //Faz o drawer fechar ou não. (false fecha)
                     }
                 })
                 .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {

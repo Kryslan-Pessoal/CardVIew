@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.GetId;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidInt;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidString;
 
 public class DataDeVigenciaBD {
@@ -17,15 +16,13 @@ public class DataDeVigenciaBD {
         int[] id = GetId(12);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(12);
         String[] textoPrincipal = GetDatasAno();
-        int[] numero = GetVoidInt(12);
         List<IndiceRecycleView> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
             IndiceRecycleView p = new IndiceRecycleView(
                     id[i % id.length],
                     foto[i % foto.length],
-                    textoPrincipal[i % textoPrincipal.length],
-                    numero[i % numero.length]);
+                    textoPrincipal[i % textoPrincipal.length]);
             //link[i % link.length]);
             listAux.add(p);
         }
@@ -33,7 +30,6 @@ public class DataDeVigenciaBD {
     }
 
     public static String[] GetDatasAno(){
-
         return new String[]{
                 "2006" ,
                 "2008" ,

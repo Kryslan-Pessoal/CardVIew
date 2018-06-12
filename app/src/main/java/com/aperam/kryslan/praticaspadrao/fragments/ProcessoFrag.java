@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.DataDeVigenciaBD;
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreasRelacionadasBD;
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 
 import java.util.List;
 
-public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
+public class ProcessoFrag extends AreaEmitenteFrag {
     private RecyclerView mRecyclerView;
     private List<IndiceRecycleView> mList;
     @Override
@@ -40,9 +41,9 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = DataDeVigenciaBD.GetDataDeVigenciaBd(container.getContext());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        CardAdapter adapter = new CardAdapter(container.getContext(), mList, "listaSimples");
-        adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+        mList = BD.GetProcessoBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        CardAdapter adapter = new CardAdapter(getActivity(), mList, "listaSimples");
+        //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 
         return view;

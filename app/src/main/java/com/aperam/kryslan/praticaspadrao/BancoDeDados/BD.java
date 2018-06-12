@@ -348,342 +348,34 @@ public class BD {
         int[] id = GetId(306);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(306);
         String[] textoPrincipal = GetAutorBd();
-        int[] numero = GetVoidInt(306);
         List<IndiceRecycleView> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
             IndiceRecycleView p = new IndiceRecycleView(
                     id[i % id.length],
                     foto[i % foto.length],
-                    textoPrincipal[i % textoPrincipal.length],
-                    numero[i % numero.length]);
+                    textoPrincipal[i % textoPrincipal.length]);
             //link[i % link.length]);
             listAux.add(p);
         }
         return listAux;
     }
 
-    public static String[] GetProcessoBd(){
-        return new String[]{" Acabamento Superficial" +
-                "Aceiros" +
-                "Ações Corretivas e Preventivas" +
-                "Administração de Pessoal" +
-                "Adquirir Produtos e Serviços" +
-                "AF1-Carregamento" +
-                "AF1-Check-list" +
-                "AF1-Cowpers" +
-                "AF1-Lingotamento de Gusa" +
-                "AF1-Processo" +
-                "AF1-Risco Operacional" +
-                "AF1-Soprador" +
-                "AF1-Transporte Carro Torpedo" +
-                "AF1-Tratamento de Gás" +
-                "AF1-Vazamento" +
-                "AF2-Carregamento" +
-                "AF2-Check-list" +
-                "AF2-Cowpers" +
-                "AF2-Processo" +
-                "AF2-Refrigeração" +
-                "AF2-Refrigeração_Inativo" +
-                "AF2-Risco Operacional" +
-                "AF2-Soprador" +
-                "AF2-Tratamento de Gás" +
-                "AF2-Vazamento" +
-                "Altos-Fornos" +
-                "Ambiência" +
-                "Análise da Capacidade de Produção" +
-                "Análise Físico e Química" +
-                "Análise Físico e Química de Meio Ambiente" +
-                "Análise Química Instrumental" +
-                "Análise Química por Via Úmida" +
-                "Aquisição" +
-                "Aquisição/Lançamento Cabos Alta Tensão" +
-                "Arquivo Central" +
-                "Aspectos Ambientais" +
-                "Atendimento a Legislação" +
-                "Auditorias Normativas" +
-                "Automação" +
-                "Avaliação do Desempenho" +
-                "Baldeio" +
-                "Biblioteca" +
-                "Cadeia de Custódia" +
-                "Capacidade Técnica dos Equipamentos" +
-                "Carbonização" +
-                "Carregamento" +
-                "Carregamento de Forno" +
-                "Casa da Sombra" +
-                "Casa de Vegetação" +
-                "Cercas" +
-                "CL1-Revestimento Carlite e Aplainamento Térmico" +
-                "Combate a Pragas e Doenças" +
-                "Comunicação Empresarial" +
-                "Comunicação Empresarial" +
-                "Condução de Brotação" +
-                "Confirmação Metrológica" +
-                "Conservação da Biodiversidade" +
-                "Conservação do Solo" +
-                "Consignação para Intervenção em Equipamentos" +
-                "Controle de Dispositivos de Medição" +
-                "Controle de Entrada de Madeira" +
-                "Controle de Insumos Críticos" +
-                "Controle de Não Conformidades" +
-                "Controle de Processo" +
-                "Controle de Produto Não Conforme" +
-                "Controle, Qualidade e Biorredutor" +
-                "Correções e Melhorias GST" +
-                "Corte a Guilhotina" +
-                "Corte a Plasma" +
-                "Corte Longitudinal" +
-                "Corte Longitudinal e Embalagem" +
-                "Corte Transversal" +
-                "Crescimento Seleção Rustificação" +
-                "Cubagem Rigorosa" +
-                "DC1-Descarbonetação de GO/GNO" +
-                "Decapagem Química" +
-                "Depósito de Bobinas e Chapas - DBQ" +
-                "Derrubada" +
-                "Descarga" +
-                "Descarga de Forno" +
-                "Desenvolvimento de Projetos" +
-                "Devolução de Produtos" +
-                "Distribuição de Fluidos" +
-                "Distribuição de GAF" +
-                "EBs-Esmerilhamento de Bobinas" +
-                "EB1-Esmerilhamento de Bobinas" +
-                "EB2-Esmerilhamento de Bobinas" +
-                "Embalagem de Produto" +
-                "EM2-Embalagem de Bobinas - GO/GNO" +
-                "Esmerilhamento de Placas" +
-                "Especificação de Aços Elétricos" +
-                "Especificação de Insumos Críticos" +
-                "Especificação de Matéria-Prima" +
-                "Especificação de produtos" +
-                "Especificação de Produtos Inoxidáveis" +
-                "Estocagem de Carvão" +
-                "Estradas" +
-                "Expedição" +
-                "Expedição de Carvão" +
-                "Expedição de Produto" +
-                "Fertilização (Nutrição)" +
-                "Fundação Aperam Acesita" +
-                "Geração de Vapor" +
-                "Gerenciamento da Rotina" +
-                "Gerenciamento de Projetos" +
-                "Gerenciamento de Resíduos" +
-                "Gerenciamento de Risco Operacional" +
-                "Gerenciamento do Fluxo de Sucata" +
-                "Gerir Matérias-Primas e Produtos Industriais" +
-                "Gerir Processos Internos e Informações de Suprimentos" +
-                "Gerir Relacionamento com Fornecedores" +
-                "Gestão Apoio Técnico" +
-                "Gestão da Excelência Operacional" +
-                "Gestão de Bens Móveis" +
-                "Gestão de Ensaios e Testes" +
-                "Gestão de Infraestrutura de TI" +
-                "Gestão de Riscos GST" +
-                "Gestão de Segurança da Informação" +
-                "Gestão de Sistema de Informação" +
-                "Gestão de Sobras em Industrializador" +
-                "GT-Processo" +
-                "GT-Refratário" +
-                "Higiene Ocupacional" +
-                "ICP-Ação Preventiva no Processo" +
-                "ICP-Check-list" +
-                "ICP-Estocagem" +
-                "ICP-Processo" +
-                "ICP-Recebimento de Matérias Primas" +
-                "ICP-Sistema Combate Incêndio e Explosão" +
-                "ICP-Sistema de Injeção e Transporte" +
-                "ICP-Sistema de Moagem e Secagem" +
-                "Identificação e Preservação do Produto" +
-                "Identificação e Rastreabilidade" +
-                "Industrialização de Aços Elétricos" +
-                "Injeção de Carvão Pulverizado" +
-                "Inspeção de Aços Elétricos" +
-                "Inspeção de Cintagem" +
-                "Inspeção de Produtos" +
-                "Inspeção de Produtos Inoxidáveis" +
-                "Inventário Físico" +
-                "Inventário Florestal Contínuo" +
-                "Jardim Clonal" +
-                "Laboratório Corrosão e Superfície" +
-                "Laboratório de Eletrônica" +
-                "Laboratório de Estampagem" +
-                "Laboratorio de Métodos Físicos" +
-                "Laboratório de Revestimento" +
-                "Laboratório de Soldagem e Torção" +
-                "Laboratório Integrado" +
-                "Laboratórios de Ensaios Magnéticos" +
-                "Laboratórios de Ensaios Mecânicos" +
-                "Laboratórios de Ensaios Termomecânicos" +
-                "Laminação de Chapas e Bobinas" +
-                "LBs-Laminação de Bobinas" +
-                "LB1-Laminação de Bobinas" +
-                "LB2-Laminação de Bobinas" +
-                "LB3-Laminação de Bobinas" +
-                "LB4-Laminação de Bobinas" +
-                "LE1-Laminação de Encruamento" +
-                "LFI -Armazenamento, Preservação e Manuzeio" +
-                "LFI-Armazenamento, Preservação e Manuzeio" +
-                "LFI-Geral" +
-                "LFI-Insumos" +
-                "Logística" +
-                "Logística de Transporte" +
-                "Manobra Elétrica" +
-                "Manutenção" +
-                "Manutenção Corretiva" +
-                "Manutenção da Aciaria" +
-                "Manutenção da LTQ" +
-                "Manutenção de Campo" +
-                "Manutenção de Forno" +
-                "Manutenção de Infra-Estrutura" +
-                "Manutenção de 90 dias" +
-                "Manutenção Elétrica" +
-                "Manutenção em Instrumentação" +
-                "Manutenção em Sistemas de Automação" +
-                "Manutenção Mecânica" +
-                "Manutenção Preventiva" +
-                "Manutenção Refratária" +
-                "Medição e Monitoramento de Desempenho GST" +
-                "Medição e Monitoramento de Processo" +
-                "Medição e Monitoramento do Produto" +
-                "Medicina do Trabalho" +
-                "Medidas de Controle GST" +
-                "Melhoramento" +
-                "Melhorias" +
-                "Metalurgia do Carbono" +
-                "Metrologia" +
-                "Monitoramento Ambiental" +
-                "Mostruários de Acabamento Superficial" +
-                "Obra Civil" +
-                "Ocorrência de Sinistros AT" +
-                "Oficina de Manutenção de Conjuntos" +
-                "Organização e Limpeza" +
-                "Pátio-Abastecimento" +
-                "Pátio-Beneficiamento" +
-                "Pátio-Escoamento" +
-                "Pátio-Estocagem" +
-                "Pátio-Inventário" +
-                "Pátio-Movimentação de Matérias-Primas" +
-                "Pátio-Recebimento" +
-                "Pátio-Risco Operacional" +
-                "PBs-Preparação de Bobinas" +
-                "PB1-Preparação de Bobinas" +
-                "PB2-Preparação de Bobinas" +
-                "PB3-Preparação de Bobinas" +
-                "Planejamento de Recursos Humanos" +
-                "Planejamento de Vendas" +
-                "Planejamento do Negócio" +
-                "Planejamento e Programação" +
-                "Planejamento, Programação e Controle da Produção" +
-                "Plano de Contingência" +
-                "Plano de Controle" +
-                "Plantio" +
-                "Preparação de Cilindros" +
-                "Preparação e Controle de Panelas de Lingotamento" +
-                "Preparação e Manutenção Refratária de Distribuidores" +
-                "Preparação e Respostas à Emergências" +
-                "Preparo do Solo" +
-                "Preservação de Produtos" +
-                "Pré-Tratamento de Gusa Via PTG" +
-                "Processos Administrativos" +
-                "Processos Relacionados a Clientes" +
-                "Produção de Aço Via AOD-L" +
-                "Produção de Aço Via MRP-L" +
-                "Produção de FeCr Via FER" +
-                "Produção de Placas de Aço Via Lingotamento Contínuo" +
-                "Produção de Pré-Metal Via FEAs" +
-                "Programas e Projetos de Melhoria" +
-                "Projeto e Desenvolvimento" +
-                "Projetos de Pesquisa" +
-                "Provisão de Recursos" +
-                "Qualidade da Água" +
-                "RBs-Recozimento e Decapagem de Bobinas" +
-                "RB1-Recozimento e Decapagem de Bobinas" +
-                "RB2-Recozimento e Decapagem de Bobinas" +
-                "RB3-Recozimento e Decapagem de Bobinas" +
-                "RB4-Recozimento e Decapagem de Bobinas" +
-                "RCs-Recozimento de Bobinas em Caixa" +
-                "RC2-Recozimento em Caixa de GO" +
-                "RC3-Recozimento de Bobinas em Caixa" +
-                "Realização Ensaios e Testes Aços Elétricos e Carbono" +
-                "Reaquecimento de Placas" +
-                "Receber, Armazenar e Abastecer Matérias Primas e Produtos Industriais" +
-                "Receber, Armazenar e Entregar Materiais" +
-                "Recebimento de Produto" +
-                "Recrutamento e Seleção" +
-                "Recuperação de Produto" +
-                "Refino de Aço Via Forno Panela" +
-                "Refino de Aço Via VOD1" +
-                "Refino de Aço Via VOD2" +
-                "Refrigeração Água Recirculada" +
-                "Regeneração de Ácido" +
-                "Relações com as Comunidades" +
-                "Relações de Trabalho" +
-                "Relações Trabalhistas" +
-                "Requisitos de Documentação" +
-                "Requisitos de Fornecedores" +
-                "Requisitos de Materiais" +
-                "Requisitos de Serviços" +
-                "Requisitos Gerais" +
-                "Requisitos Gerais - LTQ" +
-                "Requisitos Legais" +
-                "Resfriamento de Forno" +
-                "Responsabilidade da Direção" +
-                "RP1-Reparação de Bobinas de Aços Elétricos" +
-                "RTs-Retíficas de Cilindros" +
-                "RT1-Retífica de Cilindros" +
-                "RT2-Retífica de Cilindros" +
-                "RT3-Retífica de Cilindros" +
-                "RT4-Retífica de Cilindros" +
-                "RT5-Retífica de Cilindros" +
-                "RT6-Retífica de Cilindros" +
-                "RT7-Retífica de Cilindros" +
-                "RT8-Retífica de Cilindros" +
-                "Satisfação de Clientes" +
-                "Saúde Ocupacional" +
-                "Segurança do Trabalho" +
-                "Segurança Patrimonial" +
-                "Segurança Patrimonial - Bombeiros" +
-                "Segurança Patrimonial - Fiscalização" +
-                "Segurança Patrimonial - Suporte Operacional" +
-                "Serviços Administrativos" +
-                "Silvicultura" +
-                "Sucatamento de Produto" +
-                "Suprimentos para Produção" +
-                "TD1 e TD2 - Recozimento e Descarbonetação de GNO" +
-                "TL-Corte Longitudinal" +
-                "TL2-Corte Longitudinal" +
-                "TL3-Corte Longitudinal" +
-                "TL7-Corte Longitudinal" +
-                "Traçamento" +
-                "Transporte" +
-                "Transporte Interno Ferroviário" +
-                "Tratamento de Insumos e Ligas" +
-                "Tratamento de Utilidades Não-Conformes" +
-                "Tratamento Térmico" +
-                "Tratos Culturais" +
-                "Treinamento" +
-                "Treinamento e Desenvolvimento" +
-                "TS Metalurgia Secundária" +
-                "Uso de EPIs nas Atividades de Distribuição de Energia Elétrica" +
-                "Documentos Não Categorizados  "};
-    }
+    public static List<IndiceRecycleView> GetProcessoBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetId(304);  //Futuramente criar clase para cada um em domain.
+        String[] foto = GetVoidString(304);
+        String[] textoPrincipal = GetProcesso();
+        List<IndiceRecycleView> listAux = new ArrayList<>();
 
-    public static String[] GetAnoBd(){
-        return new String[]{
-                "2006" +
-                "2008" +
-                "2009" +
-                "2010" +
-                "2011" +
-                "2012" +
-                "2013" +
-                "2014" +
-                "2015" +
-                "2016" +
-                "2017" +
-                "2018"};
+        for (int i = 0; i < id.length; i++) {
+            IndiceRecycleView p = new IndiceRecycleView(
+                    id[i % id.length],
+                    foto[i % foto.length],
+                    textoPrincipal[i % textoPrincipal.length]);
+            //link[i % link.length]);
+            listAux.add(p);
+        }
+        return listAux;
     }
 
     public static int[] GetVoidInt(int qtd){
@@ -702,5 +394,310 @@ public class BD {
         return qtd;
     }
 
-
+    public static String[] GetProcesso(){
+        return new String[]{" Acabamento Superficial",
+                "Aceiros",
+                "Ações Corretivas e Preventivas",
+                "Administração de Pessoal",
+                "Adquirir Produtos e Serviços",
+                "AF1-Carregamento",
+                "AF1-Check-list",
+                "AF1-Cowpers",
+                "AF1-Lingotamento de Gusa",
+                "AF1-Processo",
+                "AF1-Risco Operacional",
+                "AF1-Soprador",
+                "AF1-Transporte Carro Torpedo",
+                "AF1-Tratamento de Gás",
+                "AF1-Vazamento",
+                "AF2-Carregamento",
+                "AF2-Check-list",
+                "AF2-Cowpers",
+                "AF2-Processo",
+                "AF2-Refrigeração",
+                "AF2-Refrigeração_Inativo",
+                "AF2-Risco Operacional",
+                "AF2-Soprador",
+                "AF2-Tratamento de Gás",
+                "AF2-Vazamento",
+                "Altos-Fornos",
+                "Ambiência",
+                "Análise da Capacidade de Produção",
+                "Análise Físico e Química",
+                "Análise Físico e Química de Meio Ambiente",
+                "Análise Química Instrumental",
+                "Análise Química por Via Úmida",
+                "Aquisição",
+                "Aquisição/Lançamento Cabos Alta Tensão",
+                "Arquivo Central",
+                "Aspectos Ambientais",
+                "Atendimento a Legislação",
+                "Auditorias Normativas",
+                "Automação",
+                "Avaliação do Desempenho",
+                "Baldeio",
+                "Biblioteca",
+                "Cadeia de Custódia",
+                "Capacidade Técnica dos Equipamentos",
+                "Carbonização",
+                "Carregamento",
+                "Carregamento de Forno",
+                "Casa da Sombra",
+                "Casa de Vegetação",
+                "Cercas",
+                "CL1-Revestimento Carlite e Aplainamento Térmico",
+                "Combate a Pragas e Doenças",
+                "Comunicação Empresarial",
+                "Comunicação Empresarial",
+                "Condução de Brotação",
+                "Confirmação Metrológica",
+                "Conservação da Biodiversidade",
+                "Conservação do Solo",
+                "Consignação para Intervenção em Equipamentos",
+                "Controle de Dispositivos de Medição",
+                "Controle de Entrada de Madeira",
+                "Controle de Insumos Críticos",
+                "Controle de Não Conformidades",
+                "Controle de Processo",
+                "Controle de Produto Não Conforme",
+                "Controle, Qualidade e Biorredutor",
+                "Correções e Melhorias GST",
+                "Corte a Guilhotina",
+                "Corte a Plasma",
+                "Corte Longitudinal",
+                "Corte Longitudinal e Embalagem",
+                "Corte Transversal",
+                "Crescimento Seleção Rustificação",
+                "Cubagem Rigorosa",
+                "DC1-Descarbonetação de GO/GNO",
+                "Decapagem Química",
+                "Depósito de Bobinas e Chapas - DBQ",
+                "Derrubada",
+                "Descarga",
+                "Descarga de Forno",
+                "Desenvolvimento de Projetos",
+                "Devolução de Produtos",
+                "Distribuição de Fluidos",
+                "Distribuição de GAF",
+                "EBs-Esmerilhamento de Bobinas",
+                "EB1-Esmerilhamento de Bobinas",
+                "EB2-Esmerilhamento de Bobinas",
+                "Embalagem de Produto",
+                "EM2-Embalagem de Bobinas - GO/GNO",
+                "Esmerilhamento de Placas",
+                "Especificação de Aços Elétricos",
+                "Especificação de Insumos Críticos",
+                "Especificação de Matéria-Prima",
+                "Especificação de produtos",
+                "Especificação de Produtos Inoxidáveis",
+                "Estocagem de Carvão",
+                "Estradas",
+                "Expedição",
+                "Expedição de Carvão",
+                "Expedição de Produto",
+                "Fertilização (Nutrição)",
+                "Fundação Aperam Acesita",
+                "Geração de Vapor",
+                "Gerenciamento da Rotina",
+                "Gerenciamento de Projetos",
+                "Gerenciamento de Resíduos",
+                "Gerenciamento de Risco Operacional",
+                "Gerenciamento do Fluxo de Sucata",
+                "Gerir Matérias-Primas e Produtos Industriais",
+                "Gerir Processos Internos e Informações de Suprimentos",
+                "Gerir Relacionamento com Fornecedores",
+                "Gestão Apoio Técnico",
+                "Gestão da Excelência Operacional",
+                "Gestão de Bens Móveis",
+                "Gestão de Ensaios e Testes",
+                "Gestão de Infraestrutura de TI",
+                "Gestão de Riscos GST",
+                "Gestão de Segurança da Informação",
+                "Gestão de Sistema de Informação",
+                "Gestão de Sobras em Industrializador",
+                "GT-Processo",
+                "GT-Refratário",
+                "Higiene Ocupacional",
+                "ICP-Ação Preventiva no Processo",
+                "ICP-Check-list",
+                "ICP-Estocagem",
+                "ICP-Processo",
+                "ICP-Recebimento de Matérias Primas",
+                "ICP-Sistema Combate Incêndio e Explosão",
+                "ICP-Sistema de Injeção e Transporte",
+                "ICP-Sistema de Moagem e Secagem",
+                "Identificação e Preservação do Produto",
+                "Identificação e Rastreabilidade",
+                "Industrialização de Aços Elétricos",
+                "Injeção de Carvão Pulverizado",
+                "Inspeção de Aços Elétricos",
+                "Inspeção de Cintagem",
+                "Inspeção de Produtos",
+                "Inspeção de Produtos Inoxidáveis",
+                "Inventário Físico",
+                "Inventário Florestal Contínuo",
+                "Jardim Clonal",
+                "Laboratório Corrosão e Superfície",
+                "Laboratório de Eletrônica",
+                "Laboratório de Estampagem",
+                "Laboratorio de Métodos Físicos",
+                "Laboratório de Revestimento",
+                "Laboratório de Soldagem e Torção",
+                "Laboratório Integrado",
+                "Laboratórios de Ensaios Magnéticos",
+                "Laboratórios de Ensaios Mecânicos",
+                "Laboratórios de Ensaios Termomecânicos",
+                "Laminação de Chapas e Bobinas",
+                "LBs-Laminação de Bobinas",
+                "LB1-Laminação de Bobinas",
+                "LB2-Laminação de Bobinas",
+                "LB3-Laminação de Bobinas",
+                "LB4-Laminação de Bobinas",
+                "LE1-Laminação de Encruamento",
+                "LFI -Armazenamento, Preservação e Manuzeio",
+                "LFI-Armazenamento, Preservação e Manuzeio",
+                "LFI-Geral",
+                "LFI-Insumos",
+                "Logística",
+                "Logística de Transporte",
+                "Manobra Elétrica",
+                "Manutenção",
+                "Manutenção Corretiva",
+                "Manutenção da Aciaria",
+                "Manutenção da LTQ",
+                "Manutenção de Campo",
+                "Manutenção de Forno",
+                "Manutenção de Infra-Estrutura",
+                "Manutenção de 90 dias",
+                "Manutenção Elétrica",
+                "Manutenção em Instrumentação",
+                "Manutenção em Sistemas de Automação",
+                "Manutenção Mecânica",
+                "Manutenção Preventiva",
+                "Manutenção Refratária",
+                "Medição e Monitoramento de Desempenho GST",
+                "Medição e Monitoramento de Processo",
+                "Medição e Monitoramento do Produto",
+                "Medicina do Trabalho",
+                "Medidas de Controle GST",
+                "Melhoramento",
+                "Melhorias",
+                "Metalurgia do Carbono",
+                "Metrologia",
+                "Monitoramento Ambiental",
+                "Mostruários de Acabamento Superficial",
+                "Obra Civil",
+                "Ocorrência de Sinistros AT",
+                "Oficina de Manutenção de Conjuntos",
+                "Organização e Limpeza",
+                "Pátio-Abastecimento",
+                "Pátio-Beneficiamento",
+                "Pátio-Escoamento",
+                "Pátio-Estocagem",
+                "Pátio-Inventário",
+                "Pátio-Movimentação de Matérias-Primas",
+                "Pátio-Recebimento",
+                "Pátio-Risco Operacional",
+                "PBs-Preparação de Bobinas",
+                "PB1-Preparação de Bobinas",
+                "PB2-Preparação de Bobinas",
+                "PB3-Preparação de Bobinas",
+                "Planejamento de Recursos Humanos",
+                "Planejamento de Vendas",
+                "Planejamento do Negócio",
+                "Planejamento e Programação",
+                "Planejamento, Programação e Controle da Produção",
+                "Plano de Contingência",
+                "Plano de Controle",
+                "Plantio",
+                "Preparação de Cilindros",
+                "Preparação e Controle de Panelas de Lingotamento",
+                "Preparação e Manutenção Refratária de Distribuidores",
+                "Preparação e Respostas à Emergências",
+                "Preparo do Solo",
+                "Preservação de Produtos",
+                "Pré-Tratamento de Gusa Via PTG",
+                "Processos Administrativos",
+                "Processos Relacionados a Clientes",
+                "Produção de Aço Via AOD-L",
+                "Produção de Aço Via MRP-L",
+                "Produção de FeCr Via FER",
+                "Produção de Placas de Aço Via Lingotamento Contínuo",
+                "Produção de Pré-Metal Via FEAs",
+                "Programas e Projetos de Melhoria",
+                "Projeto e Desenvolvimento",
+                "Projetos de Pesquisa",
+                "Provisão de Recursos",
+                "Qualidade da Água",
+                "RBs-Recozimento e Decapagem de Bobinas",
+                "RB1-Recozimento e Decapagem de Bobinas",
+                "RB2-Recozimento e Decapagem de Bobinas",
+                "RB3-Recozimento e Decapagem de Bobinas",
+                "RB4-Recozimento e Decapagem de Bobinas",
+                "RCs-Recozimento de Bobinas em Caixa",
+                "RC2-Recozimento em Caixa de GO",
+                "RC3-Recozimento de Bobinas em Caixa",
+                "Realização Ensaios e Testes Aços Elétricos e Carbono",
+                "Reaquecimento de Placas",
+                "Receber, Armazenar e Abastecer Matérias Primas e Produtos Industriais",
+                "Receber, Armazenar e Entregar Materiais",
+                "Recebimento de Produto",
+                "Recrutamento e Seleção",
+                "Recuperação de Produto",
+                "Refino de Aço Via Forno Panela",
+                "Refino de Aço Via VOD1",
+                "Refino de Aço Via VOD2",
+                "Refrigeração Água Recirculada",
+                "Regeneração de Ácido",
+                "Relações com as Comunidades",
+                "Relações de Trabalho",
+                "Relações Trabalhistas",
+                "Requisitos de Documentação",
+                "Requisitos de Fornecedores",
+                "Requisitos de Materiais",
+                "Requisitos de Serviços",
+                "Requisitos Gerais",
+                "Requisitos Gerais - LTQ",
+                "Requisitos Legais",
+                "Resfriamento de Forno",
+                "Responsabilidade da Direção",
+                "RP1-Reparação de Bobinas de Aços Elétricos",
+                "RTs-Retíficas de Cilindros",
+                "RT1-Retífica de Cilindros",
+                "RT2-Retífica de Cilindros",
+                "RT3-Retífica de Cilindros",
+                "RT4-Retífica de Cilindros",
+                "RT5-Retífica de Cilindros",
+                "RT6-Retífica de Cilindros",
+                "RT7-Retífica de Cilindros",
+                "RT8-Retífica de Cilindros",
+                "Satisfação de Clientes",
+                "Saúde Ocupacional",
+                "Segurança do Trabalho",
+                "Segurança Patrimonial",
+                "Segurança Patrimonial - Bombeiros",
+                "Segurança Patrimonial - Fiscalização",
+                "Segurança Patrimonial - Suporte Operacional",
+                "Serviços Administrativos",
+                "Silvicultura",
+                "Sucatamento de Produto",
+                "Suprimentos para Produção",
+                "TD1 e TD2 - Recozimento e Descarbonetação de GNO",
+                "TL-Corte Longitudinal",
+                "TL2-Corte Longitudinal",
+                "TL3-Corte Longitudinal",
+                "TL7-Corte Longitudinal",
+                "Traçamento",
+                "Transporte",
+                "Transporte Interno Ferroviário",
+                "Tratamento de Insumos e Ligas",
+                "Tratamento de Utilidades Não-Conformes",
+                "Tratamento Térmico",
+                "Tratos Culturais",
+                "Treinamento",
+                "Treinamento e Desenvolvimento",
+                "TS Metalurgia Secundária",
+                "Uso de EPIs nas Atividades de Distribuição de Energia Elétrica",
+                "Documentos Não Categorizados  "};
+    }
 }

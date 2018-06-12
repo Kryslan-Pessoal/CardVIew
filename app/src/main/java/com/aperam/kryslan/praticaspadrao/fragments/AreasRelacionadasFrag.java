@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreasRelacionadasBD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
@@ -40,7 +40,7 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        mList = AreasRelacionadasBD.GetAreasRelacionadasBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         CardAdapter adapter = new CardAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

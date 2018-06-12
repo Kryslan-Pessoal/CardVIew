@@ -5,14 +5,12 @@ public class IndiceRecycleView {
     private int id;
     private String fotoUrl;
     private String textoPrincipal;
-    private int numero;
     //private String link;
 
-    public IndiceRecycleView(int id, String fotoUrl, String textoPrincipal, int numero){
+    public IndiceRecycleView(int id, String fotoUrl, String textoPrincipal){
         this.id = id;
         this.fotoUrl = fotoUrl;
         this.textoPrincipal = textoPrincipal;
-        this.numero = numero;
         //this.link = link;
     }
 
@@ -40,13 +38,6 @@ public class IndiceRecycleView {
         this.textoPrincipal = textoPrincipal;
     }
 
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
     /*public String getLink() {
         return link;
     }

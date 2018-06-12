@@ -24,6 +24,7 @@ import com.aperam.kryslan.praticaspadrao.fragments.AreaEmitenteFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AreasRelacionadasFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AutorFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.DataDeVigenciaFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.ProcessoFrag;
 import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -191,9 +192,14 @@ public class MainActivity extends AppCompatActivity {
                             ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                             ft.commit();
                         }
-                        /*else if(i == 1){ //Áreas relacionadas
+                        else if(i == 2){ //Áreas relacionadas
                             frag = new AreasRelacionadasFrag();
-                        }*/
+                            frag.setArguments(args);
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                            ft.commit();
+                        }
                         else if(i == 3){ //Autor
                             frag = new AutorFrag();
                             frag.setArguments(args);
@@ -212,10 +218,15 @@ public class MainActivity extends AppCompatActivity {
                         }/*
                         else if(i == 4){ //Nível
                             frag = new PopularCarFragment();
-                        }
-                        else if(i == 5){ //Processo
-                            frag = new PopularCarFragment();
-                        }
+                        }*/
+                        else if(i == 6){ //Processo
+                            frag = new ProcessoFrag();
+                            frag.setArguments(args);
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                            ft.commit();
+                        }/*
                         else if(i == 6){ //Restrito
                             frag = new PopularCarFragment();
                         }*/
@@ -311,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
         return(list);
     }
 
-    public List<PraticasCards> getSetPraticasList(int qtd){  //Informações que ficará nos Cards.
+    /*public List<PraticasCards> getSetPraticasList(int qtd){  //Informações que ficará nos Cards.
         String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};
         String[] numeroSetor = new String[]{"27", "27"};
         String[] areaEmitente = new String[]{"Logística Integrada", "Logística Integrada"};
@@ -335,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
             listAux.add(p);
         }
         return(listAux);
-    }
+    }*/
 
     /*@Override
     protected void onSaveInstanceState(Bundle outState) {

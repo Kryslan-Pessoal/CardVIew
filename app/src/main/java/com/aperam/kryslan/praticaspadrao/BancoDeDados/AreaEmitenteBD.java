@@ -15,24 +15,17 @@ public class AreaEmitenteBD {
         int[] id = GetId(27);
         String[] foto = GetFotosAreasEminetes();
         String[] areaEmitente = GetAreasEminetes();
-        int[] numero = GetVoidInt(27);
         List<IndiceRecycleView> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
             IndiceRecycleView p = new IndiceRecycleView(
                     id[i % id.length],
                     foto[i % foto.length],
-                    areaEmitente[i % areaEmitente.length],
-                    numero[i % numero.length]);
+                    areaEmitente[i % areaEmitente.length]);
             //link[i % link.length]);
             listAux.add(p);
         }
         return listAux;
-    }
-
-    public static int[] GetFotos(Context c) {
-
-        return null;
     }
 
     public static int[] GetId(int qtdId) {
@@ -74,6 +67,36 @@ public class AreaEmitenteBD {
     }
 
     public static String[] GetFotosAreasEminetes() {
+        return new String[]{"https://drive.google.com/uc?id=1Vmq2Fip0oOMOgke-3dAgI5di35xRMJ9D",
+                "https://drive.google.com/uc?id=1e5iRGqobvaQLQwvJXsyHlKivBzTKGxDE",
+                "https://drive.google.com/uc?id=1ECkekr_tseRV9hqN8ZheXkf6KdEKmZ4R",
+                "https://drive.google.com/uc?id=1JpzW9FHqZ8hxncIjV5UQCjuiMo0It8DO",
+                "https://drive.google.com/uc?id=1ajHrjGgzBWSZeasmAoz3x2DMpQUdYB3v",
+                "https://drive.google.com/uc?id=1FMC1XqTsDl2ZE8EB5B3LXfro7q9jivFp",
+                "https://drive.google.com/uc?id=1Lg-PoI0ZWl_VmqvrpvqrhbO1mfBgJIj4",
+                "https://drive.google.com/uc?id=1iBpFi9pDiqDP7J3AM2vsPdmvjewB9FAc",
+                "https://drive.google.com/uc?id=19JVF6z5DJQQLeFcsJIQn9xZ8B4hfWtCq",
+                "https://drive.google.com/uc?id=12GEPI8CG3QzOIlxDaCqEWT4t4PQbAAQg",
+                "https://drive.google.com/uc?id=1uNKB0mgig4hzLDDius_9bvvZXW2Z_IUV",
+                "https://drive.google.com/uc?id=1EmF52GPiJeQrB9RtZfY_xKvp6Kk4nJ4o",
+                "https://drive.google.com/uc?id=1YELai99TmDzf-pmWaj0He5e2EmMktY2j",
+                "https://drive.google.com/uc?id=15_D4krC5qoaL5gZXTpzXBahY43LXo-F4",
+                "https://drive.google.com/uc?id=1oF7rt_xPXElOdFyt5I6kpMzUNP8o4bGK",
+                "https://drive.google.com/uc?id=185TkmfFvLEaRizSvg51fWgVLUL2knkUa",
+                "https://drive.google.com/uc?id=1EixpLT90SRtHqO1Ya4a8szZa1Cjrev_E",
+                "https://drive.google.com/uc?id=1xlXnPfiyLLUMHoTvqSzMhUOmstqIMRve",
+                "https://drive.google.com/uc?id=1tueQb91_k5Q3bHEkalwACZfpqkIVIF95",
+                "https://drive.google.com/uc?id=1s9ruZfsjfFxgtHKSuWx6qvP_F-GM8lJe",
+                "https://drive.google.com/uc?id=1I64kjuZQP0tvOQFpS-Ek0nv_vso4N8EC",
+                "https://drive.google.com/uc?id=11E1UetF4nPm2e9Cea9SYv-pF4TOm8u7j",
+                "https://drive.google.com/uc?id=1hCSyOjBk5m-i1UlReYpvVjNq7c5t2Oep",
+                "https://drive.google.com/uc?id=13J6ovGF9JM5-a5HsyVHQyjez9wEU8XrK",
+                "https://drive.google.com/uc?id=1Sa9WtkOL5TNhx8w15-hBcOwuYYLnt44T",
+                "https://drive.google.com/uc?id=1kS4OxjShvwPqpNAOgs1InQBEcLydGCd4",
+                "https://drive.google.com/uc?id=1DvL5GJJxPhriljK4C9dEdDkp3HE8lb-C"};
+    }
+
+    /*public static String[] GetFotosAreasEminetes() {
         return new String[]{"https://drive.google.com/uc?id=1xuXBhEJJI-4MCUYmOE1f1uOZiE1ySYRj",
                 "https://drive.google.com/uc?id=1ZIwGuULsVgTamORTuTFV8TsuG-ilO5aY",
                 "https://drive.google.com/uc?id=1xhLAHkKpaBcIr0XU5kfi7F0_STfvnIku",
@@ -101,6 +124,6 @@ public class AreaEmitenteBD {
                 "https://drive.google.com/uc?id=1AtQMgJtS5grwNSmAoi9i7DxaCsLn_FgI",
                 "https://drive.google.com/uc?id=1en4GHyi0PekuS24mX9Y1B2ndkrDVZXs7",
                 "https://drive.google.com/uc?id=1ug4G1d3v4i1LBTmJA4nFAxSFsqjKE4X9"};
-    }
+    }*/
 
 }

@@ -142,7 +142,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
             DisplayMetrics realmetrics = new DisplayMetrics();
             Float valor = displayMetrics.xdpi;
 
-            int numeroIdPratica = mList.get(positionList).getNumero();  //Se for exibição do tipo Área emitente, não terá o número, então a altura do carde será ligeiramente menor.
             Double valorFinalAux;
             //if(numeroIdPratica == 0) {
 //            valorFinalAux = valor * 0.3;

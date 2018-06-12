@@ -47,7 +47,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
                 //int l = llm.findLastCompletelyVisibleItemPosition();
 
                 if(mList.size() == l + 1){  //MODIFICAR PRA MAIS DEPOIS.
-                    List<IndiceRecycleView> listaAux = GetAreaEmitenteBd(recyclerView.getContext());  //Define a quantidade que será criado a cada rolagem
+                    List<IndiceRecycleView> listaAux = GetAreasRelacionadasBd(recyclerView.getContext());  //Define a quantidade que será criado a cada rolagem
                     for (int i = 0; i < listaAux.size(); i++) {
                         adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em CardAdapter no método AddListItem.
                     }

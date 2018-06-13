@@ -17,13 +17,11 @@ import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 import java.util.List;
 
 public class ProcessoFrag extends AreaEmitenteFrag {
-    private RecyclerView mRecyclerView;
-    private List<IndiceRecycleView> mList;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
 
-        mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
+        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -41,7 +39,7 @@ public class ProcessoFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = BD.GetProcessoBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        List<IndiceRecycleView> mList = BD.GetProcessoBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         CardAdapter adapter = new CardAdapter(getActivity(), mList, "listaSimples");
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

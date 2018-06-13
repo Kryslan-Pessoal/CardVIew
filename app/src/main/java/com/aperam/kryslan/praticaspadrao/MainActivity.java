@@ -24,6 +24,7 @@ import com.aperam.kryslan.praticaspadrao.fragments.AreaEmitenteFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AreasRelacionadasFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AutorFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.DataDeVigenciaFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.NivelFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.ProcessoFrag;
 import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -215,10 +216,15 @@ public class MainActivity extends AppCompatActivity {
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                             ft.commit();
-                        }/*
-                        else if(i == 4){ //Nível
-                            frag = new PopularCarFragment();
-                        }*/
+                        }
+                        else if(i == 5){ //Nível
+                            frag = new NivelFrag();
+                            frag.setArguments(args);
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                            ft.commit();
+                        }
                         else if(i == 6){ //Processo
                             frag = new ProcessoFrag();
                             frag.setArguments(args);
@@ -231,16 +237,15 @@ public class MainActivity extends AppCompatActivity {
                             frag = new PopularCarFragment();
                         }*/
 
-                        new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
-                                new Runnable(){
-                                    @Override
-                                    public void run() {
-                                        tabLayout.getTabAt(i-1).select();
-                                    }
-                                }, 100);
-
-
-
+                        if(i<7) {
+                            new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            tabLayout.getTabAt(i - 1).select();
+                                        }
+                                    }, 100);
+                        }
 
                         //Vai mudar o título baseado na aba.
                         StringHolder tituloNoDrawer = ((PrimaryDrawerItem)drawerItem).getName();  //Pega o nome do item selecionado no Drawer.

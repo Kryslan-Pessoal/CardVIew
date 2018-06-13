@@ -8,19 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.DataDeVigenciaBD;
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 
 import java.util.List;
 
-public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
+public class NivelFrag extends AreaEmitenteFrag {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
+        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -38,8 +38,8 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        List<IndiceRecycleView> mList = DataDeVigenciaBD.GetDataDeVigenciaBd(container.getContext());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        CardAdapter adapter = new CardAdapter(container.getContext(), mList, "listaSimples");
+        List<IndiceRecycleView> mList = BD.GetNivelBd(container.getContext());
+        CardAdapter adapter = new CardAdapter(container.getContext(), mList, "card");
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 

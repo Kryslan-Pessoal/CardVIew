@@ -378,6 +378,23 @@ public class BD {
         return listAux;
     }
 
+    public static List<IndiceRecycleView> GetNivelBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetId(3);  //Futuramente criar clase para cada um em domain.
+        String[] foto = GetFotoNivel();
+        String[] textoPrincipal = GetNivel();
+        List<IndiceRecycleView> listAux = new ArrayList<>();
+
+        for (int i = 0; i < id.length; i++) {
+            IndiceRecycleView p = new IndiceRecycleView(
+                    id[i % id.length],
+                    foto[i % foto.length],
+                    textoPrincipal[i % textoPrincipal.length]);
+            //link[i % link.length]);
+            listAux.add(p);
+        }
+        return listAux;
+    }
+
     public static int[] GetVoidInt(int qtd){
         int[] qtdVoid = new int[qtd];
         for (int i = 0; i < qtd; i++) {
@@ -699,5 +716,15 @@ public class BD {
                 "TS Metalurgia Secundária",
                 "Uso de EPIs nas Atividades de Distribuição de Energia Elétrica",
                 "Documentos Não Categorizados  "};
+    }
+
+    public static String[] GetNivel(){
+        return new String[]{"Corporativo", "Operacional", "Técnico"};
+    }
+
+    private static String[] GetFotoNivel(){
+        return new String []{"https://drive.google.com/uc?id=1KXOnNwnZHhsLLEhDSbHT7qRrcw1BrkqD",
+            "https://drive.google.com/uc?id=1Y3_kD2-WeHdb0iubxB4XkxZhacTQ7x0S",
+            "https://drive.google.com/uc?id=1subUEz1ecv08QUNAMzAxmg13ba2SFcM3"};
     }
 }

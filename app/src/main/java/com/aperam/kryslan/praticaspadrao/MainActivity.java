@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -110,29 +111,22 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         //TABs
-        ViewPager viewPager = findViewById(R.id.pager);
+        final ViewPager viewPager = findViewById(R.id.pager);
         final TabLayout tabLayout = findViewById(R.id.tab);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextoMain)));
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextoMain)));  //Criando as Tabs com seus nomes.
 
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.setHorizontalFadingEdgeEnabled(true);  //Aplica efeito de aparição e desaparição suave no rolamento do tabLayout na parte da esquerda.
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                drawer.setSelection(tab.getPosition());
-            }
-
+            public void onTabSelected(TabLayout.Tab tab) {}
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 /*
         String[] nomesTabs = GetTabsBd(contextoMain);
@@ -294,13 +288,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
                         if(i<9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
-                            new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
+                            viewPager.setCurrentItem(i);
+                            /*new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
                                     new Runnable() {
                                         @Override
                                         public void run() {
                                             tabLayout.getTabAt(i - 1).select();
                                         }
-                                    }, 1);
+                                    }, 1);*/
                         }
 /*
                         //                        mViewPager.setCurrentItem( i );

@@ -111,9 +111,78 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.addTab(tabLayout.newTab (). setText(tabName));
         }
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment frag = null;
+                //mItemDrawerSelected = i;
+                int position = tab.getPosition()+1;
 
-        final ViewPager viewPager = findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter() {
+                if(position == 1){ //Área Emitente
+                    frag = new AreaEmitenteFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                else if(position == 2){ //Áreas relacionadas
+                    frag = new AreasRelacionadasFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                else if(position == 3){ //Autor
+                    frag = new AutorFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                else if(position == 4){ //Data de vigência
+                    frag = new DataDeVigenciaFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                else if(position == 5){ //Nível
+                    frag = new NivelFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                else if(position == 6){ //Processo
+                    frag = new ProcessoFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                final int p = position;
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+//        final ViewPager viewPager = findViewById(R.id.pager);
+        /*final PagerAdapter adapter = new PagerAdapter() {
             @Override
             public int getCount() {
                 return 0;
@@ -142,8 +211,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
-        this.tabLayout = tabLayout;
+        });*/
 
         //HEADER
         headerDrawer = new AccountHeaderBuilder()

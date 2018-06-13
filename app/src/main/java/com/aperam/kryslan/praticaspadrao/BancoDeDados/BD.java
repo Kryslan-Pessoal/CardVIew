@@ -2,6 +2,7 @@ package com.aperam.kryslan.praticaspadrao.BancoDeDados;
 
 import android.content.Context;
 
+import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.GetId;
 
-public class BD {
+public class BD extends MainActivity{
     //Menus (sumários)
     public static String[] GetTabsBd(Context c){
         return new String[]{
@@ -24,7 +25,7 @@ public class BD {
                 c.getResources().getString(R.string.favoritos)};
     }
 
-    public static String[] GetAutorBd(){
+    public static String[] GetAutorList(){
         return new String[]{"ABNER LUCIO F DUTRA",
                 "Adão Cordeiro de Azevedo",
                 "ADILSON A GONCALVES",
@@ -344,10 +345,10 @@ public class BD {
                 "WILSON PEREIRA"};
     }
 
-    public static List<IndiceRecycleView> GetAutorListBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+    public static List<IndiceRecycleView> GetAutorBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetId(306);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(306);
-        String[] textoPrincipal = GetAutorBd();
+        String[] textoPrincipal = GetAutorList();
         List<IndiceRecycleView> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {

@@ -19,13 +19,17 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
+import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.fragments.AreaEmitenteFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AreasRelacionadasFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AutorFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.DataDeVigenciaFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.FavoritosFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.NivelFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.ProcessoFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.RestritoFrag;
 import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private List<PrimaryDrawerItem> listCategorias;
     private List<PraticasCards> listPraticas;
     private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     private Drawer drawer;
 
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
-            AreaEmitenteFrag frag = new AreaEmitenteFrag();
+            /*AreaEmitenteFrag frag = new AreaEmitenteFrag();
             Bundle args = new Bundle();
             if (isChecked) {
                 args.putBoolean("formatoLista", true);
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             frag.setArguments(args);
             FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
             pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
-            pt.commit();
+            pt.commit();*/
         }
     };
 
@@ -93,19 +98,43 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         //FRAGMENT
-        final Bundle args = new Bundle();
+        //final Bundle args = new Bundle();
 
-        AreaEmitenteFrag frag = (AreaEmitenteFrag) getSupportFragmentManager().findFragmentByTag("mainFrag");
+        /*AreaEmitenteFrag frag = (AreaEmitenteFrag) getSupportFragmentManager().findFragmentByTag("mainFrag");
         if(frag == null){  //Se o fragment não existir, cria e infla ele na tela inicial.
             frag = new AreaEmitenteFrag();
             frag.setArguments(args);
             FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
             pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
             pt.commit();
-        }
+        }*/
 
         //TABs
+        ViewPager viewPager = findViewById(R.id.pager);
         final TabLayout tabLayout = findViewById(R.id.tab);
+
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextoMain)));
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                drawer.setSelection(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+/*
         String[] nomesTabs = GetTabsBd(contextoMain);
         for (String tabName:nomesTabs) {
             tabLayout.addTab(tabLayout.newTab (). setText(tabName));
@@ -114,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Fragment frag = null;
+                *//*Fragment frag = null;
                 //mItemDrawerSelected = i;
                 int position = tab.getPosition()+1;
 
@@ -166,7 +195,23 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                     ft.commit();
                 }
-                final int p = position;
+                else if(position == 7){ //Processo
+                    frag = new RestritoFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                else if(position == 8){ //Processo
+                    frag = new FavoritosFrag();
+                    frag.setArguments(args);
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                    ft.commit();
+                }
+                final int p = position;*//*
 
             }
 
@@ -179,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
+        });*/
 
 //        final ViewPager viewPager = findViewById(R.id.pager);
         /*final PagerAdapter adapter = new PagerAdapter() {
@@ -248,7 +293,17 @@ public class MainActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
-//                        mViewPager.setCurrentItem( i );
+                        if(i<9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
+                            new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            tabLayout.getTabAt(i - 1).select();
+                                        }
+                                    }, 1);
+                        }
+/*
+                        //                        mViewPager.setCurrentItem( i );
                         Fragment frag = null;
                         //mItemDrawerSelected = i;
 
@@ -300,25 +355,17 @@ public class MainActivity extends AppCompatActivity {
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                             ft.commit();
-                        }/*
+                        }*//*
                         else if(i == 6){ //Restrito
                             frag = new PopularCarFragment();
-                        }*/
+                        }*//*
 
-                        if(i<7) {
-                            new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
-                                    new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            tabLayout.getTabAt(i - 1).select();
-                                        }
-                                    }, 100);
-                        }
+
 
                         //Vai mudar o título baseado na aba.
                         StringHolder tituloNoDrawer = ((PrimaryDrawerItem)drawerItem).getName();  //Pega o nome do item selecionado no Drawer.
                         String titulo = tituloNoDrawer.getText(contextoMain);
-                        mToolbar.setTitle(titulo);
+                        mToolbar.setTitle(titulo);*/
                         return false;  //Faz o drawer fechar ou não. (false fecha)
                     }
                 })

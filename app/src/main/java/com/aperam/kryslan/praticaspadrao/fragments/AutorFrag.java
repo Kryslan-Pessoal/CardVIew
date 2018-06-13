@@ -38,7 +38,7 @@ public class AutorFrag extends AreasRelacionadasFrag{
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        List<IndiceRecycleView> mList = BD.GetNivelBd(container.getContext());
+        List<IndiceRecycleView> mList = BD.GetAutorBd(container.getContext());
         CardAdapter adapter = new CardAdapter(container.getContext(), mList, "listaSimples");
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

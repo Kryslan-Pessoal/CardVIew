@@ -20,7 +20,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp">
+            app:expandedTitleMarginEnd="64dp"
+            app:theme="@style/ToolbarStyle" >
 
             <ImageView
                 android:id="@+id/iv_car"
@@ -68,56 +69,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_model"
-                android:paddingTop="20dp"
-                android:textSize="18sp"
-                android:textColor="@color/PrimaryText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_below="@+id/tv_model"
-                android:id="@+id/tv_brand"
-                android:textSize="18sp"
-                android:textColor="@color/SecondText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_below="@+id/tv_brand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ll_tv_description"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_description"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/PrimaryText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"/>
-            </LinearLayout>
-
-            <Button
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/ll_tv_description"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/bt_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:background="@android:color/transparent"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:text="Telefone"
-                android:textColor="#1d80f0"
-                android:textSize="16sp" />
-
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -128,7 +79,7 @@
         android:layout_width="wrap_content"
         android:clickable="true"
         android:src="@drawable/search"
-        app:backgroundTint="@color/primary"
+        app:backgroundTint="@color/accent"
         app:fabSize="mini"
         app:borderWidth="0dp"
         android:layout_marginBottom="@dimen/fab_margin_bottom"

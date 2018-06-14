@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,10 +13,13 @@ import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 
 import java.util.List;
 
-public class AutorFrag extends AreasRelacionadasFrag{
+public class AutorFrag extends AreaEmitenteFrag{
+    List<IndiceRecycleView> mList;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
@@ -38,11 +42,20 @@ public class AutorFrag extends AreasRelacionadasFrag{
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        List<IndiceRecycleView> mList = BD.GetAutorBd(container.getContext());
+        mList = BD.GetAutorBd(container.getContext());
         CardAdapter adapter = new CardAdapter(container.getContext(), mList, "listaSimples");
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
+        Intent intent = new Intent(getActivity(), PraticasActivity.class);
+        IndiceRecycleView indiceRecycleView = mList.get(position);
+        intent.putExtra("praticascards", indiceRecycleView);
+
+        getActivity().startActivity(intent);
     }
 }

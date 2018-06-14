@@ -3,6 +3,8 @@ package com.aperam.kryslan.praticaspadrao.interfaces;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
@@ -38,6 +40,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.squareup.picasso.Picasso;
+
+import static android.graphics.Color.WHITE;
 
 public class PraticasActivity extends AppCompatActivity {
     private Toolbar mToolbar;
@@ -117,8 +121,9 @@ public class PraticasActivity extends AppCompatActivity {
         }*/
 
         mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
-        String a = indiceRecycleView.getTextoPrincipal();
-        mCollapsingToolbarLayout.setTitle(a);
+        mCollapsingToolbarLayout.setTitle(indiceRecycleView.getTextoPrincipal());
+        mCollapsingToolbarLayout.setExpandedTitleTextColor(ColorStateList.valueOf(WHITE));
+        mCollapsingToolbarLayout.setCollapsedTitleTextColor(ColorStateList.valueOf(WHITE));
 
         mToolbar = findViewById(R.id.tb_main);
         mToolbar.setTitle(indiceRecycleView.getTextoPrincipal());
@@ -128,48 +133,8 @@ public class PraticasActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(false);
 
-        mRoot = findViewById(R.id.ll_tv_description);
-        tvDescription = findViewById(R.id.tv_description);
         ImageView ivCar = findViewById(R.id.iv_car);
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
-        TextView tvModel = findViewById(R.id.tv_model);
-        TextView tvBrand = findViewById(R.id.tv_brand);
-        Button btPhone = findViewById(R.id.bt_phone);
-
-        btPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*mMaterialDialog = new MaterialDialog(new ContextThemeWrapper(PraticasActivity.this, R.style.MyAlertDialog))
-                        .setTitle("Telefone Empresa")
-                        .setMessage(praticasCards.getTel())
-                        .setPositiveButton("Ligar", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-//                                Intent it = new Intent(Intent.ACTION_CALL);
-//                                it.setData(Uri.parse("tel:" + praticasCards.getTel().trim()));
-//                                startActivity(it);
-                            }
-                        })
-                        .setNegativeButton("Voltar", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mMaterialDialog.dismiss();
-                            }
-                        });
-                mMaterialDialog.show();*/
-            }
-        });
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize( size );
-        int w;
-        try{
-            w = size.x;
-        }
-        catch( Exception e ){
-            w = display.getWidth();
-        }
 
 
         Picasso.get().load(indiceRecycleView.getFotoUrl())  //Pega a imagem da internet e coloca no ImageView.
@@ -189,10 +154,6 @@ public class PraticasActivity extends AppCompatActivity {
 
 
         //ivCar.setImageResource(praticasCards.getPhoto());
-        tvModel.setText(indiceRecycleView.getTextoPrincipal());
-        tvBrand.setText(indiceRecycleView.getTextoPrincipal());
-        tvDescription.setText(indiceRecycleView.getTextoPrincipal());
-        tvDescription.setVisibility(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || savedInstanceState != null ? View.VISIBLE : View.INVISIBLE);
 
         /*drawer = new DrawerBuilder()
                 .withActivity(this)
@@ -260,7 +221,7 @@ public class PraticasActivity extends AppCompatActivity {
     }
 
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
             TransitionManager.beginDelayedTransition(mRoot, new Slide());
@@ -268,5 +229,5 @@ public class PraticasActivity extends AppCompatActivity {
         }
 
         super.onBackPressed();
-    }
+    }*/
 }

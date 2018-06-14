@@ -39,4 +39,5 @@ public class FavoritosFrag extends AreaEmitenteFrag{
 
         return view;
     }
+
 }

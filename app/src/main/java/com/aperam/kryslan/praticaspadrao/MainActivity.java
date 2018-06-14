@@ -1,14 +1,8 @@
 package com.aperam.kryslan.praticaspadrao;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,15 +17,7 @@ import android.widget.Toast;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
-import com.aperam.kryslan.praticaspadrao.fragments.AreaEmitenteFrag;
-import com.aperam.kryslan.praticaspadrao.fragments.AreasRelacionadasFrag;
-import com.aperam.kryslan.praticaspadrao.fragments.AutorFrag;
-import com.aperam.kryslan.praticaspadrao.fragments.DataDeVigenciaFrag;
-import com.aperam.kryslan.praticaspadrao.fragments.FavoritosFrag;
-import com.aperam.kryslan.praticaspadrao.fragments.NivelFrag;
-import com.aperam.kryslan.praticaspadrao.fragments.ProcessoFrag;
-import com.aperam.kryslan.praticaspadrao.fragments.RestritoFrag;
-import com.aperam.kryslan.praticaspadrao.interfaces.SecondActivity;
+import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -43,7 +29,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikepenz.materialize.holder.StringHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -288,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
                         if(i<9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
-                            viewPager.setCurrentItem(i);
+                            viewPager.setCurrentItem(i-1);
                             /*new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
                                     new Runnable() {
                                         @Override
@@ -396,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.setting:
-                startActivity(new Intent(this, SecondActivity.class));  //Manda para a segundo activity.
+                startActivity(new Intent(this, PraticasActivity.class));  //Manda para a segundo activity.
             default:
                 return super.onOptionsItemSelected(item);  //Caso venha algum id desconhecido (só para não dar erro).
         }

@@ -1,9 +1,9 @@
 package com.aperam.kryslan.praticaspadrao.domain;
 
 public class PraticasCards {
-    private String titulo;
-    private String numeroSetor;
+    private String numero;
     private String areaEmitente;
+    private String titulo;
     private String autor;
     private String processo;
     private String urlImagem;
@@ -11,10 +11,10 @@ public class PraticasCards {
     private int numeroId;
 
 
-    public PraticasCards(String titulo, String numeroSetor, String areaEmitente, String autor, String processo, String urlImagem, String urlDocumento, int numeroId){
-        this.titulo = titulo;
-        this.numeroSetor = numeroSetor;
+    public PraticasCards(String numero, String areaEmitente, String titulo, String autor, String processo, String urlImagem, String urlDocumento, int numeroId){
+        this.numero = numero;
         this.areaEmitente = areaEmitente;
+        this.titulo = titulo;
         this.autor = autor;
         this.processo = processo;
         this.urlImagem = urlImagem;
@@ -22,18 +22,11 @@ public class PraticasCards {
         this.numeroId = numeroId;
     }
 
-    public String getTitulo(){
-        return titulo;
+    public String getNumero(){
+        return numero;
     }
-    public void setTitulo(String titulo){  //Toda vez que eu der 'setTitulo' no código, ele irá pegar a String passada e salvar.
-        this.titulo = titulo;
-    }
-
-    public String getNumeroSetor(){
-        return numeroSetor;
-    }
-    public void setNumeroSetor(String numeroSetor){
-        this.numeroSetor = numeroSetor;
+    public void setNumero(String numero){
+        this.numero = numero;
     }
 
     public String getAreaEmitente() {
@@ -41,6 +34,13 @@ public class PraticasCards {
     }
     public void setAreaEmitente(String areaEmitente) {
         this.areaEmitente = areaEmitente;
+    }
+
+    public String getTitulo(){
+        return titulo;
+    }
+    public void setTitulo(String titulo){  //Toda vez que eu der 'setTitulo' no código, ele irá pegar a String passada e salvar.
+        this.titulo = titulo;
     }
 
     public String getAutor() {
@@ -87,7 +87,7 @@ public class PraticasCards {
     //PARCELABLE
     public PraticasCards(Parcel parcel){  //Só está escrevendo os objetos.
         setTitulo(parcel.readString());
-        setNumeroSetor(parcel.readString());
+        setNumero(parcel.readString());
         setAreaEmitente(parcel.readString());
         setAutor(parcel.readString());
         setProcesso(parcel.readString());
@@ -99,7 +99,7 @@ public class PraticasCards {
     @Override
     public void writeToParcel(Parcel dest, int flags) {  //Só está guardando os objetos.
         dest.writeString(getTitulo());
-        dest.writeString(getNumeroSetor());
+        dest.writeString(getNumero());
         dest.writeString(getAreaEmitente());
         dest.writeString(getAutor());
         dest.writeString(getProcesso());

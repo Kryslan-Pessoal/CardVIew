@@ -56,4 +56,7 @@ dependencies {
 
     //Expandable RecyclerView
     implementation 'com.zaihuishou:expandablerecycleradapter:1.0.3'
+
+    //Fresco (baixa imagens da internet direto pro app)
+    implementation 'com.facebook.fresco:fresco:1.9.0'
 }

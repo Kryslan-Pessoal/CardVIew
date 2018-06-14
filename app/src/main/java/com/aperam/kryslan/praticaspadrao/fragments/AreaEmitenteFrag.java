@@ -1,9 +1,14 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -17,6 +22,7 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 
 import java.util.List;
@@ -24,6 +30,7 @@ import java.util.List;
 public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack {
     private RecyclerView mRecyclerView;
     private List<IndiceRecycleView> mList;
+    private IndiceRecycleView indiceRecycleView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
@@ -73,7 +80,32 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
-        Toast.makeText(getActivity(), "onClickListener(): " +position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), PraticasActivity.class);
+        indiceRecycleView = mList.get(position);
+        intent.putExtra("praticascards", indiceRecycleView);
+
+
+        getActivity().startActivity(intent);
+        // TRANSITIONS
+        /*if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+
+            View ivCar = view.findViewById(R.id.iv_car);
+            View tvModel = view.findViewById(R.id.tv_model);
+            View tvBrand = view.findViewById(R.id.tv_brand);
+
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                    Pair.create( ivCar, "element1" ),
+                    Pair.create( tvModel, "element2" ),
+                    Pair.create( tvBrand, "element3" ));
+
+            getActivity().startActivity( intent, options.toBundle() );
+        }
+        else{
+            getActivity().startActivity(intent);
+        }*/
+
+
+//        Toast.makeText(getActivity(), "onClickListener(): " +position, Toast.LENGTH_SHORT).show();
 
 //        CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.

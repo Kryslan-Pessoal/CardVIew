@@ -77,7 +77,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder>{
             if (tipoLista.equals("card")) {
                 imagemIlustrativa = itemView.findViewById(R.id.imagem_ilustrativa);
                 cardView = itemView.findViewById(R.id.card_view_adapter);
-                numeroNoCard = itemView.findViewById(R.id.numeroSetor);
+                numeroNoCard = itemView.findViewById(R.id.numero);
                 nomeNoCard = itemView.findViewById(R.id.tituloCard);
             }else if(tipoLista.equals("listaSimples")){
                 nomeNoCard = itemView.findViewById(R.id.tituloListaSimples);

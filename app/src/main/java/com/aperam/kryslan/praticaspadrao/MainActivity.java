@@ -82,133 +82,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-/*
-        String[] nomesTabs = GetTabsBd(contextoMain);
-        for (String tabName:nomesTabs) {
-            tabLayout.addTab(tabLayout.newTab (). setText(tabName));
-        }
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                *//*Fragment frag = null;
-                //mItemDrawerSelected = i;
-                int position = tab.getPosition()+1;
-
-                if(position == 1){ //Área Emitente
-                    frag = new AreaEmitenteFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                else if(position == 2){ //Áreas relacionadas
-                    frag = new AreasRelacionadasFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                else if(position == 3){ //Autor
-                    frag = new AutorFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                else if(position == 4){ //Data de vigência
-                    frag = new DataDeVigenciaFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                else if(position == 5){ //Nível
-                    frag = new NivelFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                else if(position == 6){ //Processo
-                    frag = new ProcessoFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                else if(position == 7){ //Processo
-                    frag = new RestritoFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                else if(position == 8){ //Processo
-                    frag = new FavoritosFrag();
-                    frag.setArguments(args);
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                    ft.commit();
-                }
-                final int p = position;*//*
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });*/
-
-//        final ViewPager viewPager = findViewById(R.id.pager);
-        /*final PagerAdapter adapter = new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 0;
-            }
-
-            @Override
-            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                return false;
-            }
-        };
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                drawer.setSelection( tab.getPosition() - 1 , true);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });*/
 
         //HEADER
         AccountHeader headerDrawer = new AccountHeaderBuilder()
-                .withActivity(this)
+                .withActivity(this)  //Contexto da activity onde o drawer será criado.
                 .withCompactStyle(false)
                 .withSavedInstance(savedInstanceState)
                 .withThreeSmallProfileImages(false)
@@ -224,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onProfileChanged(View view, IProfile profile, boolean current) {
                         //Toast.makeText(MainActivity.this, "mudança de profile" + profile, Toast.LENGTH_SHORT).show();
                         //caso eu mude de conta.
-                        return false;
+                        return false;  //false: fecha o drawe. Verdadeiro: não fecha.
                     }
                 })
                 .build();
@@ -242,98 +119,27 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
                         if (i < 9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
-                            viewPager.setCurrentItem(i - 1);
-                            /*new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
-                                    new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            tabLayout.getTabAt(i - 1).select();
-                                        }
-                                    }, 1);*/
+                            viewPager.setCurrentItem(i - 1);  //muda a posição da Tab e página selecionada sempre que mudar a posição no Drawer.
                         }
-/*
-                        //                        mViewPager.setCurrentItem( i );
-                        Fragment frag = null;
-                        //mItemDrawerSelected = i;
-
-
-                        if(i == 1){ //Área Emitente
-                            frag = new AreaEmitenteFrag();
-                            frag.setArguments(args);
-
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                            ft.commit();
-                        }
-                        else if(i == 2){ //Áreas relacionadas
-                            frag = new AreasRelacionadasFrag();
-                            frag.setArguments(args);
-
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                            ft.commit();
-                        }
-                        else if(i == 3){ //Autor
-                            frag = new AutorFrag();
-                            frag.setArguments(args);
-
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                            ft.commit();
-                        }
-                        else if(i == 4){ //Data de vigência
-                            frag = new DataDeVigenciaFrag();
-                            frag.setArguments(args);
-
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                            ft.commit();
-                        }
-                        else if(i == 5){ //Nível
-                            frag = new NivelFrag();
-                            frag.setArguments(args);
-
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                            ft.commit();
-                        }
-                        else if(i == 6){ //Processo
-                            frag = new ProcessoFrag();
-                            frag.setArguments(args);
-
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
-                            ft.commit();
-                        }*//*
-                        else if(i == 6){ //Restrito
-                            frag = new PopularCarFragment();
-                        }*//*
-
-
-
-                        //Vai mudar o título baseado na aba.
-                        StringHolder tituloNoDrawer = ((PrimaryDrawerItem)drawerItem).getName();  //Pega o nome do item selecionado no Drawer.
-                        String titulo = tituloNoDrawer.getText(contextoMain);
-                        mToolbar.setTitle(titulo);*/
                         return false;  //Faz o drawer fechar ou não. (false fecha)
                     }
                 })
                 .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
-                        Toast.makeText(MainActivity.this, "Clique longo" + position, Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Clique longo" + position, Toast.LENGTH_SHORT).show();
                         return false;
                     }
                 })
                 .withAccountHeader(headerDrawer)
                 .build();
 
-        List<PrimaryDrawerItem> listCategorias = getSetCategoryList();
+        List<PrimaryDrawerItem> listCategorias = getSetCategoryList();  //Cria a lista de categorias que fica no Drawer.
         if(listCategorias != null && listCategorias.size() > 0){
             for(int i = 0; i < listCategorias.size(); i++ ){
-                drawer.addItem(listCategorias.get(i));
+                drawer.addItem(listCategorias.get(i));  //Adiciona cada item no Drawer.
             }
-            drawer.setSelection(mItemDrawerSelected);
+//            drawer.setSelection(mItemDrawerSelected);
         }
         drawer.addItem(new DividerDrawerItem());
         drawer.addItem(new PrimaryDrawerItem().withName(R.string.configuracoes).withIcon(R.drawable.settings));
@@ -348,12 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.setting:
-                startActivity(new Intent(this, PraticasActivity.class));  //Manda para a segundo activity.
-            default:
-                return super.onOptionsItemSelected(item);  //Caso venha algum id desconhecido (só para não dar erro).
-        }
+        return super.onOptionsItemSelected(item);  //Quando clicar nos itens do menu.
     }
 
     // CATEGORIAS
@@ -368,14 +169,14 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.processo,
                 R.drawable.restrito,
                 R.drawable.estrela_cheia};
-//        int[] iconsSelected = new int[]{
-//                R.drawable.area_eminente_selected,
-//                R.drawable.areas_relacionadas_selected,
-//                R.drawable.autor_selected,
-//                R.drawable.data_de_vigencia_selected,
-//                R.drawable.nivel_selected,
-//                R.drawable.processo_selected,
-//                R.drawable.restrito_selected};
+        int[] iconsSelected = new int[]{
+                R.drawable.area_eminente_selected,
+                R.drawable.areas_relacionadas_selected,
+                R.drawable.autor_selected,
+                R.drawable.data_de_vigencia_selected,
+                R.drawable.nivel_selected,
+                R.drawable.processo_selected,
+                R.drawable.restrito_selected};
         List<PrimaryDrawerItem> list = new ArrayList<>();
 
         for(int i = 0; i < nomes.length; i++){
@@ -383,40 +184,13 @@ public class MainActivity extends AppCompatActivity {
             aux.withName( nomes[i] );
             aux.withIcon(getResources().getDrawable(icons[i]));
             aux.withTextColor(getResources().getColor(R.color.PrimaryText));
-//            aux.withSelectedIcon(getResources().getDrawable(iconsSelected[i]));
+            aux.withSelectedIcon(getResources().getDrawable(iconsSelected[i]));
             aux.withSelectedTextColor(getResources().getColor(R.color.colorPrimary));
 
             list.add( aux );
         }
         return(list);
     }
-
-
-    /*public List<PraticasCards> getSetPraticasList(int qtd){  //Informações que ficará nos Cards.
-        String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};
-        String[] numeroSetor = new String[]{"27", "27"};
-        String[] areaEmitente = new String[]{"Logística Integrada", "Logística Integrada"};
-        String[] autor = new String[]{"CRISTINA BORGES P. M. ALTO", "CRISTINA BORGES P. M. ALTO"};
-        String[] processo = new String[]{"Logística de Transporte", "Logística de Transporte"};
-        String[] urlImagem = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
-        String[] urlDocumento = new String[]{"https://drive.google.com/open?id=1IK_eTLIkkuC30U7lUwbUFHEUjLYThT7_7D4_NCWLhZE", "https://drive.google.com/open?id=1x2XoDPLHRAyH9vej5gCen53YFUL_BncmPGLQ6bp5igY"};
-        int[] numeroId = new int[]{270008, 270007};
-        List<PraticasCards> listAux = new ArrayList<>();
-
-        for(int i=0; i<qtd; i++){
-            PraticasCards p = new PraticasCards(
-                    nome[i % nome.length],
-                    numeroSetor[i % nome.length],
-                    areaEmitente[i % nome.length],
-                    autor[i % nome.length],
-                    processo[i % nome.length],
-                    urlImagem[i % nome.length],
-                    urlDocumento[i % nome.length],
-                    numeroId[i % nome.length]);
-            listAux.add(p);
-        }
-        return(listAux);
-    }*/
 
     /*@Override
     protected void onSaveInstanceState(Bundle outState) {

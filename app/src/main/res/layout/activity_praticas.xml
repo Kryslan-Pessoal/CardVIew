@@ -31,17 +31,6 @@
                 android:transitionName="element1"
                 app:layout_collapseMode="parallax"/>
 
-            <!--com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/iv_car"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                fresco:actualImageScaleType="centerCrop"
-                fresco:placeholderImage="@drawable/loading_img"
-                fresco:failureImage="@drawable/error_img"
-                fresco:retryImage="@drawable/retry_img"
-                android:transitionName="element1"
-                app:layout_collapseMode="parallax"/-->
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tb_main"
                 android:elevation="0dp"

@@ -1,7 +1,6 @@
 package com.aperam.kryslan.praticaspadrao;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
-import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -26,7 +24,6 @@ import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
@@ -176,7 +173,8 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.data_de_vigencia_selected,
                 R.drawable.nivel_selected,
                 R.drawable.processo_selected,
-                R.drawable.restrito_selected};
+                R.drawable.restrito_selected,
+                R.drawable.estrela_cheia};
         List<PrimaryDrawerItem> list = new ArrayList<>();
 
         for(int i = 0; i < nomes.length; i++){

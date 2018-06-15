@@ -20,7 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.Drawer;
 import com.squareup.picasso.Picasso;
 
 import static android.graphics.Color.WHITE;

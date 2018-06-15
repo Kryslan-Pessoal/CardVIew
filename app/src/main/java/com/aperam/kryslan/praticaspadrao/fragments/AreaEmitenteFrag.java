@@ -2,14 +2,9 @@ package com.aperam.kryslan.praticaspadrao.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -19,9 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.CardOuListaSimplesAdapter;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
@@ -51,14 +45,14 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
                 super.onScrolled(recyclerView, dx, dy);
 
                 /*LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();  //Implementar caso queira que a lista continue gerando se chegar no final dela (no caso repetindo os valores).
+                CardOuListaSimplesAdapter adapter = (CardOuListaSimplesAdapter) mRecyclerView.getAdapter();  //Implementar caso queira que a lista continue gerando se chegar no final dela (no caso repetindo os valores).
 
                 //int l = llm.findLastCompletelyVisibleItemPosition();
 
                 if(mList.size() == l + 1){  //MODIFICAR PRA MAIS DEPOIS.
                     List<IndiceRecycleView> listaAux = GetAreasRelacionadasBd(recyclerView.getContext());  //Define a quantidade que será criado a cada rolagem
                     for (int i = 0; i < listaAux.size(); i++) {
-                        adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em CardAdapter no método AddListItem.
+                        adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em CardOuListaSimplesAdapter no método AddListItem.
                     }
                 }*/
             }
@@ -73,7 +67,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 //        boolean formatoLista = getArguments().getBoolean("formatoLista");
 
         mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        CardAdapter adapter = new CardAdapter(getActivity(), mList);
+        CardOuListaSimplesAdapter adapter = new CardOuListaSimplesAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 
@@ -110,7 +104,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
 //        Toast.makeText(getActivity(), "onClickListener(): " +position, Toast.LENGTH_SHORT).show();
 
-//        CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
+//        CardOuListaSimplesAdapter adapter = (CardOuListaSimplesAdapter) mRecyclerView.getAdapter();
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
     }
 
@@ -118,7 +112,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
     public void onLongPressClickListener(View view, int position) {  //Aqui define o que acontece ao clicar e segurar em cada card.
         Toast.makeText(getActivity(), "onLongPressClickListener: " +position, Toast.LENGTH_SHORT).show();
 
-//        CardAdapter adapter = (CardAdapter) mRecyclerView.getAdapter();
+//        CardOuListaSimplesAdapter adapter = (CardOuListaSimplesAdapter) mRecyclerView.getAdapter();
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
     }
 

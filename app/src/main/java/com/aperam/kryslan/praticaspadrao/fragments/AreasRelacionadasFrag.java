@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreasRelacionadasBD;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.CardOuListaSimplesAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 
@@ -42,7 +42,7 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
         mRecyclerView.setLayoutManager(lm);
 
         mList = AreasRelacionadasBD.GetAreasRelacionadasBd(getActivity());
-        CardAdapter adapter = new CardAdapter(getActivity(), mList);
+        CardOuListaSimplesAdapter adapter = new CardOuListaSimplesAdapter(getActivity(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 

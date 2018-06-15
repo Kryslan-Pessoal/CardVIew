@@ -8,10 +8,11 @@ public class PraticasCards {
     private String processo;
     private String urlImagem;
     private String urlDocumento;
+    private String data;
     private int numeroId;
 
 
-    public PraticasCards(String numero, String areaEmitente, String titulo, String autor, String processo, String urlImagem, String urlDocumento, int numeroId){
+    public PraticasCards(String numero, String areaEmitente, String titulo, String autor, String processo, String urlImagem, String urlDocumento, String data, int numeroId){
         this.numero = numero;
         this.areaEmitente = areaEmitente;
         this.titulo = titulo;
@@ -19,6 +20,7 @@ public class PraticasCards {
         this.processo = processo;
         this.urlImagem = urlImagem;
         this.urlDocumento = urlDocumento;
+        this.data = data;
         this.numeroId = numeroId;
     }
 
@@ -70,6 +72,15 @@ public class PraticasCards {
     public void setUrlDocumento(String urlDocumento) {
         this.urlDocumento = urlDocumento;
     }
+
+
+    public String getData() {
+        return data;
+    }
+    public void setData(String data) {
+        this.data = data;
+    }
+
 
     public int getNumeroId(){
         return numeroId;

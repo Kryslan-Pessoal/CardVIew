@@ -9,10 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreasRelacionadasBD;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.CardOuListaSimplesAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 
@@ -43,7 +42,7 @@ public class ProcessoFrag extends AreaEmitenteFrag {
         mRecyclerView.setLayoutManager(lm);
 
         mList = BD.GetProcessoBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        CardAdapter adapter = new CardAdapter(getActivity(), mList, "listaSimples");
+        CardOuListaSimplesAdapter adapter = new CardOuListaSimplesAdapter(getActivity(), mList, "listaSimples");
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 

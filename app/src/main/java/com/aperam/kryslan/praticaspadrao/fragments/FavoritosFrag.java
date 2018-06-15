@@ -32,7 +32,7 @@ public class FavoritosFrag extends AreaEmitenteFrag{
         mRecyclerView.setLayoutManager(lm);
 
         List<IndiceRecycleView> mList = AreasRelacionadasBD.GetAreasRelacionadasBd(getActivity());
-        CardAdapter adapter = new CardAdapter(getActivity(), mList);
+        CardOuListaSimplesAdapter adapter = new CardOuListaSimplesAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);*/
 

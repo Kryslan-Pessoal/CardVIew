@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.DataDeVigenciaBD;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.CardOuListaSimplesAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 
@@ -42,7 +42,7 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         mRecyclerView.setLayoutManager(lm);
 
         mList = DataDeVigenciaBD.GetDataDeVigenciaBd(container.getContext());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        CardAdapter adapter = new CardAdapter(container.getContext(), mList, "listaSimples");
+        CardOuListaSimplesAdapter adapter = new CardOuListaSimplesAdapter(container.getContext(), mList, "listaSimples");
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 

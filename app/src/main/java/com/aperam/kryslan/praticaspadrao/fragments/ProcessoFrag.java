@@ -55,6 +55,6 @@ public class ProcessoFrag extends AreaEmitenteFrag {
         IndiceRecycleView indiceRecycleView = mList.get(position);
         intent.putExtra("praticascards", indiceRecycleView);
 
-        getActivity().startActivity(intent);
+        getActivity().startActivityForResult(intent, 1);
     }
 }

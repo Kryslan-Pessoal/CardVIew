@@ -1,31 +1,17 @@
 package com.aperam.kryslan.praticaspadrao.interfaces;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
-import android.transition.TransitionManager;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +19,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.squareup.picasso.Picasso;
 
@@ -42,12 +29,13 @@ public class PraticasActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private IndiceRecycleView indiceRecycleView;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private Drawer drawer;
+
     private MaterialDialog mMaterialDialog;
     private TextView tvDescription;
     private ViewGroup mRoot;
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TRANSITIONS
@@ -97,12 +85,10 @@ public class PraticasActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_praticas);
-
         indiceRecycleView = getIntent().getExtras().getParcelable("praticascards");
 
-        /*Fresco.initialize(this);
-        setContentView(R.layout.activity_praticas);
 
+        /*
         if(savedInstanceState != null){
             praticasCards = savedInstanceState.getParcelable("praticascards");
         }
@@ -125,8 +111,10 @@ public class PraticasActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(false);
+        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);*/
+
+
 
         ImageView ivCar = findViewById(R.id.iv_car);
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
@@ -137,34 +125,17 @@ public class PraticasActivity extends AppCompatActivity {
                 .centerCrop()
                 .into(ivCar);
 
-        //Uri uri = Uri.parse( "https://lh6.googleusercontent.com/-WRJcLJZJspo/VVtjFVRucBI/AAAAAAADT-w/NnPHX5__C_s/w426-h295/descendo_com_Estilo.gif" );
-//        Uri uri = Uri.parse( DataUrl.getUrlCustom( praticasCards.getUrlPhoto(), w) );
-        /*DraweeController dc = Fresco.newDraweeControllerBuilder()
-                .setUri( uri )
-                .setAutoPlayAnimations(true)
-                .setOldController( ivCar.getController() )
-                .build();*/
-
 //        ivCar.setController( dc );
 
+        //HEADER
+        DrawerCreator drawerClass = new DrawerCreator();
+        AccountHeader headerDrawer = drawerClass.DraweHeaderBuilder(this, savedInstanceState);
 
-        //ivCar.setImageResource(praticasCards.getPhoto());
+        //NAVIGATIONDRAWER
+        ViewPager viewPager = null;
+        drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, viewPager, this, headerDrawer);
 
-        /*drawer = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(mToolbar)
-                .withActionBarDrawerToggle(false)
-                .withCloseOnClick(true)
-                .withActionBarDrawerToggleAnimated(false)
-                .withActionBarDrawerToggle(new ActionBarDrawerToggle(this, new DrawerLayout(this), R.string.drawer_open, R.string.drawer_close){
-                    @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {
-                        super.onDrawerSlide(drawerView, slideOffset);
-                        navigationDrawerLeft.closeDrawer();
-                        finish();
-                    }
-                })
-                .build();*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
 
         // FAB
         FloatingActionButton fab = findViewById(R.id.fab);

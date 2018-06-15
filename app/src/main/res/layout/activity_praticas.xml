@@ -53,12 +53,11 @@
         android:paddingBottom="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list_praticas"
+            android:scrollbars="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </RelativeLayout>
+            android:layout_height="match_parent"/>
     </android.support.v4.widget.NestedScrollView>
 
 

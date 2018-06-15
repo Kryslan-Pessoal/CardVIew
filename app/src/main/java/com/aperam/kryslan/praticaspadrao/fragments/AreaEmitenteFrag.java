@@ -9,6 +9,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardAdapter;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
@@ -85,7 +87,8 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         intent.putExtra("praticascards", indiceRecycleView);
 
 
-        getActivity().startActivity(intent);
+        getActivity().startActivityForResult(intent, 1);
+//        startActivity(intent);
         // TRANSITIONS
         /*if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
 

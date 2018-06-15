@@ -37,35 +37,17 @@ import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetTabsBd;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
-    private AccountHeader headerDrawer;
-    private int mItemDrawerSelected;
-    private int mProfileDrawerSelected;
     private Context contextoMain = this;
 
-    private List<PrimaryDrawerItem> listCategorias;
     private List<PraticasCards> listPraticas;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private int mItemDrawerSelected;
+    private int mProfileDrawerSelected;
 
-    private Drawer drawer;
-
-    private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){
-
+    private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){  //Listener do "Lista resumida" no drawer.
         @Override
-        public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
-            /*AreaEmitenteFrag frag = new AreaEmitenteFrag();
-            Bundle args = new Bundle();
-            if (isChecked) {
-                args.putBoolean("formatoLista", true);
-            }else{
-                args.putBoolean("formatoLista", false);
-            }
-            frag.setArguments(args);
-            FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
-            pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
-            pt.commit();*/
-        }
+        public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {}
     };
 
     @Override
@@ -80,27 +62,14 @@ public class MainActivity extends AppCompatActivity {
             listPraticas = getSetPraticasList(50);
         }*/
 
-        mToolbar = findViewById(R.id.my_toolbar);  //Cria a toolbar.
-        setSupportActionBar(mToolbar);
-
-        //FRAGMENT
-        //final Bundle args = new Bundle();
-
-        /*AreaEmitenteFrag frag = (AreaEmitenteFrag) getSupportFragmentManager().findFragmentByTag("mainFrag");
-        if(frag == null){  //Se o fragment não existir, cria e infla ele na tela inicial.
-            frag = new AreaEmitenteFrag();
-            frag.setArguments(args);
-            FragmentTransaction pt = getSupportFragmentManager().beginTransaction();
-            pt.replace(R.id.rl_fragment_container, frag, "mainFrag");
-            pt.commit();
-        }*/
+        Toolbar mToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(mToolbar);  //Cria a Toolbar.
 
         //TABs
         final ViewPager viewPager = findViewById(R.id.pager);
         final TabLayout tabLayout = findViewById(R.id.tab);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextoMain)));  //Criando as Tabs com seus nomes.
-
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextoMain)));  //Criando as Tabs com seus nomes baseado no BD.
         tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -238,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         //HEADER
-        headerDrawer = new AccountHeaderBuilder()
+        AccountHeader headerDrawer = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(false)
                 .withSavedInstance(savedInstanceState)
@@ -261,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         //NAVIGATIONDRAWER
-        drawer = new DrawerBuilder()
+        Drawer drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolbar)
                 .withDisplayBelowStatusBar(true)
@@ -272,8 +241,8 @@ public class MainActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
-                        if(i<9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
-                            viewPager.setCurrentItem(i-1);
+                        if (i < 9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
+                            viewPager.setCurrentItem(i - 1);
                             /*new Handler().postDelayed(  //muda a posição das Tabs sempre que mudar a posição no Drawer.
                                     new Runnable() {
                                         @Override
@@ -359,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerDrawer)
                 .build();
 
-        listCategorias = getSetCategoryList(); //Aqui é onde desenha os dados no drawer.
+        List<PrimaryDrawerItem> listCategorias = getSetCategoryList();
         if(listCategorias != null && listCategorias.size() > 0){
             for(int i = 0; i < listCategorias.size(); i++ ){
                 drawer.addItem(listCategorias.get(i));
@@ -368,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
         }
         drawer.addItem(new DividerDrawerItem());
         drawer.addItem(new PrimaryDrawerItem().withName(R.string.configuracoes).withIcon(R.drawable.settings));
-        drawer.addItem(new SwitchDrawerItem().withName("Lista resumida").withChecked(false).withOnCheckedChangeListener(mOnCheckedChangeListener));
+        //drawer.addItem(new SwitchDrawerItem().withName("Lista resumida").withChecked(false).withOnCheckedChangeListener(mOnCheckedChangeListener));
     }
 
     @Override
@@ -421,6 +390,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return(list);
     }
+
 
     /*public List<PraticasCards> getSetPraticasList(int qtd){  //Informações que ficará nos Cards.
         String[] nome = new String[]{"Inspecionar veículo", "Inspecionar fumaça preta"};

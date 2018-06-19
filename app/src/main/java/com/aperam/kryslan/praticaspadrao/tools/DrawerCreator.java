@@ -96,14 +96,6 @@ public class DrawerCreator {
                     .withSelectedItem(1)
                     .withActionBarDrawerToggle(false)  //Esta condição só possúi aqui, ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
                     //Esta também, faz o botão voltar no AppBar realmente voltar.
-                    .withOnDrawerListener(new Drawer.OnDrawerListener() {
-                        @Override
-                        public void onDrawerOpened(View drawerView) {
-                            a.finish();  //Solução provisória para voltar para activity anterior ao clicar na seta superior esquerda no appBar.
-                        }
-                        @Override public void onDrawerClosed(View drawerView) {}
-                        @Override public void onDrawerSlide(View drawerView, float slideOffset) {}
-                    })
                     .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                         @Override
                         public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {

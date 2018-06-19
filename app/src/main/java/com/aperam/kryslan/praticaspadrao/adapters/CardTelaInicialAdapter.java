@@ -50,8 +50,8 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
         if (tipoLista.equals("card")) {
             v = mLayoutInflater.inflate(R.layout.item_tela_inicial_card, viewGroup, false);
         } else if (tipoLista.equals("listaSimples")) {
-            v = mLayoutInflater.inflate(R.layout.item_lista_praticas, viewGroup, false);
-        }else if(tipoLista.equals("listaExpansivel")){
+            v = mLayoutInflater.inflate(R.layout.item_tela_inicial_lista, viewGroup, false);
+//        }else if(tipoLista.equals("listaExpansivel")){
 
         }else{
             Toast.makeText(c, "Bug: tipo de lista não identificado(CardTelaInicialAdapter>MyViewHolder). ", Toast.LENGTH_LONG).show();

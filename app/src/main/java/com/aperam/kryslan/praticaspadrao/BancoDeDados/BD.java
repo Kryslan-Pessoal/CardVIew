@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -345,14 +345,14 @@ public class BD extends MainActivity{
                 "WILSON PEREIRA"};
     }
 
-    public static List<IndiceRecycleView> GetAutorBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+    public static List<TelaInicialCards> GetAutorBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetId(306);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(306);
         String[] textoPrincipal = GetAutorList();
-        List<IndiceRecycleView> listAux = new ArrayList<>();
+        List<TelaInicialCards> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
-            IndiceRecycleView p = new IndiceRecycleView(
+            TelaInicialCards p = new TelaInicialCards(
                     id[i % id.length],
                     foto[i % foto.length],
                     textoPrincipal[i % textoPrincipal.length]);
@@ -362,14 +362,14 @@ public class BD extends MainActivity{
         return listAux;
     }
 
-    public static List<IndiceRecycleView> GetProcessoBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+    public static List<TelaInicialCards> GetProcessoBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetId(304);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(304);
         String[] textoPrincipal = GetProcesso();
-        List<IndiceRecycleView> listAux = new ArrayList<>();
+        List<TelaInicialCards> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
-            IndiceRecycleView p = new IndiceRecycleView(
+            TelaInicialCards p = new TelaInicialCards(
                     id[i % id.length],
                     foto[i % foto.length],
                     textoPrincipal[i % textoPrincipal.length]);
@@ -379,14 +379,14 @@ public class BD extends MainActivity{
         return listAux;
     }
 
-    public static List<IndiceRecycleView> GetNivelBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+    public static List<TelaInicialCards> GetNivelBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetId(3);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetFotoNivel();
         String[] textoPrincipal = GetNivel();
-        List<IndiceRecycleView> listAux = new ArrayList<>();
+        List<TelaInicialCards> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
-            IndiceRecycleView p = new IndiceRecycleView(
+            TelaInicialCards p = new TelaInicialCards(
                     id[i % id.length],
                     foto[i % foto.length],
                     textoPrincipal[i % textoPrincipal.length]);

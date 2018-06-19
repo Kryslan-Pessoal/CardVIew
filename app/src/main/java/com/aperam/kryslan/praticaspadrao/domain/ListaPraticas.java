@@ -1,24 +1,23 @@
 package com.aperam.kryslan.praticaspadrao.domain;
 
-public class PraticasCards {
+public class ListaPraticas {
     private String numero;
-    private String areaEmitente;
+//    private String areaEmitente;
     private String titulo;
     private String autor;
-    private String processo;
-    private String urlImagem;
+//    private String processo;
+//    private String urlImagem;
     private String urlDocumento;
     private String data;
     private int numeroId;
 
-
-    public PraticasCards(String numero, String areaEmitente, String titulo, String autor, String processo, String urlImagem, String urlDocumento, String data, int numeroId){
+    public ListaPraticas(String numero, String titulo, String autor,  String urlDocumento, String data, int numeroId){
         this.numero = numero;
-        this.areaEmitente = areaEmitente;
+//        this.areaEmitente = areaEmitente;
         this.titulo = titulo;
         this.autor = autor;
-        this.processo = processo;
-        this.urlImagem = urlImagem;
+//        this.processo = processo;
+//        this.urlImagem = urlImagem;
         this.urlDocumento = urlDocumento;
         this.data = data;
         this.numeroId = numeroId;
@@ -31,12 +30,12 @@ public class PraticasCards {
         this.numero = numero;
     }
 
-    public String getAreaEmitente() {
+    /*public String getAreaEmitente() {
         return areaEmitente;
     }
     public void setAreaEmitente(String areaEmitente) {
         this.areaEmitente = areaEmitente;
-    }
+    }*/
 
     public String getTitulo(){
         return titulo;
@@ -52,19 +51,19 @@ public class PraticasCards {
         this.autor = autor;
     }
 
-    public String getProcesso() {
+    /*public String getProcesso() {
         return processo;
     }
     public void setProcesso(String processo) {
         this.processo = processo;
-    }
+    }*/
 
-    public String getUrlImagem(){
+    /*public String getUrlImagem(){
         return urlImagem;
     }
     public void setUrlImagem(String urlImagem){
         this.urlImagem = urlImagem;
-    }
+    }*/
 
     public String getUrlDocumento() {
         return urlDocumento;
@@ -96,7 +95,7 @@ public class PraticasCards {
     }
 
     //PARCELABLE
-    public PraticasCards(Parcel parcel){  //Só está escrevendo os objetos.
+    public ListaPraticas(Parcel parcel){  //Só está escrevendo os objetos.
         setTitulo(parcel.readString());
         setNumero(parcel.readString());
         setAreaEmitente(parcel.readString());
@@ -118,15 +117,15 @@ public class PraticasCards {
         dest.writeString(getUrlDocumento());
         dest.writeInt(getNumeroId());
     }
-    public static final Parcelable.Creator<PraticasCards> CREATOR = new Parcelable.Creator<PraticasCards>(){
+    public static final Parcelable.Creator<ListaPraticas> CREATOR = new Parcelable.Creator<ListaPraticas>(){
         @Override
-        public PraticasCards createFromParcel(Parcel source) {  //Chamar esta entidade para pegar os dados.
-            return new PraticasCards(source);
+        public ListaPraticas createFromParcel(Parcel source) {  //Chamar esta entidade para pegar os dados.
+            return new ListaPraticas(source);
         }
 
         @Override
-        public PraticasCards[] newArray(int size) {
-            return new PraticasCards[size];
+        public ListaPraticas[] newArray(int size) {
+            return new ListaPraticas[size];
         }
     };*/
 }

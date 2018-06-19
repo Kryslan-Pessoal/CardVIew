@@ -2,7 +2,7 @@ package com.aperam.kryslan.praticaspadrao.BancoDeDados;
 
 import android.content.Context;
 
-import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +12,14 @@ import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidString;
 
 public class DataDeVigenciaBD {
 
-    public static List<IndiceRecycleView> GetDataDeVigenciaBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+    public static List<TelaInicialCards> GetDataDeVigenciaBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetId(12);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(12);
         String[] textoPrincipal = GetDatasAno();
-        List<IndiceRecycleView> listAux = new ArrayList<>();
+        List<TelaInicialCards> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
-            IndiceRecycleView p = new IndiceRecycleView(
+            TelaInicialCards p = new TelaInicialCards(
                     id[i % id.length],
                     foto[i % foto.length],
                     textoPrincipal[i % textoPrincipal.length]);

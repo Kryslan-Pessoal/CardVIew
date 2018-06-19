@@ -11,14 +11,14 @@ import android.view.ViewGroup;
 
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.CardOuListaSimplesAdapter;
-import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 
 import java.util.List;
 
 public class NivelFrag extends AreaEmitenteFrag {
-    List<IndiceRecycleView> mList;
+    List<TelaInicialCards> mList;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
@@ -42,7 +42,7 @@ public class NivelFrag extends AreaEmitenteFrag {
         mRecyclerView.setLayoutManager(lm);
 
         mList = BD.GetNivelBd(container.getContext());
-        CardOuListaSimplesAdapter adapter = new CardOuListaSimplesAdapter(container.getContext(), mList, "card");
+        CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(container.getContext(), mList, "card");
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 
@@ -51,8 +51,8 @@ public class NivelFrag extends AreaEmitenteFrag {
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
-        IndiceRecycleView indiceRecycleView = mList.get(position);
-        intent.putExtra("praticascards", indiceRecycleView);
+        TelaInicialCards telaInicialCards = mList.get(position);
+        intent.putExtra("praticascards", telaInicialCards);
 
         getActivity().startActivityForResult(intent, 1);
     }

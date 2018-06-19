@@ -3,15 +3,15 @@ package com.aperam.kryslan.praticaspadrao.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class IndiceRecycleView implements Parcelable{
+public class TelaInicialCards implements Parcelable{
 
     private int id;
     private String fotoUrl;
     private String textoPrincipal;
     //private String link;
 
-    public IndiceRecycleView(){}
-    public IndiceRecycleView(int id, String fotoUrl, String textoPrincipal){
+    public TelaInicialCards(){}
+    public TelaInicialCards(int id, String fotoUrl, String textoPrincipal){
         this.id = id;
         this.fotoUrl = fotoUrl;
         this.textoPrincipal = textoPrincipal;
@@ -55,20 +55,20 @@ public class IndiceRecycleView implements Parcelable{
         dest.writeString( getTextoPrincipal() );
     }
 
-    public IndiceRecycleView(Parcel parcel){
+    public TelaInicialCards(Parcel parcel){
         setId(parcel.readInt());
         setFotoUrl(parcel.readString());
         setTextoPrincipal(parcel.readString());
     }
 
-    public static final Parcelable.Creator<IndiceRecycleView> CREATOR = new Parcelable.Creator<IndiceRecycleView>(){
+    public static final Parcelable.Creator<TelaInicialCards> CREATOR = new Parcelable.Creator<TelaInicialCards>(){
         @Override
-        public IndiceRecycleView createFromParcel(Parcel source) {  //Pega os dados de volta.
-            return new IndiceRecycleView(source);
+        public TelaInicialCards createFromParcel(Parcel source) {  //Pega os dados de volta.
+            return new TelaInicialCards(source);
         }
         @Override
-        public IndiceRecycleView[] newArray(int size) {
-            return new IndiceRecycleView[size];
+        public TelaInicialCards[] newArray(int size) {
+            return new TelaInicialCards[size];
         }
     };
 

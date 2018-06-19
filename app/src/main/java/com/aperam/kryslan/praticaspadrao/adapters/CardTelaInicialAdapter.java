@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -22,19 +22,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CardOuListaSimplesAdapter extends RecyclerView.Adapter<CardOuListaSimplesAdapter.MyViewHolder>{
-    private List<IndiceRecycleView> mList;
+public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicialAdapter.MyViewHolder>{
+    private List<TelaInicialCards> mList;
     private LayoutInflater mLayoutInflater;
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
     private Context c;
     private String tipoLista;
 
-    public CardOuListaSimplesAdapter(Context c, List<IndiceRecycleView> lista){
+    public CardTelaInicialAdapter(Context c, List<TelaInicialCards> lista){
         this(c, lista, "card");  //Quando a última chamada for vazia (tipoLista), o tipoLista será card
     }
 
-    public CardOuListaSimplesAdapter(Context c, List<IndiceRecycleView> lista, String tipoLista){
+    public CardTelaInicialAdapter(Context c, List<TelaInicialCards> lista, String tipoLista){
         this.c = c;
         mList = lista;
         mLayoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,13 +48,13 @@ public class CardOuListaSimplesAdapter extends RecyclerView.Adapter<CardOuListaS
         View v = null;
 
         if (tipoLista.equals("card")) {
-            v = mLayoutInflater.inflate(R.layout.item_indice_card, viewGroup, false);
+            v = mLayoutInflater.inflate(R.layout.item_tela_inicial_card, viewGroup, false);
         } else if (tipoLista.equals("listaSimples")) {
-            v = mLayoutInflater.inflate(R.layout.item_indice_lista_simples, viewGroup, false);
+            v = mLayoutInflater.inflate(R.layout.item_lista_praticas, viewGroup, false);
         }else if(tipoLista.equals("listaExpansivel")){
 
         }else{
-            Toast.makeText(c, "Bug: tipo de lista não identificado(CardOuListaSimplesAdapter>MyViewHolder). ", Toast.LENGTH_LONG).show();
+            Toast.makeText(c, "Bug: tipo de lista não identificado(CardTelaInicialAdapter>MyViewHolder). ", Toast.LENGTH_LONG).show();
         }
         return new MyViewHolder(v);
     }
@@ -82,7 +82,7 @@ public class CardOuListaSimplesAdapter extends RecyclerView.Adapter<CardOuListaS
             }else if(tipoLista.equals("listaSimples")){
                 nomeNoCard = itemView.findViewById(R.id.tituloListaSimples);
             /*}else{
-                Toast.makeText(c, "Bug: tipo de lista não identificado(CardOuListaSimplesAdapter>MyViewHolder). ", Toast.LENGTH_LONG).show();*/
+                Toast.makeText(c, "Bug: tipo de lista não identificado(CardTelaInicialAdapter>MyViewHolder). ", Toast.LENGTH_LONG).show();*/
             }
               //Nome aparece em todos os casos.
 

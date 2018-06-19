@@ -31,8 +31,8 @@ public class RestritoFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        List<IndiceRecycleView> mList = AreasRelacionadasBD.GetAreasRelacionadasBd(getActivity());
-        CardOuListaSimplesAdapter adapter = new CardOuListaSimplesAdapter(getActivity(), mList);
+        List<TelaInicialCards> mList = AreasRelacionadasBD.GetAreasRelacionadasBd(getActivity());
+        CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);*/
 

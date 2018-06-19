@@ -2,26 +2,24 @@ package com.aperam.kryslan.praticaspadrao.BancoDeDados;
 
 import android.content.Context;
 
-import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidInt;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.GetId;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidString;
 
 public class AreasRelacionadasBD {
 
-    public static List<IndiceRecycleView> GetAreasRelacionadasBd(Context c){  //PEGAR DEPOIS NO DOCNIX.
+    public static List<TelaInicialCards> GetAreasRelacionadasBd(Context c){  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetId(29);
         String[] foto = GetFotosAreasRelacionadas();
         String[] areasRelacionadas = GetAreasRelacionadas();
         //String[] link = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};
-        List<IndiceRecycleView> listAux = new ArrayList<>();
+        List<TelaInicialCards> listAux = new ArrayList<>();
 
         for(int i=0; i<id.length; i++){
-            IndiceRecycleView p = new IndiceRecycleView(
+            TelaInicialCards p = new TelaInicialCards(
                     id[i % id.length],
                     foto[i % foto.length],
                     areasRelacionadas[i % areasRelacionadas.length]);

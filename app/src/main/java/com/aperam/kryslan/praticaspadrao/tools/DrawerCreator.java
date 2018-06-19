@@ -1,4 +1,4 @@
-package com.aperam.kryslan.praticaspadrao.interfaces;
+package com.aperam.kryslan.praticaspadrao.tools;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,9 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.domain.IndiceRecycleView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;

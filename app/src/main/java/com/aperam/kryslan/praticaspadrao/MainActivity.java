@@ -13,8 +13,8 @@ import android.widget.CompoundButton;
 
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
-import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
-import com.aperam.kryslan.praticaspadrao.interfaces.DrawerCreator;
+import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
+import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
 import com.aperam.kryslan.praticaspadrao.tools.Utils;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Context contextMain = this;
     public ViewPager viewPager;
 
-    private List<PraticasCards> listPraticas;
+    private List<ListaPraticas> listPraticas;
     private TabLayout tabLayout;
     private int mItemDrawerSelected;
     private int mProfileDrawerSelected;
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
         if(resultCode==2) {  //Só será dois, se for fechado pelas activitys Frag, passando o comando de voltar passando informações: startActivityForResult.
-            int i = data.getIntExtra("tabSelecionada", 2);
+            int i = data.getIntExtra("tabSelecionada", 2);  //Retorna o valor do intent como 2, e a tab selecionada.
             if (i < 9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
                 viewPager.setCurrentItem(i - 1);
             }else{  //Se for maior do que o número de tabs existentes, ele retorna para a tab um, mas IMPLEMENTAR FUTURAMENTE.

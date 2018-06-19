@@ -15,6 +15,7 @@ import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.PraticasCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.DrawerCreator;
+import com.aperam.kryslan.praticaspadrao.tools.Utils;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -22,7 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private Context contextoMain = this;
+    private Context contextMain = this;
     public ViewPager viewPager;
 
     private List<PraticasCards> listPraticas;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //INICIA O SERVIÇO QUE AVISA QUANDO FAZ ALGUM SCREENSHOT.
+        new Utils().ScreenshotListener(contextMain);  //Funciona em todas as activitys pois continuar rodando.
+
         /*if(savedInstanceState != null){
             mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
 
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.pager);
         TabLayout tabLayout = findViewById(R.id.tab);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextoMain)));  //Criando as Tabs com seus nomes baseado no BD.
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextMain)));  //Criando as Tabs com seus nomes baseado no BD.
         tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         AccountHeader headerDrawer = drawerClass.DraweHeaderBuilder(this, savedInstanceState);
 
         //NAVIGATIONDRAWER
-        drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, viewPager, contextoMain, headerDrawer);
+        drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, viewPager, contextMain, headerDrawer);
     }
 
     @Override

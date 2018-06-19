@@ -19,7 +19,12 @@
     <!-- D -->
     <string name="favoritos">Favoritos</string>
 
+    <!-- I -->
+    <string name="informacoesDaPpa">Informações da PPA</string>
+
     <!-- S -->
     <string name="SegundaTela">Segunda tela</string>
+
+    <!-- T -->
 
 </resources>

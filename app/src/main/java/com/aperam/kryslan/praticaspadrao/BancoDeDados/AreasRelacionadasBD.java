@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.GetId;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetTipo;
 
 public class AreasRelacionadasBD {
 
     public static List<TelaInicialCards> GetAreasRelacionadasBd(Context c){  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetId(29);
+        int[] id = GetTipo(0, 29);
         String[] foto = GetFotosAreasRelacionadas();
         String[] areasRelacionadas = GetAreasRelacionadas();
         //String[] link = new String[]{"https://drive.google.com/uc?id=1k3XiOU8sOtuHO_ainqMOHZbZW6oOVnXf", "https://drive.google.com/uc?id=142z4b4FK-NDu7fnh48DPTVMqbcgaHXeJ"};

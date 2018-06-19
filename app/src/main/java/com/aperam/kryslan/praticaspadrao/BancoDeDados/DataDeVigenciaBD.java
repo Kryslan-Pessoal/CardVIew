@@ -7,13 +7,13 @@ import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.GetId;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetTipo;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetVoidString;
 
 public class DataDeVigenciaBD {
 
     public static List<TelaInicialCards> GetDataDeVigenciaBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetId(12);  //Futuramente criar clase para cada um em domain.
+        int[] id = GetTipo(2, 12);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(12);
         String[] textoPrincipal = GetDatasAno();
         List<TelaInicialCards> listAux = new ArrayList<>();
@@ -31,17 +31,22 @@ public class DataDeVigenciaBD {
 
     public static String[] GetDatasAno(){
         return new String[]{
-                "2006" ,
-                "2008" ,
-                "2009" ,
-                "2010" ,
-                "2011" ,
-                "2012" ,
-                "2013" ,
-                "2014" ,
-                "2015" ,
-                "2016" ,
-                "2017" ,
-                "2018"};
+                "2018",
+                "2017",
+                "2016",
+                "2015",
+                "2014",
+                "2013",
+                "2012",
+                "2011",
+                "2010",
+                "2009",
+                "2008",
+                "2007",
+                "2006"};
+    }
+
+    public static int[] GetTipoDatasAno(){
+        return new int[]{2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006};
     }
 }

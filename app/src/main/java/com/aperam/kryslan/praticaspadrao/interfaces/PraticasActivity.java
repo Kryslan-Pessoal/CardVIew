@@ -38,8 +38,10 @@ import java.util.List;
 import static android.graphics.Color.WHITE;
 
 public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
+    private Context contextPraticas = this;
     private Toolbar mToolbar;
     private TelaInicialCards telaInicialCards;
+    List<ListaPraticas> mList;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private MaterialDialog mMaterialDialog;
@@ -111,7 +113,9 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_praticas);
 
+        Bundle test = getIntent().getExtras();
         telaInicialCards = getIntent().getExtras().getParcelable("praticascards");
+
 
         //CONFIGURA O TOOLBAR.
         mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
@@ -129,13 +133,22 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         ImageView ivCar = findViewById(R.id.iv_imagem_ilustrativa);
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
+        String fotoUrl = "";
+        int valor = telaInicialCards.getId();
+        if(valor == 0) {  //Vazio.
+            fotoUrl = telaInicialCards.getFotoUrl();
+        }else if(valor == 1){  //Autor
+            fotoUrl = "https://drive.google.com/uc?id=1pZxi73hIl5wU4jU8_P2eO8aGZ9QOzhDO";
+        }else if(valor == 2){
+            fotoUrl = "https://drive.google.com/uc?id=16lpe02o7gj4f1foQ6iSRJU2oBjT0mXlw";
+        }else if(valor == 3){
+            fotoUrl = "https://drive.google.com/uc?id=10qBgvIQGIl3oGg0fzBo876NKs1VDVKXy";
+        }
 
-
-        Picasso.get().load(telaInicialCards.getFotoUrl())  //Pega a imagem da internet e coloca no ImageView.
-                .resize(1280, 720)
-                .centerCrop()
-                .into(ivCar);
-
+            Picasso.get().load(fotoUrl)  //Pega a imagem da internet e coloca no ImageView.
+                    .resize(1280, 720)
+                    .centerCrop()
+                    .into(ivCar);
 //        ivCar.setController( dc );
 
         //HEADER
@@ -143,11 +156,12 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         AccountHeader headerDrawer = drawerClass.DraweHeaderBuilder(this, savedInstanceState);
 
         //NAVIGATIONDRAWER
-        ViewPager viewPager = null;
-        drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, viewPager, this, headerDrawer);
+        drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, null, this, headerDrawer);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
         //TRATAR A FUNÇÃO DE VOLTAR.
+
+
 
         //LISTA DAS PPAs
         RecyclerView recyclerView = findViewById(R.id.rv_list_praticas);
@@ -165,13 +179,13 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
             }
         });
 
-        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(this, recyclerView, this));
+        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener( contextPraticas, recyclerView, this));
 
         LinearLayoutManager lm = new LinearLayoutManager(this);
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         recyclerView.setLayoutManager(lm);
 
-        List<ListaPraticas> mList = AreaEmitenteBD.GetAreaEmitenteBdLista();
+        mList = AreaEmitenteBD.GetAreaEmitenteBdLista();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
         recyclerView.setAdapter(adapter);
 
@@ -214,7 +228,15 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     @Override
     public void onLongPressClickListener(View view, int position) {
-
+        String[] corpoDialog = new String[4];
+        corpoDialog[0] = "TÍTULO: " + mList.get(position).getTitulo();
+        corpoDialog[1] = "Nº: " + mList.get(position).getNumero();
+        corpoDialog[2] = "AUTOR: " + mList.get(position).getAutor();
+        corpoDialog[3] = "DATA: " + mList.get(position).getData();
+        new MaterialDialog.Builder(this)  //Cria um Dialog com informações da PPA clicada.
+                .title(R.string.informacoesDaPpa)
+                .items(corpoDialog)
+                .show();
     }
 
     private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {  //Ao clicar nos itens lança um Listener, para fazer a animação.
@@ -233,7 +255,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                     super.onLongPress(e);
 
                     View viewSelecionada = rv.findChildViewUnder(e.getX(), e.getY());  //Vai identificar a posição do clique (mas retornará o posicionamento abaixo do clicado).
-
                     if (viewSelecionada != null && mRecyclerViewOnClickListenerHack != null) {  //Só confere se o clique foi real mesmo e se existe a view selecionada para não dar erro.
                         mRecyclerViewOnClickListenerHack.onLongPressClickListener(viewSelecionada, rv.getChildAdapterPosition(viewSelecionada));
                     }
@@ -252,7 +273,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         }
         @Override
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            return false;
+            mGestureDetector.onTouchEvent(e);  //Identifica se foi um clique simples ou longPress.
+            return false;  //se for true, pega o evento de click disparado do layout root (RelativeLayout no caso).
         }
 
         @Override

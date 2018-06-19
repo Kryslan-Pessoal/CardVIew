@@ -80,7 +80,6 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         telaInicialCards = mList.get(position);
         intent.putExtra("praticascards", telaInicialCards);
 
-
         getActivity().startActivityForResult(intent, 1);
 //        startActivity(intent);
         // TRANSITIONS

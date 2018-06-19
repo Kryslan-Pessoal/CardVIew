@@ -8,10 +8,12 @@ import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetTipo;
+
 public class AreaEmitenteBD {
 
     public static List<TelaInicialCards> GetAreaEmitenteBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetId(27);
+        int[] id = GetTipo(0, 27);
         String[] foto = GetFotosAreasEminetes();
         String[] areaEmitente = GetAreasEminetes();
         List<TelaInicialCards> listAux = new ArrayList<>();

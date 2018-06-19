@@ -346,7 +346,7 @@ public class BD extends MainActivity{
     }
 
     public static List<TelaInicialCards> GetAutorBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetId(306);  //Futuramente criar clase para cada um em domain.
+        int[] id = GetTipo(1, 306);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(306);
         String[] textoPrincipal = GetAutorList();
         List<TelaInicialCards> listAux = new ArrayList<>();
@@ -380,7 +380,7 @@ public class BD extends MainActivity{
     }
 
     public static List<TelaInicialCards> GetNivelBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetId(3);  //Futuramente criar clase para cada um em domain.
+        int[] id = GetTipo(0,3);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetFotoNivel();
         String[] textoPrincipal = GetNivel();
         List<TelaInicialCards> listAux = new ArrayList<>();
@@ -396,10 +396,10 @@ public class BD extends MainActivity{
         return listAux;
     }
 
-    public static int[] GetVoidInt(int qtd){
+    public static int[] GetTipo(int valor, int qtd){
         int[] qtdVoid = new int[qtd];
         for (int i = 0; i < qtd; i++) {
-            qtdVoid[i] = 0;
+            qtdVoid[i] = valor;
         }
         return qtdVoid;
     }

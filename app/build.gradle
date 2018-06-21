@@ -59,4 +59,7 @@ dependencies {
 
     //MaterialScrollBar
     implementation 'com.github.turing-tech:MaterialScrollBar:11.2.0'
+
+    //SEARCHVIEW
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 }

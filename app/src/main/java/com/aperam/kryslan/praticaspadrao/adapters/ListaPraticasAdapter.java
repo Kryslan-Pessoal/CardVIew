@@ -41,6 +41,9 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
 
     @Override
     public Character getCharacterForElement(int element) {
+        if(mList.isEmpty()){
+            return ' ';
+        }
         Character c = mList.get(element).getTitulo().charAt(0);
         if(Character.isDigit(c)) {
             c = '#';

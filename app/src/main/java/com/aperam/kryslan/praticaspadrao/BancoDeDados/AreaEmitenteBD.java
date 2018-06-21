@@ -195,7 +195,7 @@ public class AreaEmitenteBD {
                 "PPA40-0184 - v.0"};
     }
 
-    private static String[] getTituloAreaEmitenteBd() {
+    public static String[] getTituloAreaEmitenteBd() {
         return new String[]{
                 "Monitorar Sistema de Detecção e Combate à Incêndio - TL9" ,
                 "Cortar Bobinas e Tiras - TL1" ,

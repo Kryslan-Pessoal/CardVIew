@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,21 +29,26 @@ import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.squareup.picasso.Picasso;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.Color.WHITE;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.getTituloAreaEmitenteBd;
 
 public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
-    private Context contextPraticas = this;
+    private Context c = this;
     private Toolbar mToolbar;
     private TelaInicialCards telaInicialCards;
-    List<ListaPraticas> mList;
+    List<ListaPraticas> mList, filterList = new ArrayList<>();
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    private MaterialSearchView searchView;
 
     private MaterialDialog mMaterialDialog;
     private TextView tvDescription;
@@ -162,8 +168,37 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //TRATAR A FUNÇÃO DE VOLTAR.
 
         //LISTA DAS PPAs
-        RecyclerView recyclerView = findViewById(R.id.rv_list_praticas);
+        final RecyclerView recyclerView = findViewById(R.id.rv_list_praticas);
         recyclerView.setHasFixedSize(true);  //Para o recyclerView não mude de tamanho.
+
+        //SEARCHVIEW
+        searchView = findViewById(R.id.search_view);
+        searchView.setHint("Procura");
+        searchView.setSuggestions(getTituloAreaEmitenteBd());
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterList.clear();
+                if(TextUtils.isEmpty(query)){
+                    filterList.addAll(mList);
+                }else{
+                    for(int i = 0; i < mList.size(); i++)
+                    {
+                        if(mList.get(i).getTitulo().toLowerCase().contains(query)){
+                            filterList.add(mList.get(i));
+                        }
+                    }
+                }
+                ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, filterList);
+                recyclerView.setAdapter(adapter);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -177,7 +212,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
             }
         });
 
-        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener( contextPraticas, recyclerView, this));
+        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(c, recyclerView, this));
 
         LinearLayoutManager lm = new LinearLayoutManager(this);
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
@@ -198,30 +233,41 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         //MATERIAL SCROLLBAR
         ((DragScrollBar) findViewById(R.id.dragScrollBar))
-            .setIndicator(new AlphabetIndicator(contextPraticas), true)
-            .setHandleColour(contextPraticas.getResources().getColor(R.color.colorPrimary));
+            .setIndicator(new AlphabetIndicator(c), true)
+            .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
+
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //SEARCHVIEW
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(searchItem);
+
+        return true;
+
         /*getMenuInflater().inflate(R.menu.menu_car_activity, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView;
         MenuItem item = menu.findItem(R.id.action_searchable_activity);
 
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ){
-            searchView = (SearchView) item.getActionView();
-        }
-        else{
-            searchView = (SearchView) MenuItemCompat.getActionView( item );
-        }
-
         searchView.setSearchableInfo( searchManager.getSearchableInfo( getComponentName() ) );
         searchView.setQueryHint( getResources().getString(R.string.search_hint) );
 */
-        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

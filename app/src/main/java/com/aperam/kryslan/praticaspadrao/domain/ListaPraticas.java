@@ -1,6 +1,9 @@
 package com.aperam.kryslan.praticaspadrao.domain;
 
-public class ListaPraticas {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ListaPraticas implements Parcelable{
     private String numero;
 //    private String areaEmitente;
     private String titulo;
@@ -11,6 +14,7 @@ public class ListaPraticas {
     private String data;
     private int numeroId;
 
+    public ListaPraticas(){}
     public ListaPraticas(String numero, String titulo, String autor,  String urlDocumento, String data, int numeroId){
         this.numero = numero;
 //        this.areaEmitente = areaEmitente;
@@ -89,19 +93,19 @@ public class ListaPraticas {
     }
 
     
-    /*@Override
+    //PARCELABLE
+    @Override
     public int describeContents() {
         return 0;
     }
 
-    //PARCELABLE
     public ListaPraticas(Parcel parcel){  //Só está escrevendo os objetos.
         setTitulo(parcel.readString());
         setNumero(parcel.readString());
-        setAreaEmitente(parcel.readString());
+//        setAreaEmitente(parcel.readString());
         setAutor(parcel.readString());
-        setProcesso(parcel.readString());
-        setUrlImagem(parcel.readString());
+//        setProcesso(parcel.readString());
+//        setUrlImagem(parcel.readString());
         setUrlDocumento(parcel.readString());
         setNumeroId(parcel.readInt());
     }
@@ -110,10 +114,10 @@ public class ListaPraticas {
     public void writeToParcel(Parcel dest, int flags) {  //Só está guardando os objetos.
         dest.writeString(getTitulo());
         dest.writeString(getNumero());
-        dest.writeString(getAreaEmitente());
+//        dest.writeString(getAreaEmitente());
         dest.writeString(getAutor());
-        dest.writeString(getProcesso());
-        dest.writeString(getUrlImagem());
+//        dest.writeString(getProcesso());
+//        dest.writeString(getUrlImagem());
         dest.writeString(getUrlDocumento());
         dest.writeInt(getNumeroId());
     }
@@ -122,10 +126,9 @@ public class ListaPraticas {
         public ListaPraticas createFromParcel(Parcel source) {  //Chamar esta entidade para pegar os dados.
             return new ListaPraticas(source);
         }
-
         @Override
         public ListaPraticas[] newArray(int size) {
             return new ListaPraticas[size];
         }
-    };*/
+    };
 }

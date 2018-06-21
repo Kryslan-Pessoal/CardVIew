@@ -27,6 +27,7 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aperam.kryslan.praticaspadrao.MainActivity"/>
         </activity>
+        <activity android:name=".interfaces.DocumentoDrive" />
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.aperam.kryslan.praticaspadrao.interfaces;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -133,7 +134,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
 
         String fotoUrl = "";
-        int valor = telaInicialCards.getId();
+        int valor = telaInicialCards.getId();  //Pelo Id, vai pegar a imagem que aparecetá na tollbar na tela inicial.
         if(valor == 0) {  //Vazio.
             fotoUrl = telaInicialCards.getFotoUrl();
         }else if(valor == 1){  //Autor
@@ -225,7 +226,11 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     @Override
     public void onClickListener(View view, int position) {
+        Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
+        ListaPraticas informacoesDaPratica = mList.get(position);
+        intent.putExtra("informacoesDaPratica", informacoesDaPratica);
 
+        startActivity(intent);
     }
 
     @Override

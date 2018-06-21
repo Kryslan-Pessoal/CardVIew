@@ -48,17 +48,17 @@ public class TelaInicialCards implements Parcelable{
         return 0;
     }
 
+    public TelaInicialCards(Parcel parcel){
+        setId(parcel.readInt());
+        setFotoUrl(parcel.readString());
+        setTextoPrincipal(parcel.readString());
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {  //Vai escrever os dados nos pacotes para transportar.
         dest.writeInt( getId() );
         dest.writeString( getFotoUrl() );
         dest.writeString( getTextoPrincipal() );
-    }
-
-    public TelaInicialCards(Parcel parcel){
-        setId(parcel.readInt());
-        setFotoUrl(parcel.readString());
-        setTextoPrincipal(parcel.readString());
     }
 
     public static final Parcelable.Creator<TelaInicialCards> CREATOR = new Parcelable.Creator<TelaInicialCards>(){

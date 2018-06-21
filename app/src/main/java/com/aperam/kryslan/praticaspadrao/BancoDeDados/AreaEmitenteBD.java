@@ -97,6 +97,7 @@ public class AreaEmitenteBD {
                 "https://drive.google.com/uc?id=1DvL5GJJxPhriljK4C9dEdDkp3HE8lb-C"};
     }
 
+
     //BD LISTA SIMPLES DAS PRATICAS
     public static List<ListaPraticas> GetAreaEmitenteBdLista() {  //PEGAR DEPOIS NO DOCNIX.
         String[] numero = getNumeroAreaEmitenteBd();
@@ -340,7 +341,7 @@ public class AreaEmitenteBD {
     private static String[] getUrlDocumentoAreaEmitenteBd(int qtd) {
         String[] url = new String[qtd];
         for (int i = 0; i < qtd; i++) {
-            url[i] = "";
+            url[i] = "https://docs.google.com/document/d/1kV00ZQ3EIwhuyDfVKxwaVaBUdq3Vv-3JF9YREqiP-e0";
         }
         return url;
     }

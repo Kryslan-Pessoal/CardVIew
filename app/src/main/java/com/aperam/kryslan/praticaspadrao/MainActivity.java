@@ -23,7 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private Context contextMain = this;
+    private Context c = this;
     public ViewPager viewPager;
 
     private List<ListaPraticas> listPraticas;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //INICIA O SERVIÇO QUE AVISA QUANDO FAZ ALGUM SCREENSHOT.
-        new Utils().ScreenshotListener(contextMain);  //Funciona em todas as activitys pois continuar rodando.
+        new Utils().ScreenshotListener(c);  //Funciona em todas as activitys pois continuar rodando.
 
         /*if(savedInstanceState != null){
             mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.pager);
         TabLayout tabLayout = findViewById(R.id.tab);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(contextMain)));  //Criando as Tabs com seus nomes baseado no BD.
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(c)));  //Criando as Tabs com seus nomes baseado no BD.
         tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         AccountHeader headerDrawer = drawerClass.DraweHeaderBuilder(this, savedInstanceState);
 
         //NAVIGATIONDRAWER
-        drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, viewPager, contextMain, headerDrawer);
+        drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, viewPager, c, headerDrawer);
     }
 
     @Override

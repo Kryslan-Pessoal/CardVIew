@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
+import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.List;
 
@@ -21,9 +25,9 @@ public class ProcessoFrag extends AreaEmitenteFrag {
     List<TelaInicialCards> mList;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
+        View view = inflater.inflate(R.layout.fragment_praticas_processo, container, false);  //pegando o fragment.
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
+        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list_processo);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -42,9 +46,13 @@ public class ProcessoFrag extends AreaEmitenteFrag {
         mRecyclerView.setLayoutManager(lm);
 
         mList = BD.GetProcessoBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList, "listaSimples");
+        ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
+
+        ((DragScrollBar) view.findViewById(R.id.dragScrollBar))
+            .setIndicator(new AlphabetIndicator(view.getContext()), true)
+            .setHandleColour(getResources().getColor(R.color.colorPrimary));
 
         return view;
     }

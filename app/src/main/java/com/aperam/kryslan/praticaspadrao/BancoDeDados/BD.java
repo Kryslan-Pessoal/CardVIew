@@ -363,7 +363,7 @@ public class BD extends MainActivity{
     }
 
     public static List<TelaInicialCards> GetProcessoBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetId(304);  //Futuramente criar clase para cada um em domain.
+        int[] id = GetTipo(3, 304);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetVoidString(304);
         String[] textoPrincipal = GetProcesso();
         List<TelaInicialCards> listAux = new ArrayList<>();

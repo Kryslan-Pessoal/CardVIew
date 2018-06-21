@@ -19,43 +19,27 @@ import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerH
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.picasso.Picasso;
+import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
 import java.util.List;
 
-public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicialAdapter.MyViewHolder>{
+public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicialAdapter.MyViewHolder> implements INameableAdapter{
     private List<TelaInicialCards> mList;
     private LayoutInflater mLayoutInflater;
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
     private Context c;
-    private String tipoLista;
 
     public CardTelaInicialAdapter(Context c, List<TelaInicialCards> lista){
-        this(c, lista, "card");  //Quando a última chamada for vazia (tipoLista), o tipoLista será card
-    }
-
-    public CardTelaInicialAdapter(Context c, List<TelaInicialCards> lista, String tipoLista){
         this.c = c;
         mList = lista;
         mLayoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        this.tipoLista = tipoLista;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //só é chamado na hora de criar uma nova view.
-        View v = null;
-
-        if (tipoLista.equals("card")) {
-            v = mLayoutInflater.inflate(R.layout.item_tela_inicial_card, viewGroup, false);
-        } else if (tipoLista.equals("listaSimples")) {
-            v = mLayoutInflater.inflate(R.layout.item_tela_inicial_lista, viewGroup, false);
-//        }else if(tipoLista.equals("listaExpansivel")){
-
-        }else{
-            Toast.makeText(c, "Bug: tipo de lista não identificado(CardTelaInicialAdapter>MyViewHolder). ", Toast.LENGTH_LONG).show();
-        }
+        View v = mLayoutInflater.inflate(R.layout.item_tela_inicial_card, viewGroup, false);
         return new MyViewHolder(v);
     }
 
@@ -68,27 +52,16 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
         private ImageView imagemIlustrativa;
         private CardView cardView;
         private TextView nomeNoCard;
-        public TextView numeroNoCard;
-
 
         private MyViewHolder(View itemView){
             super(itemView);
 
-            if (tipoLista.equals("card")) {
-                imagemIlustrativa = itemView.findViewById(R.id.imagem_ilustrativa);
-                cardView = itemView.findViewById(R.id.card_view_adapter);
-                numeroNoCard = itemView.findViewById(R.id.numero);
-                nomeNoCard = itemView.findViewById(R.id.tituloCard);
-            }else if(tipoLista.equals("listaSimples")){
-                nomeNoCard = itemView.findViewById(R.id.tituloListaSimples);
-            /*}else{
-                Toast.makeText(c, "Bug: tipo de lista não identificado(CardTelaInicialAdapter>MyViewHolder). ", Toast.LENGTH_LONG).show();*/
-            }
-              //Nome aparece em todos os casos.
+            imagemIlustrativa = itemView.findViewById(R.id.imagem_ilustrativa);
+            cardView = itemView.findViewById(R.id.card_view_adapter);
+            nomeNoCard = itemView.findViewById(R.id.tituloCard);
 
             itemView.setOnClickListener(this);
         }
-
         @Override
         public void onClick(View v) {
             if(mRecyclerViewOnClickListenerHack != null){
@@ -99,83 +72,69 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int positionList) {  //Vincula nossos dados com a view. (Seta o valor de cada 'mList' com uma view)
-        if (tipoLista.equals("card")) {
-            //Redimenciona a imagem de acordo com o tamanho da tela.
-            Context c = myViewHolder.imagemIlustrativa.getContext();  // Pega o contexto da activity para usar mais a frente.
+        //Redimenciona a imagem de acordo com o tamanho da tela.
+        //Cria o tamanho das imagens e dos Cards baseado na largura da tela do dispositivo em questão.
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        int larguraFrag;
+        if (windowmanager != null) {  //Para evitar erros, redimenciona a imagem apenas se o windowmanager exista.
+            windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
+            int larguraDispositivo = displayMetrics.widthPixels;
 
-            //Cria o tamanho das imagens e dos Cards baseado na largura da tela do dispositivo em questão.
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
-            int larguraFrag;
-            if (windowmanager != null) {  //Para evitar erros, redimenciona a imagem apenas se o windowmanager exista.
-                windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
-                int larguraDispositivo = displayMetrics.widthPixels;
-
-                if(larguraDispositivo < 1080){
-                    larguraFrag = larguraDispositivo;
-                }else{
-                    larguraFrag = 1080;  //Caso o dispositivo seja muito grande (maior que 720pixels) os tamanhos dos cards e imagens não irão passar de 720, para não esticar demais a imagem.
-                }
+            if(larguraDispositivo < 1080){
+                larguraFrag = larguraDispositivo;
             }else{
-                Toast toast = Toast.makeText(c,"Tamanho da tela indefinido. \n(Talvez as imagens não fiquem bem ajustadas).",Toast.LENGTH_LONG);
-                toast.show();
-                larguraFrag = 1080;
+                larguraFrag = 1080;  //Caso o dispositivo seja muito grande (maior que 720pixels) os tamanhos dos cards e imagens não irão passar de 720, para não esticar demais a imagem.
             }
-
-            //Dimensões das imgens.
-            Double larguraImagemAux = (larguraFrag*0.926);  //A imagem deve ser +-7% menor do que o fragment.
-            int larguraImagem = larguraImagemAux.intValue();
-            Double alturaImagemAux = (larguraImagem * 0.55);  //A largura da imagem é equivalente a 55% de sua altura (para ficar melhor ajustada).
-            int alturaImagem = alturaImagemAux.intValue();
-            ViewGroup.LayoutParams layoutParamsImagem = myViewHolder.imagemIlustrativa.getLayoutParams();
-
-            layoutParamsImagem.width = larguraImagem;
-            layoutParamsImagem.height = alturaImagem;
-            myViewHolder.imagemIlustrativa.setLayoutParams(layoutParamsImagem);
-
-            //Dimensões dos cards.
-            Double larguraCardAux = (larguraImagem*0.9745);  //O card deve ser +-3% menor do que a imagem.
-            int larguraCard = larguraCardAux.intValue();
-            ViewGroup.LayoutParams layoutParamsCard = myViewHolder.cardView.getLayoutParams();
-            layoutParamsCard.width = larguraCard;
-
-            DisplayMetrics realmetrics = new DisplayMetrics();
-            Float valor = displayMetrics.xdpi;
-
-            Double valorFinalAux = valor * 0.36;
-
-            int valorFinal = valorFinalAux.intValue();
-            if (windowmanager != null) {
-                windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
-            }
-            layoutParamsCard.height = valorFinal;
-            myViewHolder.cardView.setLayoutParams(layoutParamsCard);
-
-            Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
-                    .getFotoUrl())
-                    .resize(1280, 720)
-                    .centerCrop()
-                    .into(myViewHolder.imagemIlustrativa);
-
-
-
-            //if(numeroIdPratica != 0) {
-//            myViewHolder.numeroNoCard.setText(numeroIdPratica);
-//        }
-        }else if(tipoLista.equals("listaExpansivel")){
-
+        }else{
+            Toast toast = Toast.makeText(c,"Tamanho da tela indefinido. \n(Talvez as imagens não fiquem bem ajustadas).",Toast.LENGTH_LONG);
+            toast.show();
+            larguraFrag = 1080;
         }
+
+        //Dimensões das imgens.
+        Double larguraImagemAux = (larguraFrag*0.926);  //A imagem deve ser +-7% menor do que o fragment.
+        int larguraImagem = larguraImagemAux.intValue();
+        Double alturaImagemAux = (larguraImagem * 0.55);  //A largura da imagem é equivalente a 55% de sua altura (para ficar melhor ajustada).
+        int alturaImagem = alturaImagemAux.intValue();
+        ViewGroup.LayoutParams layoutParamsImagem = myViewHolder.imagemIlustrativa.getLayoutParams();
+
+        layoutParamsImagem.width = larguraImagem;
+        layoutParamsImagem.height = alturaImagem;
+        myViewHolder.imagemIlustrativa.setLayoutParams(layoutParamsImagem);
+
+        //Dimensões dos cards.
+        Double larguraCardAux = (larguraImagem*0.9745);  //O card deve ser +-3% menor do que a imagem.
+        int larguraCard = larguraCardAux.intValue();
+        ViewGroup.LayoutParams layoutParamsCard = myViewHolder.cardView.getLayoutParams();
+        layoutParamsCard.width = larguraCard;
+
+        DisplayMetrics realmetrics = new DisplayMetrics();
+        Float valor = displayMetrics.xdpi;
+
+        Double valorFinalAux = valor * 0.36;
+
+        int valorFinal = valorFinalAux.intValue();
+        if (windowmanager != null) {
+            windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
+        }
+        layoutParamsCard.height = valorFinal;
+        myViewHolder.cardView.setLayoutParams(layoutParamsCard);
+
+        Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
+                .getFotoUrl())
+                .resize(1280, 720)
+                .centerCrop()
+                .into(myViewHolder.imagemIlustrativa);
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getTextoPrincipal());  //Está fora pois é chamado em todos os casos.
 
-        if(tipoLista.equals("card")) {
-            try {
-                YoYo.with(Techniques.FadeInUp)  //Defina a animação na hora de carregar cada Card.
-                        .duration(700)
-                        .playOn(myViewHolder.itemView);
-            } catch (Exception ignored) {
+        try {
+            YoYo.with(Techniques.FadeInUp)  //Defina a animação na hora de carregar cada Card.
+                    .duration(700)
+                    .playOn(myViewHolder.itemView);
+        } catch (Exception ignored) {
 
-            }
         }
     }
 
@@ -186,5 +145,14 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
 
     public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack r){
         mRecyclerViewOnClickListenerHack = r;  //Está adicionando o parâmetro de clique de entrada ao hack para ativar o click.
+    }
+
+    @Override
+    public Character getCharacterForElement(int element) {
+        Character c = mList.get(element).getTextoPrincipal().charAt(0);
+        if(Character.isDigit(c)) {
+            c = '#';
+        }
+        return c;
     }
 }

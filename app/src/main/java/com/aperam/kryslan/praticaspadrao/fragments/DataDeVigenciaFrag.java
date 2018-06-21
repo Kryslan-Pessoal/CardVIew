@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.DataDeVigenciaBD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
+import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.List;
 
@@ -42,7 +45,7 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         mRecyclerView.setLayoutManager(lm);
 
         mList = DataDeVigenciaBD.GetDataDeVigenciaBd(container.getContext());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(container.getContext(), mList, "listaSimples");
+        ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 

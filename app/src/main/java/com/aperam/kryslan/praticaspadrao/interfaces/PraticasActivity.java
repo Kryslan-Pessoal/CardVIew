@@ -6,7 +6,6 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,14 +23,14 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
-import com.aperam.kryslan.praticaspadrao.fragments.AreaEmitenteFrag;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.squareup.picasso.Picasso;
+import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
+import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.List;
 
@@ -113,7 +112,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_praticas);
 
-        Bundle test = getIntent().getExtras();
         telaInicialCards = getIntent().getExtras().getParcelable("praticascards");
 
 
@@ -133,6 +131,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         ImageView ivCar = findViewById(R.id.iv_imagem_ilustrativa);
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
+
         String fotoUrl = "";
         int valor = telaInicialCards.getId();
         if(valor == 0) {  //Vazio.
@@ -160,8 +159,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
         //TRATAR A FUNÇÃO DE VOLTAR.
-
-
 
         //LISTA DAS PPAs
         RecyclerView recyclerView = findViewById(R.id.rv_list_praticas);
@@ -197,6 +194,11 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                 Toast.makeText(PraticasActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
             }
         });
+
+        //MATERIAL SCROLLBAR
+        ((DragScrollBar) findViewById(R.id.dragScrollBar))
+            .setIndicator(new AlphabetIndicator(contextPraticas), true)
+            .setHandleColour(contextPraticas.getResources().getColor(R.color.colorPrimary));
     }
 
 

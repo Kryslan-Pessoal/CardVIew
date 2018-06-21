@@ -9,62 +9,41 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
 import java.util.List;
 
-public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdapter.MyViewHolder> implements INameableAdapter{
-    private List<ListaPraticas> mList;
+public class ListaTelaInicialAdapter extends RecyclerView.Adapter<ListaTelaInicialAdapter.MyViewHolder> implements INameableAdapter {
+    private List<TelaInicialCards> mList;
     private LayoutInflater mLayoutInflater;
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
     private Context c;
-    private String tipoLista;
 
-
-    public ListaPraticasAdapter(Context c, List<ListaPraticas> lista){
+    public ListaTelaInicialAdapter(Context c, List<TelaInicialCards> lista){
         this.c = c;
         mList = lista;
         mLayoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     @NonNull
     @Override
-    public ListaPraticasAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //só é chamado na hora de criar uma nova view.
-        View v = mLayoutInflater.inflate(R.layout.item_lista_praticas, viewGroup, false);
+    public ListaTelaInicialAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //Vai inflar o layout de cada item da listas.
+        View v = mLayoutInflater.inflate(R.layout.item_tela_inicial_lista, viewGroup, false);
 
-        return new ListaPraticasAdapter.MyViewHolder(v);
+        return new ListaTelaInicialAdapter.MyViewHolder(v);
     }
-
-    @Override
-    public Character getCharacterForElement(int element) {
-        Character c = mList.get(element).getTitulo().charAt(0);
-        if(Character.isDigit(c)) {
-            c = '#';
-        }
-        return c;
-    }
-
-
-    /*public void removeListItem(int position){  //APLICAR AOS FAVORITOS
-        mList.remove(position);
-        notifyItemRemoved(position);
-    }*/
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{  //Responsável por controlar os cardViews, deletando os que não aparecem na tela para preservar memória
         private TextView titulo;
-        public TextView subtitulo;
 
 
         private MyViewHolder(View itemView){
             super(itemView);
 
-            titulo = itemView.findViewById(R.id.tituloListaPraticas);
-            subtitulo = itemView.findViewById(R.id.subtituloListaSimples);
-
+            titulo = itemView.findViewById(R.id.tituloListaTelaInicial);
             itemView.setOnClickListener(this);
         }
 
@@ -77,11 +56,8 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListaPraticasAdapter.MyViewHolder myViewHolder, int positionList) {  //Vincula nossos dados com a view. (Seta o valor de cada 'mList' com uma view)
-
-//        if(areaEmitente){
-        myViewHolder.titulo.setText(mList.get(positionList).getTitulo());
-        myViewHolder.subtitulo.setText(mList.get(positionList).getNumero());
+    public void onBindViewHolder(@NonNull ListaTelaInicialAdapter.MyViewHolder myViewHolder, int positionList) {  //Vincula nossos dados com a view. (Seta o valor de cada 'mList' com uma view)
+        myViewHolder.titulo.setText(mList.get(positionList).getTextoPrincipal());  //Seta o texto da mList em cada Card.
     }
 
     @Override
@@ -91,5 +67,14 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
 
     public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack r){
         mRecyclerViewOnClickListenerHack = r;  //Está adicionando o parâmetro de clique de entrada ao hack para ativar o click.
+    }
+
+    @Override
+    public Character getCharacterForElement(int element) {
+        Character c = mList.get(element).getTextoPrincipal().charAt(0);
+        if(Character.isDigit(c)) {
+            c = '#';
+        }
+        return c;
     }
 }

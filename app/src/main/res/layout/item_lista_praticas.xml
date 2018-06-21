@@ -8,7 +8,7 @@
     android:paddingTop="20dp">
 
     <TextView
-        android:id="@+id/tituloListaSimples"
+        android:id="@+id/tituloListaPraticas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/tituloListaSimples"
+        android:layout_below="@+id/tituloListaPraticas"
 
         android:textColor="@color/SecondText"
         android:textSize="12sp" />

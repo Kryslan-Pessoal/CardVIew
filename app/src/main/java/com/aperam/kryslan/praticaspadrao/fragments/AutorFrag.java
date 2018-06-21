@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +13,12 @@ import android.view.ViewGroup;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
+import com.turingtechnologies.materialscrollbar.DragScrollBar;
+import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
 import java.util.List;
 
@@ -22,9 +27,9 @@ public class AutorFrag extends AreaEmitenteFrag{
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
+        View view = inflater.inflate(R.layout.fragment_praticas_autor, container, false);  //pegando o fragment.
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);
+        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list_autor);
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -43,9 +48,13 @@ public class AutorFrag extends AreaEmitenteFrag{
         mRecyclerView.setLayoutManager(lm);
 
         mList = BD.GetAutorBd(container.getContext());
-        CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(container.getContext(), mList, "listaSimples");
+        ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
+
+        ((DragScrollBar) view.findViewById(R.id.dragScrollBar))
+            .setIndicator(new AlphabetIndicator(view.getContext()), true)
+            .setHandleColour(getResources().getColor(R.color.colorPrimary));  //CONFIGURAR O SAVEDINSTANCESTATE.
 
         return view;
     }
@@ -58,4 +67,5 @@ public class AutorFrag extends AreaEmitenteFrag{
 
         getActivity().startActivityForResult(intent, 1);
     }
+
 }

@@ -184,7 +184,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                 }else{
                     for(int i = 0; i < mList.size(); i++)
                     {
-                        if(mList.get(i).getTitulo().toLowerCase().contains(query)){
+                        if(mList.get(i).getTitulo().toLowerCase().contains(query)||mList.get(i).getNumero().toLowerCase().contains(query)){
                             filterList.add(mList.get(i));
                         }
                     }
@@ -196,7 +196,19 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                if (!TextUtils.isEmpty(newText)) {
+                    filterList.clear();
+                    for(int i = 0; i < mList.size(); i++)
+                    {
+                        if(mList.get(i).getTitulo().toLowerCase().contains(newText)||mList.get(i).getNumero().toLowerCase().contains(newText)){
+                            filterList.add(mList.get(i));
+                        }
+                    }
+                    ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, filterList);
+                    recyclerView.setAdapter(adapter);
+                }
+
+                return true;
             }
         });
 
@@ -222,14 +234,14 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
         recyclerView.setAdapter(adapter);
 
-        // FAB
+       /* // FAB
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(PraticasActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         //MATERIAL SCROLLBAR
         ((DragScrollBar) findViewById(R.id.dragScrollBar))
@@ -249,16 +261,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         searchView.setMenuItem(searchItem);
 
         return true;
-
-        /*getMenuInflater().inflate(R.menu.menu_car_activity, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView;
-        MenuItem item = menu.findItem(R.id.action_searchable_activity);
-
-        searchView.setSearchableInfo( searchManager.getSearchableInfo( getComponentName() ) );
-        searchView.setQueryHint( getResources().getString(R.string.search_hint) );
-*/
     }
 
     @Override

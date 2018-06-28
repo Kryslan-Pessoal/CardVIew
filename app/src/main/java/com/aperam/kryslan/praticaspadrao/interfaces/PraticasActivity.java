@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
@@ -255,7 +253,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //SEARCHVIEW
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_praticas_activity, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchItem);

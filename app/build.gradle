@@ -62,4 +62,7 @@ dependencies {
 
     //SEARCHVIEW
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
+    //FLOAT SEARCHVIEW
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
 }

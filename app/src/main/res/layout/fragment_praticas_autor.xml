@@ -3,19 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"
+        app:floatingSearch_leftActionMode="showSearch"
+
+        app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
+        app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
+        app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
+        app:floatingSearch_searchHint="Pesquisa de Categoria..."
+        app:floatingSearch_showSearchKey="false"
+        app:floatingSearch_suggestionsListAnimDuration="250" />
+    <!--app:floatingSearch_menu="@menu/menu_main"-->
+
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/floating_search_view"
         android:id="@+id/rv_list_autor"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <com.turingtechnologies.materialscrollbar.DragScrollBar
+        android:layout_below="@+id/floating_search_view"
         android:id="@+id/dragScrollBar"
         android:layout_width="wrap_content"
         app:msb_recyclerView="@id/rv_list_autor"
         app:msb_lightOnTouch="true"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+
         android:layout_alignParentEnd="true"/>
 </RelativeLayout>

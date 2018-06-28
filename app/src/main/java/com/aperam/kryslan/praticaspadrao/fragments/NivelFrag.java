@@ -14,6 +14,7 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
@@ -47,6 +48,10 @@ public class NivelFrag extends AreaEmitenteFrag {
         CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
+
+        //FLOATING SEARCHVIEW
+        FloatingSearchView mSearchView = view.findViewById(R.id.floating_search_view);
+        mSearchView.setVisibility(View.GONE);  //Tira o searchView desse fragment.
 
         return view;
     }

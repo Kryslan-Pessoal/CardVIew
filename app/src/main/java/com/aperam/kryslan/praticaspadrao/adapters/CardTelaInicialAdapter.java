@@ -129,13 +129,13 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getTextoPrincipal());  //Está fora pois é chamado em todos os casos.
 
-        try {
+       /* try {
             YoYo.with(Techniques.FadeInUp)  //Defina a animação na hora de carregar cada Card.
                     .duration(700)
                     .playOn(myViewHolder.itemView);
         } catch (Exception ignored) {
 
-        }
+        }*/
     }
 
     @Override

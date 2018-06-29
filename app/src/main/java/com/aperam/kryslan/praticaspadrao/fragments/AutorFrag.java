@@ -63,7 +63,7 @@ public class AutorFrag extends AreaEmitenteFrag{
 
         //FLOATING SEARCHVIEW
         mSearchView = view.findViewById(R.id.floating_search_view);
-        mSearchView.setSearchBarTitle("Pesquisa de Autor...");
+        mSearchView.setSearchHint("Pesquisa de Autor...");
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {

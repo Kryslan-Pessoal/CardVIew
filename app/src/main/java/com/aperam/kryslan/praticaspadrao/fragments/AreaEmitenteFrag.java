@@ -3,6 +3,7 @@ package com.aperam.kryslan.praticaspadrao.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
@@ -30,16 +32,29 @@ import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack {
     private RecyclerView mRecyclerView;
     private List<TelaInicialCards> mList, filterList = new ArrayList<>();
     private TelaInicialCards telaInicialCards;
     private FloatingSearchView mSearchView;
+    private String queryPesquisa;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(savedInstanceState == null) {
+            mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        }else{
+            mList = savedInstanceState.getParcelableArrayList("mList");
+        }
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        final View view = inflater.inflate(R.layout.fragment_praticas, container, false);  //pegando o fragment.
 
         mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
@@ -75,17 +90,17 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
 //        boolean formatoLista = getArguments().getBoolean("formatoLista");
 
-        mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
 
         //FLOATING SEARCHVIEW
         mSearchView = view.findViewById(R.id.floating_search_view);
-        mSearchView.setSearchBarTitle("Pesquisa de Área Emitente...");
+        mSearchView.setSearchHint("Pesquisa de Área Emitente...");
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                queryPesquisa = newQuery;
                 mSearchView.showProgress();
                 filterList.clear();
                 if(TextUtils.isEmpty(newQuery)){
@@ -197,4 +212,13 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putParcelableArrayList("mList", (ArrayList<TelaInicialCards>) mList);
+        savedInstanceState.putString("pesquisa", queryPesquisa);
+    }
+
 }

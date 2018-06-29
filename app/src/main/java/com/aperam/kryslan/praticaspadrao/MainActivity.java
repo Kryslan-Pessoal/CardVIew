@@ -65,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setHorizontalFadingEdgeEnabled(true);  //Aplica efeito de aparição e desaparição suave no rolamento do tabLayout na parte da esquerda.
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-            }
+            public void onTabSelected(TabLayout.Tab tab) {}
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {}
             @Override

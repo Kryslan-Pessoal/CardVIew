@@ -85,7 +85,7 @@ public class DrawerCreator {
                     .withAccountHeader(headerDrawer)
                     .build();
             //PraticasActivity
-        }else{
+        }else {
             drawer = new DrawerBuilder()
                     .withActivity(a)
                     .withToolbar(mToolbar)
@@ -116,6 +116,8 @@ public class DrawerCreator {
                     .withAccountHeader(headerDrawer)
                     .build();
         }
+
+
 
         List<PrimaryDrawerItem> listCategorias = getSetCategoryList();  //Cria a lista de categorias que fica no DrawerCreator.
         if(listCategorias != null && listCategorias.size() > 0){

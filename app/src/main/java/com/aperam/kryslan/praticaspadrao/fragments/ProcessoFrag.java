@@ -60,7 +60,7 @@ public class ProcessoFrag extends AreaEmitenteFrag {
 
         //FLOATING SEARCHVIEW
         mSearchView = view.findViewById(R.id.floating_search_view);
-        mSearchView.setSearchBarTitle("Pesquisa de Processo...");
+        mSearchView.setSearchHint("Pesquisa de Processo...");
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {

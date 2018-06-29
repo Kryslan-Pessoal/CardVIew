@@ -59,62 +59,62 @@ public class DrawerCreator {
         //MainActivity
         if(viewPager != null) {  //Se viewPager for diferente de null, quer dizer que o Drawer será criado na MainActivity.
             drawer = new DrawerBuilder()
-                    .withActivity(a)
-                    .withToolbar(mToolbar)
-                    .withDisplayBelowStatusBar(true)
-                    .withActionBarDrawerToggleAnimated(true)
-                    .withDrawerGravity(Gravity.START)
-                    .withSavedInstance(savedInstanceState)
-                    .withSelectedItem(1)
-                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                        @Override
-                        public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
-                            if (i < 9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
-                                viewPager.setCurrentItem(i - 1);  //muda a posição da Tab e página selecionada sempre que mudar a posição no DrawerCreator.
-                            }
-                            return false;  //Faz o drawer fechar ou não. (false fecha)
+                .withActivity(a)
+                .withToolbar(mToolbar)
+                .withDisplayBelowStatusBar(true)
+                .withActionBarDrawerToggleAnimated(true)
+                .withDrawerGravity(Gravity.START)
+                .withSavedInstance(savedInstanceState)
+                .withSelectedItem(1)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
+                        if (i < 9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
+                            viewPager.setCurrentItem(i - 1);  //muda a posição da Tab e página selecionada sempre que mudar a posição no DrawerCreator.
                         }
-                    })
-                    .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                        @Override
-                        public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
-                            Toast.makeText(c, "Clique longo" + position, Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                    })
-                    .withAccountHeader(headerDrawer)
-                    .build();
+                        return false;  //Faz o drawer fechar ou não. (false fecha)
+                    }
+                })
+                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
+                        Toast.makeText(c, "Clique longo" + position, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                })
+                .withAccountHeader(headerDrawer)
+                .build();
             //PraticasActivity
         }else {
             drawer = new DrawerBuilder()
-                    .withActivity(a)
-                    .withToolbar(mToolbar)
-                    .withDisplayBelowStatusBar(true)
-                    .withActionBarDrawerToggleAnimated(true)
-                    .withDrawerGravity(Gravity.START)
-                    .withSavedInstance(savedInstanceState)
-                    .withSelectedItem(1)
-                    .withActionBarDrawerToggle(false)  //Esta condição só possúi aqui, ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
-                    //Esta também, faz o botão voltar no AppBar realmente voltar.
-                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                        @Override
-                        public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
-                            Intent intent = new Intent();
-                            intent.putExtra("tabSelecionada",i);  //Passa a posição do item no drawer para a activity anterior (Main) para essa setar a tab correta.
-                            a.setResult(2,intent);  //Manda resultCode 2 para rodar a função no if apenas se ela voltar por este caminho, e não por onCreate normal etc.
-                            a.finish();
-                            return false;  //Faz o drawer fechar ou não. (false fecha)
-                        }
-                    })
-                    .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                        @Override
-                        public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
-                            Toast.makeText(c, "Clique longo" + position, Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                    })
-                    .withAccountHeader(headerDrawer)
-                    .build();
+            .withActivity(a)
+            .withToolbar(mToolbar)
+            .withDisplayBelowStatusBar(true)
+            .withActionBarDrawerToggleAnimated(true)
+            .withDrawerGravity(Gravity.START)
+            .withSavedInstance(savedInstanceState)
+            .withSelectedItem(1)
+            .withActionBarDrawerToggle(false)  //Esta condição só possúi aqui, ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
+            //Esta também, faz o botão voltar no AppBar realmente voltar.
+            .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                @Override
+                public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
+                    Intent intent = new Intent();
+                    intent.putExtra("tabSelecionada",i);  //Passa a posição do item no drawer para a activity anterior (Main) para essa setar a tab correta.
+                    a.setResult(2,intent);  //Manda resultCode 2 para rodar a função no if apenas se ela voltar por este caminho, e não por onCreate normal etc.
+                    a.finish();
+                    return false;  //Faz o drawer fechar ou não. (false fecha)
+                }
+            })
+            .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
+                    Toast.makeText(c, "Clique longo" + position, Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            })
+            .withAccountHeader(headerDrawer)
+            .build();
         }
 
 

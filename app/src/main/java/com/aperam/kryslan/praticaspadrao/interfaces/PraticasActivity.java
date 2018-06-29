@@ -357,9 +357,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //outState.putParcelable("praticasCards", praticasCards);
     }
 
-
-
-
     /*@Override
     public void onBackPressed() {
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,12 +43,12 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
     private String queryPesquisa;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
-        }else{
+        } else {
             mList = savedInstanceState.getParcelableArrayList("mList");
         }
     }
@@ -90,6 +91,9 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
 //        boolean formatoLista = getArguments().getBoolean("formatoLista");
 
+        if(mList == null){
+            mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());
+        }
         CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

@@ -1,8 +1,11 @@
 package com.aperam.kryslan.praticaspadrao.interfaces;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,11 +17,15 @@ import android.widget.ProgressBar;
 import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
+import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
+import com.mikepenz.materialdrawer.AccountHeader;
 
 public class DocumentoDrive extends MainActivity{
     private WebView webview;
     private ProgressBar progress;
     private SwipeRefreshLayout swipeLayout;
+
+    Activity c = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -27,7 +34,7 @@ public class DocumentoDrive extends MainActivity{
         setContentView(R.layout.activity_documento_drive);
         Toolbar toolbar = findViewById(R.id.my_toolbar_documento_drive);
 
-        ListaPraticas informacoesDaPratica = getIntent().getExtras().getParcelable("informacoesDaPratica");
+        ListaPraticas informacoesDaPratica = getIntent().getExtras().getParcelable("praticascards");
 
         if (toolbar != null) {  //Mudas o nome do título da Tollbar para o nome da prática.
             setSupportActionBar(toolbar);
@@ -68,6 +75,14 @@ public class DocumentoDrive extends MainActivity{
                 R.color.colorPrimary,
                 R.color.colorAccent,
                 R.color.md_red_500);
+
+        //HEADER
+        DrawerCreator drawerClass = new DrawerCreator();
+        AccountHeader headerDrawer = drawerClass.DraweHeaderBuilder(this, savedInstanceState);
+
+        ViewPager viewPager = null;
+        //NAVIGATIONDRAWER
+        drawerClass.DrawerBodyBuilder(c, savedInstanceState, toolbar, viewPager, c, headerDrawer);
     }
 
     private void setWebViewClient(WebView webview) {

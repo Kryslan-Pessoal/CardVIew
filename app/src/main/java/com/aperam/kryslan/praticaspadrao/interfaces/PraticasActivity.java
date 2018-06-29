@@ -1,6 +1,7 @@
 package com.aperam.kryslan.praticaspadrao.interfaces;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -45,6 +46,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     private TelaInicialCards telaInicialCards;
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    Activity activity = this;
 
     private MaterialSearchView searchView;
 
@@ -149,10 +152,10 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
             fotoUrl = "https://drive.google.com/uc?id=10qBgvIQGIl3oGg0fzBo876NKs1VDVKXy";
         }
 
-            Picasso.get().load(fotoUrl)  //Pega a imagem da internet e coloca no ImageView.
-                    .resize(1280, 720)
-                    .centerCrop()
-                    .into(ivCar);
+        Picasso.get().load(fotoUrl)  //Pega a imagem da internet e coloca no ImageView.
+                .resize(1280, 720)
+                .centerCrop()
+                .into(ivCar);
 //        ivCar.setController( dc );
 
         //HEADER
@@ -274,9 +277,9 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     public void onClickListener(View view, int position) {
         Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
         ListaPraticas informacoesDaPratica = mList.get(position);
-        intent.putExtra("informacoesDaPratica", informacoesDaPratica);
+        intent.putExtra("praticascards", informacoesDaPratica);
 
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -366,4 +369,22 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         super.onBackPressed();
     }*/
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(resultCode==2) {  //Só será dois, se for fechado pelas activitys Frag, passando o comando de voltar passando informações: startActivityForResult.
+            int i = data.getIntExtra("tabSelecionada", 2);  //Retorna o valor do intent como 2, e a tab selecionada.
+            Intent intent = new Intent();
+            intent.putExtra("tabSelecionada",i);  //Passa a posição do item no drawer para a activity anterior (Main) para essa setar a tab correta.
+            activity.setResult(2,intent);  //Manda resultCode 2 para rodar a função no if apenas se ela voltar por este caminho, e não por onCreate normal etc.
+            activity.finish();
+            /*if (i < 9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
+                viewPager.setCurrentItem(i - 1);
+            }else{  //Se for maior do que o número de tabs existentes, ele retorna para a tab um, mas IMPLEMENTAR FUTURAMENTE.
+                viewPager.setCurrentItem(0);
+            }*/
+        }
+    }
 }

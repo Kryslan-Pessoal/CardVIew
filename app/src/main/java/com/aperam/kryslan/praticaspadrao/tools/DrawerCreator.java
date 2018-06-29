@@ -103,6 +103,7 @@ public class DrawerCreator {
                     intent.putExtra("tabSelecionada",i);  //Passa a posição do item no drawer para a activity anterior (Main) para essa setar a tab correta.
                     a.setResult(2,intent);  //Manda resultCode 2 para rodar a função no if apenas se ela voltar por este caminho, e não por onCreate normal etc.
                     a.finish();
+
                     return false;  //Faz o drawer fechar ou não. (false fecha)
                 }
             })
@@ -116,8 +117,6 @@ public class DrawerCreator {
             .withAccountHeader(headerDrawer)
             .build();
         }
-
-
 
         List<PrimaryDrawerItem> listCategorias = getSetCategoryList();  //Cria a lista de categorias que fica no DrawerCreator.
         if(listCategorias != null && listCategorias.size() > 0){

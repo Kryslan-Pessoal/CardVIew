@@ -30,7 +30,7 @@ public class BdLite {
         bd.delete("pratica", "nome = ? " , new String[]{"" + pratica.getNumero()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
     }
 
-    public List<ListaPraticas> buscar(ListaPraticas pratica){
+    public List<ListaPraticas> buscar(){
         List<ListaPraticas> list = new ArrayList<ListaPraticas>();
         String[] colunas = new String[]{"_id", "nome", "numero"};
         Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id ASC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.

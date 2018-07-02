@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BDCore extends SQLiteOpenHelper {
     private static final String NOME_BD = "teste";
-    private static final int VERSAO_BD = 6;
+    private static final int VERSAO_BD = 1;
 
     //Essa chamada faz: Se o banco existir, ele chama ele, se não existir, ele irá criar um novo, se tiver uma varsão nova do BdLite
     //Ele vai destruir e reconstruir o banco

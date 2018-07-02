@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.DocumentoDrive;
@@ -49,7 +50,9 @@ public class HistoricoFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = AreaEmitenteBD.GetAreaEmitenteBdLista();
+        BdLite bd = new BdLite(view.getContext());
+
+        mList = bd.buscar();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

@@ -23,7 +23,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
@@ -275,6 +277,11 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     @Override
     public void onClickListener(View view, int position) {
+        //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
+        BdLite bd = new BdLite(activity);
+        bd.inserir(mList.get(position));
+
+        //CHAMANDO PRÓXIMA ACTIVITY (DocumentoDrive).
         Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
         ListaPraticas informacoesDaPratica = mList.get(position);
         intent.putExtra("praticascards", informacoesDaPratica);

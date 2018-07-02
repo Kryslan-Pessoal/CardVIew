@@ -9,6 +9,7 @@ import com.aperam.kryslan.praticaspadrao.fragments.AreasRelacionadasFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.AutorFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.DataDeVigenciaFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.FavoritosFrag;
+import com.aperam.kryslan.praticaspadrao.fragments.HistoricoFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.NivelFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.ProcessoFrag;
 import com.aperam.kryslan.praticaspadrao.fragments.RestritoFrag;
@@ -41,6 +42,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
                 return new RestritoFrag();
             case 7:
                 return new FavoritosFrag();
+            case 8:
+                return new HistoricoFrag();
         }
 
         return null;

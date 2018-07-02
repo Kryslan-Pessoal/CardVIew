@@ -22,7 +22,8 @@ public class BD extends MainActivity{
                 c.getResources().getString(R.string.nivel),
                 c.getResources().getString(R.string.processo),
                 c.getResources().getString(R.string.restrito),
-                c.getResources().getString(R.string.favoritos)};
+                c.getResources().getString(R.string.favoritos),
+                c.getResources().getString(R.string.historico)};
     }
 
     public static String[] GetAutorList(){

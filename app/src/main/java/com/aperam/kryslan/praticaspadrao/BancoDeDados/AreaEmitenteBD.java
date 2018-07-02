@@ -98,7 +98,7 @@ public class AreaEmitenteBD {
     }
 
 
-    //BD LISTA SIMPLES DAS PRATICAS
+    //BdLite LISTA SIMPLES DAS PRATICAS
     public static List<ListaPraticas> GetAreaEmitenteBdLista() {  //PEGAR DEPOIS NO DOCNIX.
         String[] numero = getNumeroAreaEmitenteBd();
 //        String[] areaEmitente = GetAreasEminetes();

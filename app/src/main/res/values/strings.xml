@@ -4,30 +4,33 @@
     <string name="app_name">(Sou + Seguro)</string>
 
     <!-- A -->
-    <string name="areaEminente">Área Emitente</string>
-    <string name="areasRelacionadas">Áreas Relacionadas</string>
-    <string name="autor">Autor</string>
-    <string name="dataDeVigencia">Data de Vigência</string>
-    <string name="nivel">Nível</string>
-    <string name="processo">Processo</string>
-    <string name="restrito">Restrito</string>
+        <string name="areaEminente">Área Emitente</string>
+        <string name="areasRelacionadas">Áreas Relacionadas</string>
+        <string name="autor">Autor</string>
+        <string name="dataDeVigencia">Data de Vigência</string>
+        <string name="nivel">Nível</string>
+        <string name="processo">Processo</string>
+        <string name="restrito">Restrito</string>
 
     <!-- C -->
-    <string name="configuracao">Configuração</string>
-    <string name="configuracoes">Configurações</string>
+        <string name="configuracao">Configuração</string>
+        <string name="configuracoes">Configurações</string>
 
     <!-- D -->
     <string name="favoritos">Favoritos</string>
 
+    <!--H-->
+        <string name="historico">Histórico</string>
+
     <!-- I -->
-    <string name="informacoesDaPpa">Informações da PPA</string>
+        <string name="informacoesDaPpa">Informações da PPA</string>
 
     <!-- P -->
-    <string name="pesquisaAvancada">Pesquisa Avançada…</string>
+        <string name="pesquisaAvancada">Pesquisa Avançada…</string>
 
     <!-- S -->
-    <string name="SegundaTela">Segunda tela</string>
-    <string name="pesquisar">Pesquisar…</string>
+        <string name="SegundaTela">Segunda tela</string>
+        <string name="pesquisar">Pesquisar…</string>
 
     <!-- T -->
 </resources>

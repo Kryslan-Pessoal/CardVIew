@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.pager);
         TabLayout tabLayout = findViewById(R.id.tab);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(c)));  //Criando as Tabs com seus nomes baseado no BD.
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(c)));  //Criando as Tabs com seus nomes baseado no BdLite.
         tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         // check if the request code is same as what is passed  here it is 2
         if(resultCode==2) {  //Só será dois, se for fechado pelas activitys Frag, passando o comando de voltar passando informações: startActivityForResult.
             int i = data.getIntExtra("tabSelecionada", 2);  //Retorna o valor do intent como 2, e a tab selecionada.
-            if (i < 9) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
+            if (i < 10) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
                 viewPager.setCurrentItem(i - 1);
             }else{  //Se for maior do que o número de tabs existentes, ele retorna para a tab um, mas IMPLEMENTAR FUTURAMENTE.
                 viewPager.setCurrentItem(0);

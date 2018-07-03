@@ -3,23 +3,21 @@ package com.aperam.kryslan.praticaspadrao.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
@@ -33,7 +31,6 @@ import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack {
     private RecyclerView mRecyclerView;
@@ -129,11 +126,24 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
+
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
+        intent.putExtra("praticascards", mList.get(position));
+
+        // TRANSITIONS, CRIANDO ANIMAÇÃO.
+        View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
+        /*View listaPratica = view.findViewById(R.id.rv_list_praticas);
+        View scrollPratica = view.findViewById(R.id.dragScrollBarActivityPraticas);*/
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), Pair.create(imagePratica, "element1"));
+
+        getActivity().startActivity(intent, options.toBundle());
+
+        /*Intent intent = new Intent(getActivity(), PraticasActivity.class);
         telaInicialCards = mList.get(position);
         intent.putExtra("praticascards", telaInicialCards);
 
-        getActivity().startActivityForResult(intent, 1);
+        getActivity().startActivityForResult(intent, 1);*/
 //        startActivity(intent);
         // TRANSITIONS
         /*if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){

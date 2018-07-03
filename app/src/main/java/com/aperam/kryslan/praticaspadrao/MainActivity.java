@@ -7,6 +7,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
@@ -38,6 +43,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //CRIANDO ANIMAÇÃO.
+        /*Explode transition1 = new Explode();
+        transition1.setDuration(600);
+
+        Fade transition2 = new Fade();
+        transition2.setDuration(600);
+
+        getWindow().setExitTransition(transition1);  //transição na ida.
+        getWindow().setReenterTransition(transition2);  //transição na volta.*/
+
+        TransitionInflater inflater = TransitionInflater.from(this);
+        Transition transition = inflater.inflateTransition(R.transition.transitions);
+
+        getWindow().setSharedElementExitTransition(transition);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

@@ -7,11 +7,17 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.transition.ChangeBounds;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,7 +67,20 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TRANSITIONS
+        // TRANSITIONS, CRIANDO ANIMAÇÃO.
+        /*Explode transition1 = new Explode();
+        transition1.setDuration(600);
+
+        Fade transition2 = new Fade();
+        transition2.setDuration(600);
+
+        getWindow().setEnterTransition(transition1);  //transição recebida de MainActivity.
+        getWindow().setReturnTransition(transition2);  //transição na volta.*/
+
+        TransitionInflater inflater = TransitionInflater.from(this);
+        Transition transition = inflater.inflateTransition(R.transition.transitions);
+
+        getWindow().setSharedElementExitTransition(transition);
         /*if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
                 *//*Explode trans1 = new Explode();
                 trans1.setDuration(3000);
@@ -247,7 +266,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         });*/
 
         //MATERIAL SCROLLBAR
-        ((DragScrollBar) findViewById(R.id.dragScrollBar))
+        ((DragScrollBar) findViewById(R.id.dragScrollBarActivityPraticas))
             .setIndicator(new AlphabetIndicator(c), true)
             .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
 
@@ -279,6 +298,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //CHAMANDO PRÓXIMA ACTIVITY (DocumentoDrive).
         Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
         ListaPraticas informacoesDaPratica = mList.get(position);
+
+
         intent.putExtra("praticascards", informacoesDaPratica);
 
         startActivityForResult(intent, 1);

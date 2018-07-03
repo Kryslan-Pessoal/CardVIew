@@ -65,7 +65,7 @@
             />
 
         <com.turingtechnologies.materialscrollbar.DragScrollBar
-            android:id="@+id/dragScrollBar"
+            android:id="@+id/dragScrollBarActivityPraticas"
             android:layout_width="wrap_content"
             app:msb_recyclerView="@id/rv_list_praticas"
             app:msb_lightOnTouch="true"

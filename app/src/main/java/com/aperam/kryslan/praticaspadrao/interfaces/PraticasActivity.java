@@ -251,7 +251,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
             .setIndicator(new AlphabetIndicator(c), true)
             .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
 
-
     }
 
 
@@ -277,20 +276,21 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     @Override
     public void onClickListener(View view, int position) {
-        //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
-        BdLite bd = new BdLite(activity);
-        bd.inserir(mList.get(position));
-
         //CHAMANDO PRÓXIMA ACTIVITY (DocumentoDrive).
         Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
         ListaPraticas informacoesDaPratica = mList.get(position);
         intent.putExtra("praticascards", informacoesDaPratica);
 
         startActivityForResult(intent, 1);
+
+        //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
+        BdLite bd = new BdLite(activity);
+        bd.inserir(mList.get(position));
     }
 
     @Override
     public void onLongPressClickListener(View view, int position) {
+
         String[] corpoDialog = new String[4];
         corpoDialog[0] = "TÍTULO: " + mList.get(position).getTitulo();
         corpoDialog[1] = "Nº: " + mList.get(position).getNumero();

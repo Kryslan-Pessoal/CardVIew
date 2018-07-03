@@ -6,9 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.turingtechnologies.materialscrollbar.INameableAdapter;
@@ -21,15 +24,15 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
     private Context c;
-    private String tipoLista;
+    private boolean comLixeira;
 
 
     public ListaPraticasAdapter(Context c, List<ListaPraticas> lista){
         this.c = c;
         mList = lista;
         mLayoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
+
 
     @NonNull
     @Override

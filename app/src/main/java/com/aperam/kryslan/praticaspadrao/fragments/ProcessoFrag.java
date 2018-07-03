@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.R;

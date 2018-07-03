@@ -168,7 +168,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
     }
 
-    private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener{  //Ao clicar nos itens lança um Listener, para fazer a animação.
+    public static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener{  //Ao clicar nos itens lança um Listener, para fazer a animação.
         private Context mContext;  //Pega várias informações do app no tempo de execução para usar essas informações.
         private GestureDetector mGestureDetector;
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;

@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.SQLite;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,18 +23,20 @@ public class BdLite {
         ContentValues valores = new ContentValues();
         valores.put("nome", pratica.getTitulo());
         valores.put("numero", pratica.getNumero());
+        valores.put("autor", pratica.getNumero());
+        valores.put("data", pratica.getNumero());
 
         bd.insert("pratica", null, valores);
     }
 
     public void deletar(ListaPraticas pratica){
-        bd.delete("pratica", "nome = ? " , new String[]{"" + pratica.getNumero()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+        bd.delete("pratica", "_id = ? " , new String[]{"" + pratica.getNumeroId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
     }
 
     public List<ListaPraticas> buscar(){
         List<ListaPraticas> list = new ArrayList<ListaPraticas>();
-        String[] colunas = new String[]{"_id", "nome", "numero"};
-        Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id ASC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+        String[] colunas = new String[]{"_id", "nome", "numero", "autor", "data"};
+        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id ASC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
 
         if(cursor.getCount() > 0){
             cursor.moveToFirst();

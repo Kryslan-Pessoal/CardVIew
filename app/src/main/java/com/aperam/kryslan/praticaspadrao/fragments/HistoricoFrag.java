@@ -1,21 +1,27 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.DocumentoDrive;
+import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
@@ -27,12 +33,14 @@ public class HistoricoFrag extends AreaEmitenteFrag {
 
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
+    BdLite bd = null;
+    RecyclerView mRecyclerView = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas_autor, container, false);  //pegando o fragment.
 
-        final RecyclerView mRecyclerView = view.findViewById(R.id.rv_list_autor);
+        mRecyclerView = view.findViewById(R.id.rv_list_autor);
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -50,8 +58,7 @@ public class HistoricoFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        BdLite bd = new BdLite(view.getContext());
-
+        bd = new BdLite(getContext());
         mList = bd.buscar();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
@@ -60,6 +67,8 @@ public class HistoricoFrag extends AreaEmitenteFrag {
         ((DragScrollBar) view.findViewById(R.id.dragScrollBar))
                 .setIndicator(new AlphabetIndicator(view.getContext()), true)
                 .setHandleColour(getResources().getColor(R.color.colorPrimary));  //CONFIGURAR O SAVEDINSTANCESTATE.
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(view.getContext(), mRecyclerView, this));  //Ativa o longPress.
 
         //FLOATING SEARCHVIEW
         mSearchView = view.findViewById(R.id.floating_search_view);
@@ -97,5 +106,26 @@ public class HistoricoFrag extends AreaEmitenteFrag {
 
         startActivityForResult(intent, 1);
     }
+
+    @Override
+    public void onLongPressClickListener(View view, int position) {
+
+        bd.deletar(mList.get(position));
+
+        mList = bd.buscar();
+        ListaPraticasAdapter adapter = new ListaPraticasAdapter(getActivity(), mList);
+        mRecyclerView.setAdapter(adapter);
+
+        /*String[] corpoDialog = new String[4];
+        corpoDialog[0] = "TÍTULO: " + mList.get(position).getTitulo();
+        corpoDialog[1] = "Nº: " + mList.get(position).getNumero();
+        corpoDialog[2] = "AUTOR: " + mList.get(position).getAutor();
+        corpoDialog[3] = "DATA: " + mList.get(position).getData();
+        new MaterialDialog.Builder(view.getContext())  //Cria um Dialog com informações da PPA clicada.
+                .title(R.string.informacoesDaPpa)
+                .items(corpoDialog)
+                .show();*/
+    }
+
 
 }

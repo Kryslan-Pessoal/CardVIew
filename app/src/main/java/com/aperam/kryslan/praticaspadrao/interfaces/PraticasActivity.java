@@ -18,14 +18,17 @@ import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
@@ -146,7 +149,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         //CONFIGURA O TOOLBAR.
         mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
-        mCollapsingToolbarLayout.setTitle(telaInicialCards.getTextoPrincipal());
         mCollapsingToolbarLayout.setExpandedTitleTextColor(ColorStateList.valueOf(WHITE));
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(ColorStateList.valueOf(WHITE));
 
@@ -195,8 +197,21 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         //SEARCHVIEW
         searchView = findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);  //Para o título aparecer e não ser tampado pela caixa do searchView, ele fica oculto por padrão.
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                searchView.setVisibility(View.VISIBLE);  //Mas ao abrir ele, ele volta a aparecer.
+            }
+            @Override
+            public void onSearchViewClosed() {
+                searchView.setVisibility(View.GONE);  //E ao fechar ele some novamente.
+            }
+        });
+
         searchView.setHint("Procura");
         searchView.setSuggestions(getTituloAreaEmitenteBd());
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -272,7 +287,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //SEARCHVIEW
@@ -282,6 +296,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         searchView.setMenuItem(searchItem);
 
         return true;
+
+
     }
 
     @Override
@@ -375,8 +391,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == android.R.id.home){
-            finish();
+        if(id == R.id.home){
+            Toast.makeText(c, "pesquisa", Toast.LENGTH_SHORT).show();
         }
         return true;
     }
@@ -415,4 +431,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
             }*/
         }
     }
+
+
 }

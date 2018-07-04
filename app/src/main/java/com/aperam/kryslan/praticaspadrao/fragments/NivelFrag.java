@@ -1,8 +1,11 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,12 +58,19 @@ public class NivelFrag extends AreaEmitenteFrag {
 
         return view;
     }
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
         TelaInicialCards telaInicialCards = mList.get(position);
         intent.putExtra("praticascards", telaInicialCards);
 
-        getActivity().startActivityForResult(intent, 1);
+        // TRANSITIONS, CRIANDO ANIMAÇÃO.
+        View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                Pair.create(imagePratica, "element1"));
+
+        getActivity().startActivityForResult(intent, 1,options.toBundle());
     }
 }

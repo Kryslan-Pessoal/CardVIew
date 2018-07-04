@@ -94,7 +94,7 @@ public class DrawerCreator {
             .withDrawerGravity(Gravity.START)
             .withSavedInstance(savedInstanceState)
             .withSelectedItem(1)
-            .withActionBarDrawerToggle(false)  //Esta condição só possúi aqui, ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
+            //.withActionBarDrawerToggle(false)  //Esta condição só possúi aqui, ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
             //Esta também, faz o botão voltar no AppBar realmente voltar.
             .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                 @Override
@@ -127,7 +127,6 @@ public class DrawerCreator {
         drawer.addItem(new DividerDrawerItem());
         drawer.addItem(new PrimaryDrawerItem().withName(R.string.configuracoes).withIcon(R.drawable.settings));
         //drawer.addItem(new SwitchDrawerItem().withName("Lista resumida").withChecked(false).withOnCheckedChangeListener(mOnCheckedChangeListener));
-
     }
 
 

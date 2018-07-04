@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
@@ -29,6 +34,12 @@ public class DocumentoDrive extends MainActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+
+        TransitionInflater inflater = TransitionInflater.from(this);  //Recebe a animação.
+        Transition transition = inflater.inflateTransition(R.transition.transitions);
+
+        getWindow().setSharedElementExitTransition(transition);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_documento_drive);
@@ -37,10 +48,13 @@ public class DocumentoDrive extends MainActivity{
         ListaPraticas informacoesDaPratica = getIntent().getExtras().getParcelable("praticascards");
 
         if (toolbar != null) {  //Mudas o nome do título da Tollbar para o nome da prática.
-            setSupportActionBar(toolbar);
+           /* setSupportActionBar(toolbar);
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(informacoesDaPratica.getTitulo());
+            getSupportActionBar().setTitle(informacoesDaPratica.getTitulo());*/
         }
+
+        TextView textViewTitulo = findViewById(R.id.tvDocumentoDriveTitulo);
+        textViewTitulo.setText(informacoesDaPratica.getTitulo());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

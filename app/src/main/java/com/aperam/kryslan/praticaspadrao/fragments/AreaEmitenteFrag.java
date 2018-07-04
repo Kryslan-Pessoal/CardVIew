@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -124,6 +125,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         return view;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
 
@@ -132,12 +134,12 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
-        /*View listaPratica = view.findViewById(R.id.rv_list_praticas);
-        View scrollPratica = view.findViewById(R.id.dragScrollBarActivityPraticas);*/
+         /*View scrollPratica = view.findViewById(R.id.dragScrollBarActivityPraticas);*/
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), Pair.create(imagePratica, "element1"));
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                Pair.create(imagePratica, "element1"));
 
-        getActivity().startActivity(intent, options.toBundle());
+        getActivity().startActivityForResult(intent, 1,options.toBundle());
 
         /*Intent intent = new Intent(getActivity(), PraticasActivity.class);
         telaInicialCards = mList.get(position);

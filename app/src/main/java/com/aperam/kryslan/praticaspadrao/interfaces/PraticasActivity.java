@@ -8,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -80,10 +81,12 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         getWindow().setEnterTransition(transition1);  //transição recebida de MainActivity.
         getWindow().setReturnTransition(transition2);  //transição na volta.*/
 
-        TransitionInflater inflater = TransitionInflater.from(this);
+        TransitionInflater inflater = TransitionInflater.from(this);  //Recebe a animação.
         Transition transition = inflater.inflateTransition(R.transition.transitions);
 
         getWindow().setSharedElementExitTransition(transition);
+
+
         /*if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
                 *//*Explode trans1 = new Explode();
                 trans1.setDuration(3000);
@@ -157,8 +160,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         setSupportActionBar(mToolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(false);*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);
 
         ImageView ivCar = findViewById(R.id.iv_imagem_ilustrativa);
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
@@ -188,6 +191,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //NAVIGATIONDRAWER
         drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, null, this, headerDrawer);
 
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
         //TRATAR A FUNÇÃO DE VOLTAR.
 
@@ -208,10 +212,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                 searchView.setVisibility(View.GONE);  //E ao fechar ele some novamente.
             }
         });
-
         searchView.setHint("Procura");
         searchView.setSuggestions(getTituloAreaEmitenteBd());
-
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -230,7 +232,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                 recyclerView.setAdapter(adapter);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(newText)) {
@@ -248,6 +249,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                 return true;
             }
         });
+
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -318,7 +320,12 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         intent.putExtra("praticascards", informacoesDaPratica);
 
-        startActivityForResult(intent, 1);
+        // TRANSITIONS, CRIANDO ANIMAÇÃO.
+        View textoAutor = view.findViewById(R.id.tituloListaPraticas);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(textoAutor, "element1"));
+
+        activity.startActivityForResult(intent, 1, options.toBundle());
 
         //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
         BdLite bd = new BdLite(activity);

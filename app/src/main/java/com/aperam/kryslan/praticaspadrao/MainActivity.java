@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setExitTransition(transition1);  //transição na ida.
         getWindow().setReenterTransition(transition2);  //transição na volta.*/
 
-        TransitionInflater inflater = TransitionInflater.from(this);
+        TransitionInflater inflater = TransitionInflater.from(this);  //Recebe a animação quando está em outr activity e volta para esta.
         Transition transition = inflater.inflateTransition(R.transition.transitions);
 
         getWindow().setSharedElementExitTransition(transition);

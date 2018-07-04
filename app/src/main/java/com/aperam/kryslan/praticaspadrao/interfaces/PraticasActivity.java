@@ -323,7 +323,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View textoAutor = view.findViewById(R.id.tituloListaPraticas);
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(textoAutor, "element1"));
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(textoAutor, "element2"));  //Não vai achar o element2
+        //propositalmente para causar uma animação suave.
 
         activity.startActivityForResult(intent, 1, options.toBundle());
 

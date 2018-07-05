@@ -8,13 +8,15 @@ public class TelaInicialCards implements Parcelable{
     private int id;
     private String fotoUrl;
     private String textoPrincipal;
+    private String grupo;
     //private String link;
 
     public TelaInicialCards(){}
-    public TelaInicialCards(int id, String fotoUrl, String textoPrincipal){
+    public TelaInicialCards(int id, String fotoUrl, String textoPrincipal, String grupo){
         this.id = id;
         this.fotoUrl = fotoUrl;
         this.textoPrincipal = textoPrincipal;
+        this.grupo = grupo;
         //this.link = link;
     }
 
@@ -42,6 +44,14 @@ public class TelaInicialCards implements Parcelable{
         this.textoPrincipal = textoPrincipal;
     }
 
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
     // PARCELABLE
     @Override
     public int describeContents() {
@@ -52,6 +62,7 @@ public class TelaInicialCards implements Parcelable{
         setId(parcel.readInt());
         setFotoUrl(parcel.readString());
         setTextoPrincipal(parcel.readString());
+        setGrupo(parcel.readString());
     }
 
     @Override
@@ -59,6 +70,7 @@ public class TelaInicialCards implements Parcelable{
         dest.writeInt( getId() );
         dest.writeString( getFotoUrl() );
         dest.writeString( getTextoPrincipal() );
+        dest.writeString( getGrupo() );
     }
 
     public static final Parcelable.Creator<TelaInicialCards> CREATOR = new Parcelable.Creator<TelaInicialCards>(){

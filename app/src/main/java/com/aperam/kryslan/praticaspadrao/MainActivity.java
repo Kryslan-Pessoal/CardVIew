@@ -7,16 +7,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.ChangeBounds;
-import android.transition.Explode;
-import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
@@ -26,6 +22,8 @@ import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.List;
+
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetTabsBd;
 
 public class MainActivity extends AppCompatActivity {
     private Context c = this;
@@ -44,17 +42,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //CRIANDO ANIMAÇÃO.
-        /*Explode transition1 = new Explode();
-        transition1.setDuration(600);
-
-        Fade transition2 = new Fade();
-        transition2.setDuration(600);
-
-        getWindow().setExitTransition(transition1);  //transição na ida.
-        getWindow().setReenterTransition(transition2);  //transição na volta.*/
-
-        TransitionInflater inflater = TransitionInflater.from(this);  //Recebe a animação quando está em outr activity e volta para esta.
+        //ANIMAÇÃO.
+        TransitionInflater inflater = TransitionInflater.from(this);  //Recebe a animação quando está em outra activity e volta para esta.
         Transition transition = inflater.inflateTransition(R.transition.transitions);
 
         getWindow().setSharedElementExitTransition(transition);
@@ -79,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.pager);
         TabLayout tabLayout = findViewById(R.id.tab);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), BD.GetTabsBd(c)));  //Criando as Tabs com seus nomes baseado no BdLite.
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetTabsBd(c)));  //Criando as Tabs com seus nomes baseado no BdLite.
         tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);

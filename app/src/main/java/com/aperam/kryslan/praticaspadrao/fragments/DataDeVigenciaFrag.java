@@ -8,24 +8,19 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.DataDeVigenciaBD;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
-import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetDataDeVigenciaMainActivity;
 
 public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
     List<TelaInicialCards> mList;
@@ -52,7 +47,7 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = DataDeVigenciaBD.GetDataDeVigenciaBd(container.getContext());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        mList = GetDataDeVigenciaMainActivity();  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

@@ -24,7 +24,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BD.GetTabsBd;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetTabsBd;
+
 
 public class DrawerCreator {
     private Context c;

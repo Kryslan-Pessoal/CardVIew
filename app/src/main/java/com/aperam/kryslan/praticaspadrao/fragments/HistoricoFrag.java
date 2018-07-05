@@ -1,27 +1,24 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.DocumentoDrive;
-import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
-import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
@@ -36,11 +33,15 @@ public class HistoricoFrag extends AreaEmitenteFrag {
     BdLite bd = null;
     RecyclerView mRecyclerView = null;
 
+    Context c = null;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas_autor, container, false);  //pegando o fragment.
 
+        c = view.getContext();
         mRecyclerView = view.findViewById(R.id.rv_list_autor);
+
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -98,33 +99,28 @@ public class HistoricoFrag extends AreaEmitenteFrag {
         return view;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
         ListaPraticas informacoesDaPratica = mList.get(position);
         intent.putExtra("praticascards", informacoesDaPratica);
 
-        startActivityForResult(intent, 1);
+        // TRANSITIONS, CRIANDO ANIMAÇÃO.
+        View imagePratica = view.findViewById(R.id.tituloListaPraticas);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                Pair.create(imagePratica, "element1"));
+
+        getActivity().startActivityForResult(intent, 1,options.toBundle());
     }
 
     @Override
     public void onLongPressClickListener(View view, int position) {
+        bd.deletar(mList.get(position));  //Deleta do banco de dados o item da lista clicado da tab histórico
 
-        bd.deletar(mList.get(position));
-
-        mList = bd.buscar();
-        ListaPraticasAdapter adapter = new ListaPraticasAdapter(getActivity(), mList);
-        mRecyclerView.setAdapter(adapter);
-
-        /*String[] corpoDialog = new String[4];
-        corpoDialog[0] = "TÍTULO: " + mList.get(position).getTitulo();
-        corpoDialog[1] = "Nº: " + mList.get(position).getNumero();
-        corpoDialog[2] = "AUTOR: " + mList.get(position).getAutor();
-        corpoDialog[3] = "DATA: " + mList.get(position).getData();
-        new MaterialDialog.Builder(view.getContext())  //Cria um Dialog com informações da PPA clicada.
-                .title(R.string.informacoesDaPpa)
-                .items(corpoDialog)
-                .show();*/
+        mList.remove(position);  //Remove do List.
+        mRecyclerView.getAdapter().notifyItemRemoved(position);  //Notifica ao RecyclerView que ele foi removido para fazer uma animação suave do item sumindo.
     }
 
 

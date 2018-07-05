@@ -13,17 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreasRelacionadasBD;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
-import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAreasRelacionadasMainActivity;
 
 public class AreasRelacionadasFrag extends AreaEmitenteFrag {
     private List<TelaInicialCards> mList, filterList = new ArrayList<>();
@@ -50,7 +49,7 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = AreasRelacionadasBD.GetAreasRelacionadasBd(getActivity());
+        mList = GetAreasRelacionadasMainActivity();
         CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

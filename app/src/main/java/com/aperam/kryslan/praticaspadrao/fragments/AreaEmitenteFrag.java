@@ -21,22 +21,19 @@ import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
-import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
-import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAreaEmitenteMainActivity;
+
 public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack {
     private RecyclerView mRecyclerView;
     private List<TelaInicialCards> mList, filterList = new ArrayList<>();
-    private TelaInicialCards telaInicialCards;
     private FloatingSearchView mSearchView;
     private String queryPesquisa;
 
@@ -44,11 +41,11 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (savedInstanceState == null) {
-            mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        /*if (savedInstanceState == null) {
+            mList = GetAreaEmitenteBd();  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
         } else {
             mList = savedInstanceState.getParcelableArrayList("mList");
-        }
+        }*/
     }
 
     @Override
@@ -66,18 +63,6 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
            @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
-                /*LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                CardTelaInicialAdapter adapter = (CardTelaInicialAdapter) mRecyclerView.getAdapter();  //Implementar caso queira que a lista continue gerando se chegar no final dela (no caso repetindo os valores).
-
-                //int l = llm.findLastCompletelyVisibleItemPosition();
-
-                if(mList.size() == l + 1){  //MODIFICAR PRA MAIS DEPOIS.
-                    List<TelaInicialCards> listaAux = GetAreasRelacionadasBd(recyclerView.getContext());  //Define a quantidade que será criado a cada rolagem
-                    for (int i = 0; i < listaAux.size(); i++) {
-                        adapter.addListItem(listaAux.get(i), mList.size());  //pra add itens a lista vai em CardTelaInicialAdapter no método AddListItem.
-                    }
-                }*/
             }
         });
 
@@ -90,7 +75,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 //        boolean formatoLista = getArguments().getBoolean("formatoLista");
 
         if(mList == null){
-            mList = AreaEmitenteBD.GetAreaEmitenteBd(getActivity());
+            mList = GetAreaEmitenteMainActivity();
         }
         CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
@@ -134,42 +119,11 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
-         /*View scrollPratica = view.findViewById(R.id.dragScrollBarActivityPraticas);*/
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 Pair.create(imagePratica, "element1"));
 
         getActivity().startActivityForResult(intent, 1,options.toBundle());
-
-        /*Intent intent = new Intent(getActivity(), PraticasActivity.class);
-        telaInicialCards = mList.get(position);
-        intent.putExtra("praticascards", telaInicialCards);
-
-        getActivity().startActivityForResult(intent, 1);*/
-//        startActivity(intent);
-        // TRANSITIONS
-        /*if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
-
-            View ivCar = view.findViewById(R.id.iv_car);
-            View tvModel = view.findViewById(R.id.tv_model);
-            View tvBrand = view.findViewById(R.id.tv_brand);
-
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                    Pair.create( ivCar, "element1" ),
-                    Pair.create( tvModel, "element2" ),
-                    Pair.create( tvBrand, "element3" ));
-
-            getActivity().startActivity( intent, options.toBundle() );
-        }
-        else{
-            getActivity().startActivity(intent);
-        }*/
-
-
-//        Toast.makeText(getActivity(), "onClickListener(): " +position, Toast.LENGTH_SHORT).show();
-
-//        CardTelaInicialAdapter adapter = (CardTelaInicialAdapter) mRecyclerView.getAdapter();
-//        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
     }
 
     @Override
@@ -219,14 +173,8 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
             mGestureDetector.onTouchEvent(e);  //Identifica se foi um clique simples ou longPress.
             return false;  //se for true, pega o evento de click disparado do layout root (RelativeLayout no caso).
         }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
+        @Override public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
+        @Override public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
     }
 
     @Override

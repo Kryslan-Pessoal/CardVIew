@@ -2,17 +2,16 @@ package com.aperam.kryslan.praticaspadrao.BancoDeDados;
 
 import android.content.Context;
 
-import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.GetId;
 
-public class BD extends MainActivity{
-    //Menus (sumários)
+public class BdMainActivity {
+
+    //TABS
     public static String[] GetTabsBd(Context c){
         return new String[]{
                 c.getResources().getString(R.string.areaEminente),
@@ -26,7 +25,182 @@ public class BD extends MainActivity{
                 c.getResources().getString(R.string.historico)};
     }
 
-    public static String[] GetAutorList(){
+    //LISTAS
+    public static List<TelaInicialCards> GetAreaEmitenteMainActivity() {  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetTipo(0, 27);
+        String[] foto = GetFotosAreaEminete();
+        String[] areaEmitente = GetTitulosAreaEminete();
+        String[] grupo = GetGrupo("Área Emitente", 306);
+        List<TelaInicialCards> listAux = new ArrayList<>();
+
+        for (int i = 0; i < id.length; i++) {
+            TelaInicialCards p = new TelaInicialCards(
+                    id[i % id.length],
+                    foto[i % foto.length],
+                    areaEmitente[i % areaEmitente.length],
+                    grupo[i % grupo.length]);
+            listAux.add(p);
+        }
+        return listAux;
+    }
+    private static String[] GetFotosAreaEminete() {
+        return new String[]{"https://drive.google.com/uc?id=1Vmq2Fip0oOMOgke-3dAgI5di35xRMJ9D",
+                "https://drive.google.com/uc?id=1e5iRGqobvaQLQwvJXsyHlKivBzTKGxDE",
+                "https://drive.google.com/uc?id=1ECkekr_tseRV9hqN8ZheXkf6KdEKmZ4R",
+                "https://drive.google.com/uc?id=1JpzW9FHqZ8hxncIjV5UQCjuiMo0It8DO",
+                "https://drive.google.com/uc?id=1ajHrjGgzBWSZeasmAoz3x2DMpQUdYB3v",
+                "https://drive.google.com/uc?id=1FMC1XqTsDl2ZE8EB5B3LXfro7q9jivFp",
+                "https://drive.google.com/uc?id=1Lg-PoI0ZWl_VmqvrpvqrhbO1mfBgJIj4",
+                "https://drive.google.com/uc?id=1iBpFi9pDiqDP7J3AM2vsPdmvjewB9FAc",
+                "https://drive.google.com/uc?id=19JVF6z5DJQQLeFcsJIQn9xZ8B4hfWtCq",
+                "https://drive.google.com/uc?id=12GEPI8CG3QzOIlxDaCqEWT4t4PQbAAQg",
+                "https://drive.google.com/uc?id=1uNKB0mgig4hzLDDius_9bvvZXW2Z_IUV",
+                "https://drive.google.com/uc?id=1EmF52GPiJeQrB9RtZfY_xKvp6Kk4nJ4o",
+                "https://drive.google.com/uc?id=1YELai99TmDzf-pmWaj0He5e2EmMktY2j",
+                "https://drive.google.com/uc?id=15_D4krC5qoaL5gZXTpzXBahY43LXo-F4",
+                "https://drive.google.com/uc?id=1oF7rt_xPXElOdFyt5I6kpMzUNP8o4bGK",
+                "https://drive.google.com/uc?id=185TkmfFvLEaRizSvg51fWgVLUL2knkUa",
+                "https://drive.google.com/uc?id=1EixpLT90SRtHqO1Ya4a8szZa1Cjrev_E",
+                "https://drive.google.com/uc?id=1xlXnPfiyLLUMHoTvqSzMhUOmstqIMRve",
+                "https://drive.google.com/uc?id=1tueQb91_k5Q3bHEkalwACZfpqkIVIF95",
+                "https://drive.google.com/uc?id=1s9ruZfsjfFxgtHKSuWx6qvP_F-GM8lJe",
+                "https://drive.google.com/uc?id=1I64kjuZQP0tvOQFpS-Ek0nv_vso4N8EC",
+                "https://drive.google.com/uc?id=11E1UetF4nPm2e9Cea9SYv-pF4TOm8u7j",
+                "https://drive.google.com/uc?id=1hCSyOjBk5m-i1UlReYpvVjNq7c5t2Oep",
+                "https://drive.google.com/uc?id=13J6ovGF9JM5-a5HsyVHQyjez9wEU8XrK",
+                "https://drive.google.com/uc?id=1Sa9WtkOL5TNhx8w15-hBcOwuYYLnt44T",
+                "https://drive.google.com/uc?id=1kS4OxjShvwPqpNAOgs1InQBEcLydGCd4",
+                "https://drive.google.com/uc?id=1DvL5GJJxPhriljK4C9dEdDkp3HE8lb-C"};
+    }
+    private static String[] GetTitulosAreaEminete() {
+        return new String[]{"Acabamento a Frio de Aços Inoxidáveis",
+                "Acabamento a Quente de Aços Inoxidáveis",
+                "Acabamento e Reprocessamento de Aços Inoxidáveis",
+                "Aciaria",
+                "Automação e Otimização de Processos",
+                "Centro de Pesquisa",
+                "Comunicação Empresarial",
+                "Engenharia de Projetos",
+                "Gestão Ambiental",
+                "Gestão da Excelência Operacional",
+                "Gestão da Saúde e Segurança",
+                "Gestão de Recursos Humanos",
+                "Gestão Financeira",
+                "Infraestrutura",
+                "Laminação a Frio de Aços Elétricos",
+                "Laminação a Frio de Aços Inoxidáveis",
+                "Laminação de Tiras a Quente",
+                "Logística Integrada",
+                "Manutenção Central",
+                "Metalurgia",
+                "Metalurgia de Aços Elétricos",
+                "Metalurgia Integrada",
+                "Planejamento Estratégico",
+                "Redução",
+                "Suprimentos",
+                "Tecnologia da Informação",
+                "Vendas"};
+    }
+
+    public static List<TelaInicialCards> GetAreasRelacionadasMainActivity(){  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetTipo(0, 29);
+        String[] foto = GetFotosAreasRelacionadas();
+        String[] areasRelacionadas = GetTitulosAreasRelacionadas();
+        String[] grupo = GetGrupo("Áreas Relacionadas", 29);
+        List<TelaInicialCards> listAux = new ArrayList<>();
+
+        for(int i=0; i<id.length; i++){
+            TelaInicialCards p = new TelaInicialCards(
+                    id[i % id.length],
+                    foto[i % foto.length],
+                    areasRelacionadas[i % areasRelacionadas.length],
+                    grupo[i% grupo.length]);
+            listAux.add(p);
+        }
+        return listAux;
+    }
+    private static String[] GetFotosAreasRelacionadas(){
+        return new String[]{"https://drive.google.com/uc?id=1o4Esm_RLPzVqd-jR_s8eEJmEcyx1m3cO",
+                "https://drive.google.com/uc?id=19JVF6z5DJQQLeFcsJIQn9xZ8B4hfWtCq",
+                "https://drive.google.com/uc?id=1kS4OxjShvwPqpNAOgs1InQBEcLydGCd4",
+                "https://drive.google.com/uc?id=11E1UetF4nPm2e9Cea9SYv-pF4TOm8u7j",
+                "https://drive.google.com/uc?id=15_D4krC5qoaL5gZXTpzXBahY43LXo-F4",
+                "https://drive.google.com/uc?id=1yRxKfdFrQR2G0rMbJPOi0TOtO5u7GCyJ",
+                "https://drive.google.com/uc?id=1JpzW9FHqZ8hxncIjV5UQCjuiMo0It8DO",
+                "https://drive.google.com/uc?id=1FMC1XqTsDl2ZE8EB5B3LXfro7q9jivFp",
+                "https://drive.google.com/uc?id=13J6ovGF9JM5-a5HsyVHQyjez9wEU8XrK",
+                "https://drive.google.com/uc?id=1grv5QVOo9Nlga70_x4PMv-ul7E6bLZyw",
+                "https://drive.google.com/uc?id=11ZAOFMwRRLMDCQoqVfsEbWUp5jY5mCy8",
+                "https://drive.google.com/uc?id=1F_gn6E_DjHqz6MyV2XIxjAjo53Xe0qDx",
+                "https://drive.google.com/uc?id=185TkmfFvLEaRizSvg51fWgVLUL2knkUa",
+                "https://drive.google.com/uc?id=16anwxKguK8JdhvtHrk2bt_u6HAtkSH7G",
+                "https://drive.google.com/uc?id=1oF7rt_xPXElOdFyt5I6kpMzUNP8o4bGK",
+                "https://drive.google.com/uc?id=1FJHhcDgzedDIk6KCV0qSRjtGQK3ku5FQ",
+                "https://drive.google.com/uc?id=1Sa9WtkOL5TNhx8w15-hBcOwuYYLnt44T",
+                "https://drive.google.com/uc?id=1uNKB0mgig4hzLDDius_9bvvZXW2Z_IUV",
+                "https://drive.google.com/uc?id=12GEPI8CG3QzOIlxDaCqEWT4t4PQbAAQg",
+                "https://drive.google.com/uc?id=1yoIUz1qmJF89hclVy4MCy2MjLoajzx10",
+                "https://drive.google.com/uc?id=1xlXnPfiyLLUMHoTvqSzMhUOmstqIMRve",
+                "https://drive.google.com/uc?id=1YELai99TmDzf-pmWaj0He5e2EmMktY2j",
+                "https://drive.google.com/uc?id=1DvL5GJJxPhriljK4C9dEdDkp3HE8lb-C",
+                "https://drive.google.com/uc?id=1ghzl5M1Iv4S-EUVvy2ifi1Au3MmwI29e",
+                "https://drive.google.com/uc?id=1hCSyOjBk5m-i1UlReYpvVjNq7c5t2Oep",
+                "https://drive.google.com/uc?id=1tueQb91_k5Q3bHEkalwACZfpqkIVIF95",
+                "https://drive.google.com/uc?id=1Lg-PoI0ZWl_VmqvrpvqrhbO1mfBgJIj4",
+                "https://drive.google.com/uc?id=1Vmq2Fip0oOMOgke-3dAgI5di35xRMJ9D",
+                "https://drive.google.com/uc?id=1ajHrjGgzBWSZeasmAoz3x2DMpQUdYB3v"};
+    }
+    private static String[] GetTitulosAreasRelacionadas(){
+        return new String[]{"Núcleo 01 - Arquivo Central",
+                "Núcleo 02 - Gestão Ambiental",
+                "Núcleo 03 - Tecnologia da Informação",
+                "Núcleo 04 - Metalurgia Integrada",
+                "Núcleo 05 - Infraestrutura",
+                "Núcleo 07 - Fundação Aperam Acesita",
+                "Núcleo 09 - Aciaria",
+                "Núcleo 10 - Centro de Pesquisa",
+                "Núcleo 11 - Redução",
+                "Núcleo 12 - Laboratório Químico",
+                "Núcleo 13 - Manutenção da Aciaria",
+                "Núcleo 15 - Metrologia",
+                "Núcleo 17 - Laminação a Frio de Inoxidáveis",
+                "Núcleo 19 - Laminação a Quente",
+                "Núcleo 20 - Laminação a Frio de Aços Elétricos",
+                "Núcleo 22 - Relações Trabalhistas",
+                "Núcleo 23 - Suprimentos",
+                "Núcleo 24 - Gestão da Saúde e Segurança",
+                "Núcleo 25 - Gestão da Excelência Operacional",
+                "Núcleo 26 - Desenvolvimento e Treinamento",
+                "Núcleo 27 - Logística Integrada",
+                "Núcleo 28 - Vendas",
+                "Núcleo 31 - Gestão Financeira",
+                "Núcleo 32 - Engenharia de Projetos",
+                "Núcleo 37 - Planejamento Estratégico",
+                "Núcleo 38 - Manutenção Central",
+                "Núcleo 39 - Comunicação Empresarial",
+                "Núcleo 40 - Acabamento a Frio de Aços Inoxidáveis",
+                "Núcleo 43 - Automação e Otimização de Processos"};
+    }
+
+    public static List<TelaInicialCards> GetAutorMainActivity() {  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetTipo(1, 306);  //Futuramente criar clase para cada um em domain.
+        String[] foto = GetVoidString(306);
+        String[] tutulo = GetTituloAutor();
+        String[] grupo = GetGrupo("Autor", 306);
+        List<TelaInicialCards> listAux = new ArrayList<>();
+
+        for (int i = 0; i < id.length; i++) {
+            TelaInicialCards p = new TelaInicialCards(
+                    id[i % id.length],
+                    foto[i % foto.length],
+                    tutulo[i % tutulo.length],
+                    grupo[i % grupo.length]);
+            //link[i % link.length]);
+            listAux.add(p);
+        }
+        return listAux;
+    }
+    private static String[] GetTituloAutor(){
         return new String[]{"ABNER LUCIO F DUTRA",
                 "Adão Cordeiro de Azevedo",
                 "ADILSON A GONCALVES",
@@ -346,74 +520,86 @@ public class BD extends MainActivity{
                 "WILSON PEREIRA"};
     }
 
-    public static List<TelaInicialCards> GetAutorBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetTipo(1, 306);  //Futuramente criar clase para cada um em domain.
-        String[] foto = GetVoidString(306);
-        String[] textoPrincipal = GetAutorList();
+    public static List<TelaInicialCards> GetDataDeVigenciaMainActivity() {  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetTipo(2, 12);  //Futuramente criar clase para cada um em domain.
+        String[] foto = GetVoidString(12);
+        String[] titulo = GetTituloDataDeVigencia();
+        String[] grupo = GetGrupo("Data de Vigência", 12);
         List<TelaInicialCards> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
             TelaInicialCards p = new TelaInicialCards(
                     id[i % id.length],
                     foto[i % foto.length],
-                    textoPrincipal[i % textoPrincipal.length]);
+                    titulo[i % titulo.length],
+                    grupo[i % grupo.length]);
             //link[i % link.length]);
             listAux.add(p);
         }
         return listAux;
     }
-
-    public static List<TelaInicialCards> GetProcessoBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
-        int[] id = GetTipo(3, 304);  //Futuramente criar clase para cada um em domain.
-        String[] foto = GetVoidString(304);
-        String[] textoPrincipal = GetProcesso();
-        List<TelaInicialCards> listAux = new ArrayList<>();
-
-        for (int i = 0; i < id.length; i++) {
-            TelaInicialCards p = new TelaInicialCards(
-                    id[i % id.length],
-                    foto[i % foto.length],
-                    textoPrincipal[i % textoPrincipal.length]);
-            //link[i % link.length]);
-            listAux.add(p);
-        }
-        return listAux;
+    private static String[] GetTituloDataDeVigencia(){
+        return new String[]{
+                "2018",
+                "2017",
+                "2016",
+                "2015",
+                "2014",
+                "2013",
+                "2012",
+                "2011",
+                "2010",
+                "2009",
+                "2008",
+                "2007",
+                "2006"};
     }
 
-    public static List<TelaInicialCards> GetNivelBd(Context c) {  //PEGAR DEPOIS NO DOCNIX.
+    public static List<TelaInicialCards> GetNivelMainActivity() {  //PEGAR DEPOIS NO DOCNIX.
         int[] id = GetTipo(0,3);  //Futuramente criar clase para cada um em domain.
         String[] foto = GetFotoNivel();
-        String[] textoPrincipal = GetNivel();
+        String[] titulo = GetTituloNivel();
+        String[] grupo = GetGrupo("Nível", 306);
         List<TelaInicialCards> listAux = new ArrayList<>();
 
         for (int i = 0; i < id.length; i++) {
             TelaInicialCards p = new TelaInicialCards(
                     id[i % id.length],
                     foto[i % foto.length],
-                    textoPrincipal[i % textoPrincipal.length]);
+                    titulo[i % titulo.length],
+                    grupo[i % grupo.length]);
+            listAux.add(p);
+        }
+        return listAux;
+    }
+    private static String[] GetTituloNivel(){
+        return new String[]{"Corporativo", "Operacional", "Técnico"};
+    }
+    private static String[] GetFotoNivel(){
+        return new String []{"https://drive.google.com/uc?id=1KXOnNwnZHhsLLEhDSbHT7qRrcw1BrkqD",
+                "https://drive.google.com/uc?id=1Y3_kD2-WeHdb0iubxB4XkxZhacTQ7x0S",
+                "https://drive.google.com/uc?id=1subUEz1ecv08QUNAMzAxmg13ba2SFcM3"};
+    }
+
+    public static List<TelaInicialCards> GetProcessoMainActivity() {  //PEGAR DEPOIS NO DOCNIX.
+        int[] id = GetTipo(3, 304);  //Futuramente criar clase para cada um em domain.
+        String[] foto = GetVoidString(304);
+        String[] titulo = GetTituloProcesso();
+        String[] grupo = GetGrupo("Processo", 306);
+        List<TelaInicialCards> listAux = new ArrayList<>();
+
+        for (int i = 0; i < id.length; i++) {
+            TelaInicialCards p = new TelaInicialCards(
+                    id[i % id.length],
+                    foto[i % foto.length],
+                    titulo[i % titulo.length],
+                    grupo[i % grupo.length]);
             //link[i % link.length]);
             listAux.add(p);
         }
         return listAux;
     }
-
-    public static int[] GetTipo(int valor, int qtd){
-        int[] qtdVoid = new int[qtd];
-        for (int i = 0; i < qtd; i++) {
-            qtdVoid[i] = valor;
-        }
-        return qtdVoid;
-    }
-
-    public static String[] GetVoidString(int qtdId){
-        String[] qtd = new String[qtdId];
-        for (int i = 0; i < qtdId; i++) {
-            qtd[i] = "" + i;
-        }
-        return qtd;
-    }
-
-    public static String[] GetProcesso(){
+    private static String[] GetTituloProcesso(){
         return new String[]{" Acabamento Superficial",
                 "Aceiros",
                 "Ações Corretivas e Preventivas",
@@ -720,13 +906,26 @@ public class BD extends MainActivity{
                 "Documentos Não Categorizados  "};
     }
 
-    public static String[] GetNivel(){
-        return new String[]{"Corporativo", "Operacional", "Técnico"};
+    //UTILS
+    private static int[] GetTipo(int valor, int qtd){
+        int[] qtdVoid = new int[qtd];
+        for (int i = 0; i < qtd; i++) {
+            qtdVoid[i] = valor;
+        }
+        return qtdVoid;
     }
-
-    private static String[] GetFotoNivel(){
-        return new String []{"https://drive.google.com/uc?id=1KXOnNwnZHhsLLEhDSbHT7qRrcw1BrkqD",
-            "https://drive.google.com/uc?id=1Y3_kD2-WeHdb0iubxB4XkxZhacTQ7x0S",
-            "https://drive.google.com/uc?id=1subUEz1ecv08QUNAMzAxmg13ba2SFcM3"};
+    private static String[] GetGrupo(String grupo, int qtdId){
+        String[] qtd = new String[qtdId];
+        for (int i = 0; i < qtdId; i++) {
+            qtd[i] = grupo;
+        }
+        return qtd;
+    }
+    private static String[] GetVoidString(int qtdId){
+        String[] qtd = new String[qtdId];
+        for (int i = 0; i < qtdId; i++) {
+            qtd[i] = "" + i;
+        }
+        return qtd;
     }
 }

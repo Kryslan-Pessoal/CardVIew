@@ -14,26 +14,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.transition.ChangeBounds;
-import android.transition.Explode;
-import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD;
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.BD;
+import com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
@@ -50,7 +44,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.Color.WHITE;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.AreaEmitenteBD.getTituloAreaEmitenteBd;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetAreasRelacionadasPraticasActivity;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetAutorPraticasActivity;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetDataPraticasActivity;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetNivelPraticasActivity;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetProcessoPraticasActivity;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.getTituloAreaEmitenteBd;
 
 public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private Context c = this;
@@ -71,7 +70,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TRANSITIONS, CRIANDO ANIMAÇÃO.
+        //TRANSIÇÃO ANTIGA.
         /*Explode transition1 = new Explode();
         transition1.setDuration(600);
 
@@ -81,74 +80,16 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         getWindow().setEnterTransition(transition1);  //transição recebida de MainActivity.
         getWindow().setReturnTransition(transition2);  //transição na volta.*/
 
+        // TRANSITIONS, CRIANDO ANIMAÇÃO.
         TransitionInflater inflater = TransitionInflater.from(this);  //Recebe a animação.
         Transition transition = inflater.inflateTransition(R.transition.transitions);
 
         getWindow().setSharedElementExitTransition(transition);
 
-
-        /*if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
-                *//*Explode trans1 = new Explode();
-                trans1.setDuration(3000);
-                Fade trans2 = new Fade();
-                trans2.setDuration(3000);
-
-                getWindow().setEnterTransition( trans1 );
-                getWindow().setReturnTransition( trans2 );*//*
-
-            TransitionInflater inflater = TransitionInflater.from( this );
-            Transition transition = inflater.inflateTransition( R.transition.transitions );
-
-            getWindow().setSharedElementEnterTransition(transition);
-
-            Transition transition1 = getWindow().getSharedElementEnterTransition();
-            transition1.addListener(new Transition.TransitionListener() {
-                @Override
-                public void onTransitionStart(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    TransitionManager.beginDelayedTransition(mRoot, new Slide());
-                    tvDescription.setVisibility( View.VISIBLE );
-                }
-
-                @Override
-                public void onTransitionCancel(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionPause(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionResume(Transition transition) {
-
-                }
-            });
-        }*/
-
-        /*
-        if(savedInstanceState != null){
-            praticasCards = savedInstanceState.getParcelable("praticascards");
-        }
-        else {
-            if (getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras().getParcelable("praticascards") != null) {
-                praticasCards = getIntent().getExtras().getParcelable("praticascards");
-            } else {
-                Toast.makeText(this, "Fail!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }*/
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_praticas);
 
         telaInicialCards = getIntent().getExtras().getParcelable("praticascards");
-
 
         //CONFIGURA O TOOLBAR.
         mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
@@ -269,7 +210,10 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         recyclerView.setLayoutManager(lm);
 
-        mList = AreaEmitenteBD.GetAreaEmitenteBdLista();
+
+        //DEFINE O TIPO DE LISTA QUE SERÁ MONTADO.
+//        mList = BdPraticasActivity.GetAreaEmitentePraticasActivity();
+        TipoDeLista();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
         recyclerView.setAdapter(adapter);
 
@@ -287,6 +231,29 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
             .setIndicator(new AlphabetIndicator(c), true)
             .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
 
+    }
+
+    private void TipoDeLista(){  //Define o tipo de lista que terá na tela de práticas.
+        String a = telaInicialCards.getGrupo();
+        if (telaInicialCards.getGrupo().equals("Área Emitente")) {
+            mList = BdPraticasActivity.GetAreaEmitentePraticasActivity();
+
+        }else if(telaInicialCards.getGrupo().equals("Áreas Relacionadas")) {
+            mList = GetAreasRelacionadasPraticasActivity();
+
+        }else if(telaInicialCards.getGrupo().equals("Autor")) {
+            mList = GetAutorPraticasActivity();
+
+        }else if(telaInicialCards.getGrupo().equals("Data de Vigência")) {
+            mList = GetDataPraticasActivity();
+
+        }else if(telaInicialCards.getGrupo().equals("Nível")) {
+            mList = GetNivelPraticasActivity();
+
+        }else if(telaInicialCards.getGrupo().equals("Processo")) {
+            mList = GetProcessoPraticasActivity();
+
+        }
     }
 
     @Override

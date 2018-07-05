@@ -31,7 +31,7 @@ public class FavoritosFrag extends AreaEmitenteFrag{
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        List<TelaInicialCards> mList = AreasRelacionadasBD.GetAreasRelacionadasBd(getActivity());
+        List<TelaInicialCards> mList = AreasRelacionadasBD.GetAreasRelacionadasMainActivity(getActivity());
         CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);*/

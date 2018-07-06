@@ -113,7 +113,6 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
     @SuppressLint("RestrictedApi")
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
-
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
         intent.putExtra("praticascards", mList.get(position));
 

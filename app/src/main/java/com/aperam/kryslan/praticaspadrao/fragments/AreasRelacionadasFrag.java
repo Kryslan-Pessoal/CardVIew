@@ -45,6 +45,8 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
             }
         });
 
+        mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), mRecyclerView, this));  //CORRIGIR POIS MANDA A INFORMAÇÃO ERRADA AO ABRIR A OUTRA ACTIVITY.
+
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);

@@ -540,7 +540,6 @@ public class BdMainActivity {
     }
     private static String[] GetTituloDataDeVigencia(){
         return new String[]{
-                "2018",
                 "2017",
                 "2016",
                 "2015",
@@ -552,7 +551,8 @@ public class BdMainActivity {
                 "2009",
                 "2008",
                 "2007",
-                "2006"};
+                "2006",
+                "2018"};
     }
 
     public static List<TelaInicialCards> GetNivelMainActivity() {  //PEGAR DEPOIS NO DOCNIX.

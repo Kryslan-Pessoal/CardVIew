@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
+import com.aperam.kryslan.praticaspadrao.adapters.DataAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
@@ -44,9 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.Color.WHITE;
+import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdExpandableList.CriaMesExpansivel;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetAreasRelacionadasPraticasActivity;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetAutorPraticasActivity;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetDataPraticasActivity;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetNivelPraticasActivity;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetProcessoPraticasActivity;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.getTituloAreaEmitenteBd;
@@ -61,11 +62,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     Activity activity = this;
 
     private MaterialSearchView searchView;
-
-    private MaterialDialog mMaterialDialog;
-    private TextView tvDescription;
-    private ViewGroup mRoot;
-
+    RecyclerView recyclerView = null;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -137,7 +134,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //TRATAR A FUNÇÃO DE VOLTAR.
 
         //LISTA DAS PPAs
-        final RecyclerView recyclerView = findViewById(R.id.rv_list_praticas);
+        recyclerView = findViewById(R.id.rv_list_praticas);
         recyclerView.setHasFixedSize(true);  //Para o recyclerView não mude de tamanho.
 
         //SEARCHVIEW
@@ -214,8 +211,19 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //DEFINE O TIPO DE LISTA QUE SERÁ MONTADO.
 //        mList = BdPraticasActivity.GetAreaEmitentePraticasActivity();
         TipoDeLista();
-        ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
-        recyclerView.setAdapter(adapter);
+
+        if(!telaInicialCards.getGrupo().equals("Data de Vigência")) {  //Data de vigência irá usar uma lista composta.
+            ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
+            recyclerView.setAdapter(adapter);
+        }else{
+            DataAdapter adapter = new DataAdapter(CriaMesExpansivel());
+            recyclerView.setAdapter(adapter);
+
+
+            /*Mes = Genre
+            Artist = Dia*/
+
+        }
 
        /* // FAB
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -227,32 +235,25 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         });*/
 
         //MATERIAL SCROLLBAR
-        ((DragScrollBar) findViewById(R.id.dragScrollBarActivityPraticas))
-            .setIndicator(new AlphabetIndicator(c), true)
-            .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
-
+        if(!telaInicialCards.getGrupo().equals("Data de Vigência")){  //ScrollBar não funciona com ExpandableListView.
+            ((DragScrollBar) findViewById(R.id.dragScrollBarActivityPraticas))
+                    .setIndicator(new AlphabetIndicator(c), true)
+                    .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
+        }
     }
 
     private void TipoDeLista(){  //Define o tipo de lista que terá na tela de práticas.
-        String a = telaInicialCards.getGrupo();
         if (telaInicialCards.getGrupo().equals("Área Emitente")) {
             mList = BdPraticasActivity.GetAreaEmitentePraticasActivity();
-
         }else if(telaInicialCards.getGrupo().equals("Áreas Relacionadas")) {
             mList = GetAreasRelacionadasPraticasActivity();
-
         }else if(telaInicialCards.getGrupo().equals("Autor")) {
             mList = GetAutorPraticasActivity();
-
         }else if(telaInicialCards.getGrupo().equals("Data de Vigência")) {
-            mList = GetDataPraticasActivity();
-
         }else if(telaInicialCards.getGrupo().equals("Nível")) {
             mList = GetNivelPraticasActivity();
-
         }else if(telaInicialCards.getGrupo().equals("Processo")) {
             mList = GetProcessoPraticasActivity();
-
         }
     }
 
@@ -280,24 +281,26 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     @Override
     public void onClickListener(View view, int position) {
-        //CHAMANDO PRÓXIMA ACTIVITY (DocumentoDrive).
-        Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
-        ListaPraticas informacoesDaPratica = mList.get(position);
+        if(!telaInicialCards.getGrupo().equals("Data de Vigência")) { //Quando é ExpandableListView, o OnClickListener, não dever ser chamado aqui.
+            //CHAMANDO PRÓXIMA ACTIVITY (DocumentoDrive).
+            Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
+            ListaPraticas informacoesDaPratica = mList.get(position);
 
 
-        intent.putExtra("praticascards", informacoesDaPratica);
+            intent.putExtra("praticascards", informacoesDaPratica);
 
-        // TRANSITIONS, CRIANDO ANIMAÇÃO.
-        View textoAutor = view.findViewById(R.id.tituloListaPraticas);
+            // TRANSITIONS, CRIANDO ANIMAÇÃO.
+            View textoAutor = view.findViewById(R.id.tituloListaPraticas);
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(textoAutor, "element2"));  //Não vai achar o element2
-        //propositalmente para causar uma animação suave.
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(textoAutor, "element2"));  //Não vai achar o element2
+            //propositalmente para causar uma animação suave.
 
-        activity.startActivityForResult(intent, 1, options.toBundle());
+            activity.startActivityForResult(intent, 1, options.toBundle());
 
-        //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
-        BdLite bd = new BdLite(activity);
-        bd.inserir(mList.get(position));
+            //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
+            BdLite bd = new BdLite(activity);
+            bd.inserir(mList.get(position));
+        }
     }
 
     @Override

@@ -3,9 +3,12 @@ package com.aperam.kryslan.praticaspadrao.BancoDeDados;
 import android.content.Context;
 
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.domain.DataDeVigenciaDia;
+import com.aperam.kryslan.praticaspadrao.domain.DataDeVigenciaMes;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -551,8 +554,7 @@ public class BdMainActivity {
                 "2009",
                 "2008",
                 "2007",
-                "2006",
-                "2018"};
+                "2006", "2018"};
     }
 
     public static List<TelaInicialCards> GetNivelMainActivity() {  //PEGAR DEPOIS NO DOCNIX.

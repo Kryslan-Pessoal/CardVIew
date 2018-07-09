@@ -65,4 +65,7 @@ dependencies {
 
     //FLOAT SEARCHVIEW
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+
+    //EXPANDABLE RECYCLERVIEW
+    implementation 'com.thoughtbot:expandablerecyclerview:1.3'
 }

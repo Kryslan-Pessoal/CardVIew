@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //INICIA O SERVIÇO QUE AVISA QUANDO FAZ ALGUM SCREENSHOT.
-        new Utils().ScreenshotListener(c);  //Funciona em todas as activitys pois continuar rodando.
+        new Utils().ScreenshotListener(c);  //Funciona em todas as activitys pois continua rodando.
 
         /*if(savedInstanceState != null){
             mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/mainview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools">
+
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/floating_search_view"
         android:layout_width="match_parent"
@@ -35,4 +39,70 @@
         android:layout_height="match_parent"
 
         android:layout_alignParentEnd="true"/>
+
+    <!--<android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        android:layout_toStartOf="@+id/dragScrollBar"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_anchorGravity="bottom|end"
+        fab:menu_colorNormal="@color/primary"
+        fab:menu_colorPressed="@color/primary"
+        fab:menu_icon="@drawable/ic_plus"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        android:layout_marginBottom="100dp">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorPressed="@color/colorFABPressed"
+            fab:fab_label="Facebook"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorPressed="@color/colorFABPressed"
+            fab:fab_label="Google Plus"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorPressed="@color/colorFABPressed"
+            fab:fab_label="YouTube"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorPressed="@color/colorFABPressed"
+            fab:fab_label="LinkedIn"
+            fab:fab_size="mini" />
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorPressed="@color/colorFABPressed"
+            fab:fab_label="WhatsApp"
+            fab:fab_size="mini" />
+
+    </android.support.design.widget.FloatingActionButton>-->
 </RelativeLayout>

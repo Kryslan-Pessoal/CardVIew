@@ -26,12 +26,14 @@ import com.turingtechnologies.materialscrollbar.DragScrollBar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoricoFrag extends AreaEmitenteFrag {
+public class HistoricoFrag extends AreaEmitenteFrag{
 
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
     BdLite bd = null;
     RecyclerView mRecyclerView = null;
+
+
 
     Context c = null;
 
@@ -52,6 +54,7 @@ public class HistoricoFrag extends AreaEmitenteFrag {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
             }
         });
 
@@ -96,6 +99,8 @@ public class HistoricoFrag extends AreaEmitenteFrag {
             }
         });
 
+
+
         return view;
     }
 
@@ -122,6 +127,4 @@ public class HistoricoFrag extends AreaEmitenteFrag {
         mList.remove(position);  //Remove do List.
         mRecyclerView.getAdapter().notifyItemRemoved(position);  //Notifica ao RecyclerView que ele foi removido para fazer uma animação suave do item sumindo.
     }
-
-
 }

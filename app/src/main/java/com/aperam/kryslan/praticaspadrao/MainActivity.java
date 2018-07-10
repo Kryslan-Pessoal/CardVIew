@@ -2,6 +2,7 @@ package com.aperam.kryslan.praticaspadrao;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
@@ -48,11 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setSharedElementExitTransition(transition);
 
+        //MAIN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //INICIA O SERVIÇO QUE AVISA QUANDO FAZ ALGUM SCREENSHOT.
-        new Utils().ScreenshotListener(c);  //Funciona em todas as activitys pois continua rodando.
 
         /*if(savedInstanceState != null){
             mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
             listPraticas = getSetPraticasList(50);
         }*/
 
+        //SERVIÇO QUE AVISA QUANDO FAZ ALGUM SCREENSHOT.
+        new Utils().ScreenshotListener(c);  //Funciona em todas as activitys pois continua rodando.
+
+        //TOOLBAR
         Toolbar mToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(mToolbar);  //Cria a Toolbar.
 
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.setHorizontalFadingEdgeEnabled(true);  //Aplica efeito de aparição e desaparição suave no rolamento do tabLayout na parte da esquerda.
+        tabLayout.setHorizontalFadingEdgeEnabled(true);  //Aplica efeito de fadding suave no rolamento do tabLayout na parte da esquerda.
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {}
@@ -103,14 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
         super.onResume();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
+        //Se o resultado == 2 quer dizer que acabou de fechar outra Activity e que na mesma, foi clicado em algum item do drawer, fechando-a e setando a tab certa.
         if(resultCode==2) {  //Só será dois, se for fechado pelas activitys Frag, passando o comando de voltar passando informações: startActivityForResult.
             int i = data.getIntExtra("tabSelecionada", 2);  //Retorna o valor do intent como 2, e a tab selecionada.
             if (i < 10) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.

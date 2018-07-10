@@ -3,6 +3,7 @@ package com.aperam.kryslan.praticaspadrao.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -10,9 +11,12 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
@@ -22,24 +26,32 @@ import com.aperam.kryslan.praticaspadrao.interfaces.DocumentoDrive;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoricoFrag extends AreaEmitenteFrag{
+public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener{
 
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
     BdLite bd = null;
     RecyclerView mRecyclerView = null;
 
+    private RapidFloatingActionLayout fabView;
+    private RapidFloatingActionButton rfaBtn;
+    private RapidFloatingActionHelper rfabHelper;
 
-
+    int alturaFab = 0;
     Context c = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_praticas_autor, container, false);  //pegando o fragment.
+        final View view = inflater.inflate(R.layout.fragment_praticas_autor, container, false);  //pegando o fragment.
 
         c = view.getContext();
         mRecyclerView = view.findViewById(R.id.rv_list_autor);
@@ -54,12 +66,16 @@ public class HistoricoFrag extends AreaEmitenteFrag{
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
+                if (dy > 0){  //Quando rola o recyclerView para baixo
+                    fabView.animate().translationY(view.getHeight());  //Esconde o Fab.
+                }else if (dy < 0) {  //Quando rola o recyclerView para cima
+                    fabView.animate().translationY(alturaFab);  //Mostra o Fab.
+                }
             }
         });
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
-        lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
+        lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical (Obrigatório).
         mRecyclerView.setLayoutManager(lm);
 
         bd = new BdLite(getContext());
@@ -70,7 +86,7 @@ public class HistoricoFrag extends AreaEmitenteFrag{
 
         ((DragScrollBar) view.findViewById(R.id.dragScrollBar))
                 .setIndicator(new AlphabetIndicator(view.getContext()), true)
-                .setHandleColour(getResources().getColor(R.color.colorPrimary));  //CONFIGURAR O SAVEDINSTANCESTATE.
+                .setHandleColour(getResources().getColor(R.color.colorPrimary));  //CONFIGURAR O SAVEDINSTANCESTATE***.
 
         mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(view.getContext(), mRecyclerView, this));  //Ativa o longPress.
 
@@ -99,7 +115,20 @@ public class HistoricoFrag extends AreaEmitenteFrag{
             }
         });
 
+        //FLOATING ACTION BUTTOM
+        fabView = view.findViewById(R.id.autorLFAB);
+        rfaBtn = view.findViewById(R.id.autorFAB);
+        SetFloatingActionButton();
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();  //Corrige a posição do FAB, pois com o "layout_scrollFlags", ele fica em posição errada, abaixo do que deveria.
+        WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        if (windowmanager != null) {  //Para evitar erros, redimenciona a imagem apenas se o windowmanager exista.
+            windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
+        }
+        int alturaDispositivo = displayMetrics.heightPixels;
+        Double alturaFabAux = (alturaDispositivo * (-0.05));
+        alturaFab = alturaFabAux.intValue();
+        fabView.setY(alturaFab);
 
         return view;
     }
@@ -126,5 +155,46 @@ public class HistoricoFrag extends AreaEmitenteFrag{
 
         mList.remove(position);  //Remove do List.
         mRecyclerView.getAdapter().notifyItemRemoved(position);  //Notifica ao RecyclerView que ele foi removido para fazer uma animação suave do item sumindo.
+    }
+
+    public void SetFloatingActionButton(){
+
+        RapidFloatingActionContentLabelList fabList = new RapidFloatingActionContentLabelList(c);
+        fabList.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Limpar histórico")
+                .setLabelColor(c.getResources().getColor(R.color.md_red_400))
+                .setLabelSizeSp(20)
+                .setResId(R.drawable.delete_white)
+                .setIconNormalColor(c.getResources().getColor(R.color.primary))
+                .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Tipo de lista")
+                .setResId(R.drawable.format_list_white)
+                .setIconNormalColor(c.getResources().getColor(R.color.primary))
+                .setWrapper(3)
+                .setLabelSizeSp(20)
+        );
+        fabList.setItems(items).setIconShadowColor(0xff888888);
+        rfabHelper = new RapidFloatingActionHelper(
+                c,
+                fabView,
+                rfaBtn,
+                fabList
+        ).build();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        Toast.makeText(getContext(), "clicked label: " + position, Toast.LENGTH_SHORT).show();
+        rfabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        Toast.makeText(getContext(), "clicked icon: " + position, Toast.LENGTH_SHORT).show();
+        rfabHelper.toggleContent();
     }
 }

@@ -21,7 +21,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.SQLite.BDCore;
+import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
@@ -93,9 +96,9 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         if(mList == null){
             mList = GetAreaEmitenteMainActivity();
         }
-        CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
-        //adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
-        mRecyclerView.setAdapter(adapter);
+
+        //DEFINE O TIPO DE LISTA.
+        AtualizaTipoLista();
 
         //FLOATING SEARCHVIEW
         mSearchView = view.findViewById(R.id.floating_search_view);
@@ -143,10 +146,13 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                Pair.create(imagePratica, "element1"));
-
-        getActivity().startActivityForResult(intent, 1,options.toBundle());
+        if(imagePratica != null) {  //Caso a lista não tenha imagem, cancela a animação para não dar erro.
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                    Pair.create(imagePratica, "element1"));
+            getActivity().startActivityForResult(intent, 1,options.toBundle());
+        }else{
+            getActivity().startActivityForResult(intent, 1);
+        }
     }
 
     @Override
@@ -214,16 +220,36 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         savedInstanceState.putString("pesquisa", queryPesquisa);
     }
 
-    protected void DialogTipoLista(Context contextLocal){
+    private void DialogTipoLista(Context contextLocal){
         new MaterialDialog.Builder(contextLocal)
                 .title(R.string.selecioneTipoLista)
                 .items(R.array.tipoLista)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        Toast.makeText(c, "" + which, Toast.LENGTH_SHORT).show();
+                        BdLite.atualizaTipoLista(0, which);
+                        AtualizaTipoLista();
                     }
                 })
                 .show();
+    }
+
+    private void AtualizaTipoLista(){
+        /*Tipos de lista:
+        0 = Lista com imgaens grandes.
+        1 = Lista com imagens, mas resumida
+        2 = Lista resumida sem imagens.*/
+        int tipoLista = BdLite.buscaTipoLista(0);
+        if(tipoLista == 0){
+            CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
+            adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+            mRecyclerView.setAdapter(adapter);
+        }else if(tipoLista == 1){
+
+        }else{
+            ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
+            adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+            mRecyclerView.setAdapter(adapter);
+        }
     }
 }

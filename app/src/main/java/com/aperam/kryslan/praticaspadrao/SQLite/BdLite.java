@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BdLite {
-    private SQLiteDatabase bd;
+    private static SQLiteDatabase bd;
 
     public BdLite(Context c){
         BDCore auxBd = new BDCore(c);
@@ -56,11 +57,26 @@ public class BdLite {
         return(list);
     }
 
-    /*public void atualizar(ListaPraticas pratica){
-        ContentValues valores = new ContentValues();
-        valores.put("nome", pratica.getTitulo());
-        valores.put("numero", pratica.getNumero());
+    public static void atualizaTipoLista(int idFragment, int tipoLista){
+        /*Tipos de lista (Id Fragment):
+        0 = Lista com imgaens grandes.
+        1 = Lista com imagens, mas resumida
+        2 = Lista resumida sem imagens.*/
 
-        bd.update("pratica", valores, "_id = ?",  new String[]{""+pratica.getNumeroId()});
-    }*/
+        ContentValues valores = new ContentValues();
+
+        valores.put("tipoLista", tipoLista);
+
+        bd.update("tipoListaFrags", valores, "_id = ?",  new String[]{""+idFragment});
+    }
+    public static int buscaTipoLista(int idFrag){
+        @SuppressLint("Recycle") Cursor cursor = bd.rawQuery("SELECT tipoLista FROM tipoListaFrags WHERE _id=?", new String[] {idFrag + ""});
+        int idTipoLista = 0;
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            idTipoLista = cursor.getInt(cursor.getColumnIndex("tipoLista"));
+        }
+
+        return idTipoLista;
+    }
 }

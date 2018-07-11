@@ -13,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
+import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.aperam.kryslan.praticaspadrao.tools.Utils;
@@ -29,6 +32,7 @@ import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetN
 public class NivelFrag extends AreaEmitenteFrag {
     Context c;
     List<TelaInicialCards> mList;
+    RecyclerView mRecyclerView;
 
     private RapidFloatingActionLayout fabView;
     int alturaFab = 0;
@@ -36,7 +40,8 @@ public class NivelFrag extends AreaEmitenteFrag {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o fragment.
         c = view.getContext();
-        RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);
+
+        mRecyclerView = view.findViewById(R.id.rv_list);
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -55,9 +60,10 @@ public class NivelFrag extends AreaEmitenteFrag {
         mRecyclerView.setLayoutManager(lm);
 
         mList = GetNivelMainActivity();
-        CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(container.getContext(), mList);
+        AtualizaTipoLista();
+        /*CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapter);*/
 
         //FLOATING SEARCHVIEW
         FloatingSearchView mSearchView = view.findViewById(R.id.floating_search_view);
@@ -89,9 +95,46 @@ public class NivelFrag extends AreaEmitenteFrag {
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                Pair.create(imagePratica, "element1"));
+        if(imagePratica != null) {  //Caso a lista não tenha imagem, cancela a animação para não dar erro.
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                    Pair.create(imagePratica, "element1"));
+            getActivity().startActivityForResult(intent, 1,options.toBundle());
+        }else{
+            getActivity().startActivityForResult(intent, 1);
+        }
+    }
 
-        getActivity().startActivityForResult(intent, 1,options.toBundle());
+    protected void DialogTipoLista(Context contextLocal){
+        new MaterialDialog.Builder(contextLocal)
+                .title(R.string.selecioneTipoLista)
+                .items(R.array.tipoLista)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        BdLite.atualizaTipoLista(2, which);
+                        AtualizaTipoLista();
+                    }
+                })
+                .show();
+    }
+
+    private void AtualizaTipoLista(){
+        /*Tipos de lista:
+        0 = Lista com imgaens grandes.
+        1 = Lista com imagens, mas resumida
+        2 = Lista resumida sem imagens.*/
+        int tipoLista = BdLite.buscaTipoLista(2);
+        if(tipoLista == 0){
+            CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
+            adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+            mRecyclerView.setAdapter(adapter);
+        }else if(tipoLista == 1){
+
+        }else{
+            ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
+            adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+            mRecyclerView.setAdapter(adapter);
+        }
+
     }
 }

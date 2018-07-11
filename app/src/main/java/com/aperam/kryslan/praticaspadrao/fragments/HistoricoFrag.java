@@ -182,7 +182,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
         if(position == 0){
             DialogDelete();
         }else if(position == 1){
-            DialogTipoLista(c);
+//            DialogTipoLista(c);
         }
     }
 

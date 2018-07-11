@@ -20,6 +20,7 @@ import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,10 @@ public class ProcessoFrag extends AreaEmitenteFrag {
                 mSearchView.hideProgress();
             }
         });
+
+        //FAZ O FAB DESAPARECER NESTA LISTA.
+        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fragsLFAB);
+        rfaLayout.setVisibility(View.GONE);
 
         return view;
     }

@@ -3,7 +3,6 @@ package com.aperam.kryslan.praticaspadrao.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,12 +10,9 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -119,8 +115,8 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
         });
 
         //FLOATING ACTION BUTTOM
-        fabView = view.findViewById(R.id.autorLFAB);
-        rfaBtn = view.findViewById(R.id.autorFAB);
+        fabView = view.findViewById(R.id.fragsLFAB);
+        rfaBtn = view.findViewById(R.id.fragsFAB);
         SetFloatingActionButton();
 
         alturaFab = Utils.AlturaFabCorrigida(c);
@@ -154,7 +150,6 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
     }
 
     public void SetFloatingActionButton(){
-
         RapidFloatingActionContentLabelList fabList = new RapidFloatingActionContentLabelList(c);
         fabList.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -185,20 +180,20 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if(position == 0){
-            DialogoDelete();
+            DialogDelete();
         }else if(position == 1){
-//            DialogList();
+            DialogTipoLista(c);
         }
     }
 
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
         if(position == 0){
-            DialogoDelete();
+            DialogDelete();
         }
     }
 
-    private void DialogoDelete(){  //Cria o Dialog.
+    private void DialogDelete(){  //Cria o Dialog.
         new MaterialDialog.Builder(c)
                 .title(R.string.deletarTudo)
                 .positiveText(R.string.sim)

@@ -17,6 +17,7 @@ import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 
 import java.util.List;
 
@@ -55,6 +56,10 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         //FLOATING SEARCHVIEW
         FloatingSearchView mSearchView = view.findViewById(R.id.floating_search_view);
         mSearchView.setVisibility(View.GONE);  //São poucas datas, portanto não precisa de barra de pesquisa.
+
+        //FAZ O FAB DESAPARECER NESTA LISTA.
+        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fragsLFAB);
+        rfaLayout.setVisibility(View.GONE);
 
         return view;
     }

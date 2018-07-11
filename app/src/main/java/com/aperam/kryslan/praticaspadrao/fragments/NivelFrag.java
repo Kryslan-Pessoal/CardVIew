@@ -1,6 +1,7 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,18 +17,25 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.aperam.kryslan.praticaspadrao.tools.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 
 import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetNivelMainActivity;
 
 public class NivelFrag extends AreaEmitenteFrag {
+    Context c;
     List<TelaInicialCards> mList;
+
+    private RapidFloatingActionLayout fabView;
+    int alturaFab = 0;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o fragment.
-
+        c = view.getContext();
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
@@ -55,8 +63,22 @@ public class NivelFrag extends AreaEmitenteFrag {
         FloatingSearchView mSearchView = view.findViewById(R.id.floating_search_view);
         mSearchView.setVisibility(View.GONE);  //Tira o searchView desse fragment.
 
+        //FLOATING ACTION BUTTOM
+        fabView = view.findViewById(R.id.fragsLFAB);
+
+        alturaFab = Utils.AlturaFabCorrigida(c);
+        fabView.setY(alturaFab);
+        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
+        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+
         return view;
     }
+
+    @Override
+    public void onRFABClick() {
+        DialogTipoLista(c);
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.

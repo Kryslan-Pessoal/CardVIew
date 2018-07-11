@@ -1,6 +1,7 @@
 package com.aperam.kryslan.praticaspadrao.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +18,10 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.aperam.kryslan.praticaspadrao.tools.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +29,16 @@ import java.util.List;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAreasRelacionadasMainActivity;
 
 public class AreasRelacionadasFrag extends AreaEmitenteFrag {
+    Context c;
     private List<TelaInicialCards> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
+
+    private RapidFloatingActionLayout fabView;
+    int alturaFab = 0;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o fragment.
-
+        final View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o fragment.
+        c = view.getContext();
         final RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
@@ -42,6 +50,11 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0){  //Quando rola o recyclerView para baixo
+                    fabView.animate().translationY(view.getHeight());  //Esconde o Fab.
+                }else if (dy < 0) {  //Quando rola o recyclerView para cima
+                    fabView.animate().translationY(alturaFab);  //Mostra o Fab.
+                }
             }
         });
 
@@ -81,7 +94,20 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
             }
         });
 
+        //FLOATING ACTION BUTTOM
+        fabView = view.findViewById(R.id.fragsLFAB);
+
+        alturaFab = Utils.AlturaFabCorrigida(c);
+        fabView.setY(alturaFab);
+        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
+        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+
         return view;
+    }
+
+    @Override
+    public void onRFABClick() {
+        DialogTipoLista(c);
     }
 
     @SuppressLint("RestrictedApi")

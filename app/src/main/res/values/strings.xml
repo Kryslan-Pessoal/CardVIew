@@ -36,6 +36,14 @@
     <!-- S -->
         <string name="SegundaTela">Segunda tela</string>
         <string name="sim">sim</string>
+        <string name="selecioneTipoLista">Selecione o tipo de lista</string>
 
     <!-- T -->
+
+    <!--ARRAY-->
+    <array name="tipoLista">
+        <item name="listaImagem">Imagem e texto</item>
+        <item name="listaImagemResumida">Imagem e texto resumidos</item>
+        <item name="listaImagemSemImagem">Apenas texto</item>
+    </array>
 </resources>

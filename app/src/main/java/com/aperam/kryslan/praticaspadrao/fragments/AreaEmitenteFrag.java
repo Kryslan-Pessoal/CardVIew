@@ -19,23 +19,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
+import com.aperam.kryslan.praticaspadrao.tools.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAreaEmitenteMainActivity;
 
-public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack {
+public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack, OnRapidFloatingButtonSeparateListener {
+    private Context c;
     private RecyclerView mRecyclerView;
     private List<TelaInicialCards> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
     private String queryPesquisa;
+
+    private RapidFloatingActionLayout fabView;
+    int alturaFab = 0;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -52,6 +61,8 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o fragment.
 
+        c = view.getContext();
+
         mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
@@ -63,6 +74,11 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
            @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+               if (dy > 0){  //Quando rola o recyclerView para baixo
+                   fabView.animate().translationY(view.getHeight());  //Esconde o Fab.
+               }else if (dy < 0) {  //Quando rola o recyclerView para cima
+                   fabView.animate().translationY(alturaFab);  //Mostra o Fab.
+               }
             }
         });
 
@@ -107,6 +123,14 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
             }
         });
 
+        //FLOATING ACTION BUTTOM
+        fabView = view.findViewById(R.id.fragsLFAB);
+
+        alturaFab = Utils.AlturaFabCorrigida(c);
+        fabView.setY(alturaFab);
+        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
+        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+
         return view;
     }
 
@@ -127,10 +151,16 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
     @Override
     public void onLongPressClickListener(View view, int position) {  //Aqui define o que acontece ao clicar e segurar em cada card.
-        Toast.makeText(getActivity(), "onLongPressClickListener: " +position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "onLongPressClickListener: " +position, Toast.LENGTH_SHORT).show();
 
 //        CardTelaInicialAdapter adapter = (CardTelaInicialAdapter) mRecyclerView.getAdapter();
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
+    }
+
+
+    @Override
+    public void onRFABClick() {
+        DialogTipoLista(c);
     }
 
     public static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener{  //Ao clicar nos itens lança um Listener, para fazer a animação.
@@ -138,7 +168,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         private GestureDetector mGestureDetector;
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-        public RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvhack){
+        protected RecyclerViewTouchListener(Context c, final RecyclerView rv, RecyclerViewOnClickListenerHack rvhack){
             mContext = c;
             mRecyclerViewOnClickListenerHack = rvhack;
 
@@ -184,4 +214,16 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         savedInstanceState.putString("pesquisa", queryPesquisa);
     }
 
+    protected void DialogTipoLista(Context contextLocal){
+        new MaterialDialog.Builder(contextLocal)
+                .title(R.string.selecioneTipoLista)
+                .items(R.array.tipoLista)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Toast.makeText(c, "" + which, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
 }

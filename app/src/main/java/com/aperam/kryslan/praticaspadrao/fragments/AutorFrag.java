@@ -92,7 +92,7 @@ public class AutorFrag extends AreaEmitenteFrag{
         });
 
         //FAZ O FAB DESAPARECER NESTA LISTA.
-        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.autorLFAB);
+        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fragsLFAB);
         rfaLayout.setVisibility(View.GONE);
 
         return view;

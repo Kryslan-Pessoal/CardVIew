@@ -17,11 +17,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.SQLite.BDCore;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaResumidaTelaInicialAdapter;
@@ -141,7 +139,11 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
-        intent.putExtra("praticascards", mList.get(position));
+        if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
+            intent.putExtra("praticascards", filterList.get(position));
+        }else {
+            intent.putExtra("praticascards", mList.get(position));
+        }
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View imagePratica = view.findViewById(R.id.imagem_ilustrativa);  //Primeiro tenta pegar o imageView do estilo Card...

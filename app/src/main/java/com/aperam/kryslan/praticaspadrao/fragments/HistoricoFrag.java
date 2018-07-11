@@ -30,11 +30,12 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener{
+public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingButtonSeparateListener {
 
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
@@ -117,10 +118,11 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
         //FLOATING ACTION BUTTOM
         fabView = view.findViewById(R.id.fragsLFAB);
         rfaBtn = view.findViewById(R.id.fragsFAB);
-        SetFloatingActionButton();
 
         alturaFab = Utils.AlturaFabCorrigida(c);
         fabView.setY(alturaFab);
+        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
+        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
 
         return view;
     }
@@ -129,8 +131,11 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
-        ListaPraticas informacoesDaPratica = mList.get(position);
-        intent.putExtra("praticascards", informacoesDaPratica);
+        if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
+            intent.putExtra("praticascards", filterList.get(position));
+        }else {
+            intent.putExtra("praticascards", mList.get(position));
+        }
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View imagePratica = view.findViewById(R.id.tituloListaPraticas);
@@ -149,48 +154,10 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
         mRecyclerView.getAdapter().notifyItemRemoved(position);  //Notifica ao RecyclerView que ele foi removido para fazer uma animação suave do item sumindo.
     }
 
-    public void SetFloatingActionButton(){
-        RapidFloatingActionContentLabelList fabList = new RapidFloatingActionContentLabelList(c);
-        fabList.setOnRapidFloatingActionContentLabelListListener(this);
-        List<RFACLabelItem> items = new ArrayList<>();
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("Limpar histórico")
-                .setLabelColor(c.getResources().getColor(R.color.md_red_400))
-                .setLabelSizeSp(20)
-                .setResId(R.drawable.delete_white)
-                .setIconNormalColor(c.getResources().getColor(R.color.primary))
-                .setWrapper(0)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("Tipo de lista")
-                .setResId(R.drawable.format_list_white)
-                .setIconNormalColor(c.getResources().getColor(R.color.primary))
-                .setWrapper(3)
-                .setLabelSizeSp(20)
-        );
-        fabList.setItems(items).setIconShadowColor(0xff888888);
-        rfabHelper = new RapidFloatingActionHelper(
-                c,
-                fabView,
-                rfaBtn,
-                fabList
-        ).build();
-    }
 
     @Override
-    public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        if(position == 0){
-            DialogDelete();
-        }else if(position == 1){
-//            DialogTipoLista(c);
-        }
-    }
-
-    @Override
-    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        if(position == 0){
-            DialogDelete();
-        }
+    public void onRFABClick() {
+        DialogDelete();
     }
 
     private void DialogDelete(){  //Cria o Dialog.
@@ -207,8 +174,6 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
                         ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
                         mRecyclerView.setAdapter(adapter);
 
-                        rfabHelper.collapseContent();
-                        //CONFIGURAR PARA RECOLHER MENU DO FAB NO FINAL DA TAREFA***
                     }
                 })
                 .show();

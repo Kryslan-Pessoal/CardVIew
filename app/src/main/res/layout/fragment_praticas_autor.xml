@@ -58,7 +58,7 @@
             android:layout_marginBottom="15dp"
             android:padding="8dp"
             rfab:rfab_size="normal"
-            rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
+            rfab:rfab_drawable="@drawable/delete_white"
             rfab:rfab_color_normal="@color/primary"
             rfab:rfab_color_pressed="@color/primary_dark"
             rfab:rfab_shadow_radius="7dp"

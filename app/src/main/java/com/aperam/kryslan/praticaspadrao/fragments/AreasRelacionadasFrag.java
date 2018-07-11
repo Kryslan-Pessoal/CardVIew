@@ -119,8 +119,11 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
-        TelaInicialCards telaInicialCards = mList.get(position);
-        intent.putExtra("praticascards", telaInicialCards);
+        if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
+            intent.putExtra("praticascards", filterList.get(position));
+        }else {
+            intent.putExtra("praticascards", mList.get(position));
+        }
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         // TRANSITIONS, CRIANDO ANIMAÇÃO.

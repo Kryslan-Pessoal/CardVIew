@@ -17,6 +17,7 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
@@ -30,6 +31,7 @@ import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetP
 public class ProcessoFrag extends AreaEmitenteFrag {
     List<TelaInicialCards> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
+    RecyclerViewOnClickListenerHack thisFrag = this;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         View view = inflater.inflate(R.layout.fragment_praticas_com_scrool_bar, container, false);  //pegando o fragment.
@@ -82,6 +84,7 @@ public class ProcessoFrag extends AreaEmitenteFrag {
                 ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), filterList);
                 mRecyclerView.setAdapter(adapter);
                 //mSearchView.swapSuggestions(newSuggestions); Futuras implementações com Approximate string matching.
+                adapter.setRecyclerViewOnClickListenerHack(thisFrag);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
                 mSearchView.hideProgress();
             }
         });
@@ -96,8 +99,11 @@ public class ProcessoFrag extends AreaEmitenteFrag {
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
-        TelaInicialCards telaInicialCards = mList.get(position);
-        intent.putExtra("praticascards", telaInicialCards);
+        if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
+            intent.putExtra("praticascards", filterList.get(position));
+        }else {
+            intent.putExtra("praticascards", mList.get(position));
+        }
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View textoAutor = view.findViewById(R.id.tituloListaTelaInicial);

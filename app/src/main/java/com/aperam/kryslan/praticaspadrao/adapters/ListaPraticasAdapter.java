@@ -18,7 +18,7 @@ import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
 import java.util.List;
 
-public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdapter.MyViewHolder> implements INameableAdapter{
+public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdapter.MyViewHolder>{
     private List<ListaPraticas> mList;
     private LayoutInflater mLayoutInflater;
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -41,19 +41,6 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
 
         return new ListaPraticasAdapter.MyViewHolder(v);
     }
-
-    @Override
-    public Character getCharacterForElement(int element) {
-        if(mList.isEmpty()){
-            return ' ';
-        }
-        Character c = mList.get(element).getTitulo().charAt(0);
-        if(Character.isDigit(c)) {
-            c = '#';
-        }
-        return c;
-    }
-
 
     /*public void removeListItem(int position){  //APLICAR AOS FAVORITOS
         mList.remove(position);

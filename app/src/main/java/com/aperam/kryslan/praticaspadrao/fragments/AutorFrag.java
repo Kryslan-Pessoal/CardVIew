@@ -18,6 +18,7 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
+import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
@@ -32,6 +33,7 @@ public class AutorFrag extends AreaEmitenteFrag{
     List<TelaInicialCards> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
 
+    RecyclerViewOnClickListenerHack thisFrag = this;
     Context c = null;
 
     @Override
@@ -72,7 +74,7 @@ public class AutorFrag extends AreaEmitenteFrag{
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
-                mSearchView.showProgress();
+                //mSearchView.showProgress();
                 filterList.clear();
                 if(TextUtils.isEmpty(newQuery)){
                     filterList.addAll(mList);
@@ -87,7 +89,7 @@ public class AutorFrag extends AreaEmitenteFrag{
                 ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), filterList);
                 mRecyclerView.setAdapter(adapter);
                 //mSearchView.swapSuggestions(newSuggestions); Futuras implementações com Approximate string matching.
-                mSearchView.hideProgress();
+                adapter.setRecyclerViewOnClickListenerHack(thisFrag);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
             }
         });
 
@@ -102,8 +104,11 @@ public class AutorFrag extends AreaEmitenteFrag{
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
-        TelaInicialCards telaInicialCards = mList.get(position);
-        intent.putExtra("praticascards", telaInicialCards);
+        if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
+            intent.putExtra("praticascards", filterList.get(position));
+        }else {
+            intent.putExtra("praticascards", mList.get(position));
+        }
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View textoAutor = view.findViewById(R.id.tituloListaTelaInicial);

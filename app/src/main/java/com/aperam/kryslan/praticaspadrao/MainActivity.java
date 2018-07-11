@@ -1,8 +1,5 @@
 package com.aperam.kryslan.praticaspadrao;
 
-import android.app.AlarmManager;
-import android.app.FragmentTransaction;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -15,23 +12,13 @@ import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
-import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
-import com.aperam.kryslan.praticaspadrao.adapters.ListaResumidaTelaInicialAdapter;
-import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
-import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
 import com.aperam.kryslan.praticaspadrao.tools.OnClearFromRecentService;
 import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-
-import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetTabsBd;
 
@@ -104,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < 3 ; i++) {
                                 BdLite.atualizaTipoLista(i, which);  //Define todas as listas como o parâmetro passado.
                             }
-                            viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetTabsBd(c)));
-                            viewPager.setCurrentItem(tabSelecionada);
+                            viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetTabsBd(c)));  //Reinicia os fragments.
+                            viewPager.setCurrentItem(tabSelecionada);  //Após reiniciar os fragments, deixa no fragment que já estava selecionado.
                         }
                     })
                     .show();

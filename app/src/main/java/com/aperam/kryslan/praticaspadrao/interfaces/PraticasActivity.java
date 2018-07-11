@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,8 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     private MaterialSearchView searchView;
     RecyclerView recyclerView = null;
+
+    String queryDePesquisaSubmit = "";
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -155,23 +158,16 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                filterList.clear();
-                if(TextUtils.isEmpty(query)){
-                    filterList.addAll(mList);
-                }else{
-                    for(int i = 0; i < mList.size(); i++)
-                    {
-                        if(mList.get(i).getTitulo().toLowerCase().contains(query)||mList.get(i).getNumero().toLowerCase().contains(query)){
-                            filterList.add(mList.get(i));
-                        }
-                    }
+                if(!TextUtils.isEmpty(query)){
+                    queryDePesquisaSubmit = query;
                 }
-                ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, filterList);
-                recyclerView.setAdapter(adapter);
-                return false;
+                return false;  //Define se o teclado irá fechar ou não (false fecha).
             }
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(!queryDePesquisaSubmit.isEmpty()){
+                    newText = queryDePesquisaSubmit;
+                }
                 if (!TextUtils.isEmpty(newText)) {
                     filterList.clear();
                     for(int i = 0; i < mList.size(); i++)
@@ -180,13 +176,25 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                             filterList.add(mList.get(i));
                         }
                     }
-                    ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, filterList);
-                    recyclerView.setAdapter(adapter);
-                }
 
+                }else{
+                    filterList.addAll(mList);
+                }
+                ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, filterList);
+                recyclerView.setAdapter(adapter);
+                queryDePesquisaSubmit = "";
                 return true;
             }
         });
+        searchView.setOnClickListener(new MaterialSearchView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterList.clear();
+                filterList.addAll(mList);
+                ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, filterList);
+                recyclerView.setAdapter(adapter);
+            }
+        });  //TESTAR E FAZER FUNCIONAR.
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -237,7 +245,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //MATERIAL SCROLLBAR
         if(!telaInicialCards.getGrupo().equals("Data de Vigência")){  //ScrollBar não funciona com ExpandableListView.
             ((DragScrollBar) findViewById(R.id.dragScrollBarActivityPraticas))
-                    .setIndicator(new AlphabetIndicator(c), true)
                     .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
         }
     }
@@ -284,10 +291,11 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         if(!telaInicialCards.getGrupo().equals("Data de Vigência")) { //Quando é ExpandableListView, o OnClickListener, não dever ser chamado aqui.
             //CHAMANDO PRÓXIMA ACTIVITY (DocumentoDrive).
             Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
-            ListaPraticas informacoesDaPratica = mList.get(position);
-
-
-            intent.putExtra("praticascards", informacoesDaPratica);
+            if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
+                intent.putExtra("praticascards", filterList.get(position));
+            }else {
+                intent.putExtra("praticascards", mList.get(position));
+            }
 
             // TRANSITIONS, CRIANDO ANIMAÇÃO.
             View textoAutor = view.findViewById(R.id.tituloListaPraticas);

@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaResumidaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
@@ -60,7 +61,7 @@ public class NivelFrag extends AreaEmitenteFrag {
         mRecyclerView.setLayoutManager(lm);
 
         mList = GetNivelMainActivity();
-        AtualizaTipoLista();
+        AtualizaTipoLista(mList);
         /*CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);*/
@@ -93,13 +94,16 @@ public class NivelFrag extends AreaEmitenteFrag {
         intent.putExtra("praticascards", telaInicialCards);
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
-        View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
-
-        if(imagePratica != null) {  //Caso a lista não tenha imagem, cancela a animação para não dar erro.
+        // TRANSITIONS, CRIANDO ANIMAÇÃO.
+        View imagePratica = view.findViewById(R.id.imagem_ilustrativa);  //Primeiro tenta pegar o imageView do estilo Card...
+        if(imagePratica == null){  //Se não achar o ImageView Card...
+            imagePratica = view.findViewById(R.id.ivTelaInicialResumida);  //procura pelo ImageView da lista resumida.
+        }
+        if(imagePratica != null) {  //caso a lista não tenha imagem...
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                     Pair.create(imagePratica, "element1"));
             getActivity().startActivityForResult(intent, 1,options.toBundle());
-        }else{
+        }else{  //cancela a animação para não dar erro.
             getActivity().startActivityForResult(intent, 1);
         }
     }
@@ -112,13 +116,13 @@ public class NivelFrag extends AreaEmitenteFrag {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         BdLite.atualizaTipoLista(2, which);
-                        AtualizaTipoLista();
+                        AtualizaTipoLista(mList);
                     }
                 })
                 .show();
     }
 
-    private void AtualizaTipoLista(){
+    private void AtualizaTipoLista(List<TelaInicialCards> mList){
         /*Tipos de lista:
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
@@ -129,7 +133,9 @@ public class NivelFrag extends AreaEmitenteFrag {
             adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
             mRecyclerView.setAdapter(adapter);
         }else if(tipoLista == 1){
-
+            ListaResumidaTelaInicialAdapter adapter = new ListaResumidaTelaInicialAdapter(getActivity(), mList);
+            adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+            mRecyclerView.setAdapter(adapter);
         }else{
             ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
             adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.

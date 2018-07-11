@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="20dp">
+
+    <com.aperam.kryslan.praticaspadrao.tools.RoundedImageView
+        android:id="@+id/ivTelaInicialResumida"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:contentDescription="desc"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/tituloListaResumidaTelaInicial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/ivTelaInicialResumida"
+        android:textColor="@color/PrimaryText"
+        android:textSize="15sp" />
+
+    <View
+        android:id="@+id/diveder"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_below="@+id/ivTelaInicialResumida"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorDivider" />
+
+</RelativeLayout>

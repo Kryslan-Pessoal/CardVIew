@@ -24,6 +24,7 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BDCore;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaResumidaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.interfaces.PraticasActivity;
@@ -98,7 +99,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         }
 
         //DEFINE O TIPO DE LISTA.
-        AtualizaTipoLista();
+        AtualizaTipoLista(mList);
 
         //FLOATING SEARCHVIEW
         mSearchView = view.findViewById(R.id.floating_search_view);
@@ -119,8 +120,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
                         }
                     }
                 }
-                CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), filterList);
-                mRecyclerView.setAdapter(adapter);
+                AtualizaTipoLista(filterList);
                 //mSearchView.swapSuggestions(newSuggestions); Futuras implementações com Approximate string matching.
                 mSearchView.hideProgress();
             }
@@ -144,13 +144,15 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         intent.putExtra("praticascards", mList.get(position));
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
-        View imagePratica = view.findViewById(R.id.imagem_ilustrativa);
-
-        if(imagePratica != null) {  //Caso a lista não tenha imagem, cancela a animação para não dar erro.
+        View imagePratica = view.findViewById(R.id.imagem_ilustrativa);  //Primeiro tenta pegar o imageView do estilo Card...
+        if(imagePratica == null){  //Se não achar o ImageView Card...
+            imagePratica = view.findViewById(R.id.ivTelaInicialResumida);  //procura pelo ImageView da lista resumida.
+        }
+        if(imagePratica != null) {  //caso a lista não tenha imagem...
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                     Pair.create(imagePratica, "element1"));
             getActivity().startActivityForResult(intent, 1,options.toBundle());
-        }else{
+        }else{  //cancela a animação para não dar erro.
             getActivity().startActivityForResult(intent, 1);
         }
     }
@@ -228,13 +230,13 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         BdLite.atualizaTipoLista(0, which);
-                        AtualizaTipoLista();
+                        AtualizaTipoLista(mList);
                     }
                 })
                 .show();
     }
 
-    private void AtualizaTipoLista(){
+    private void AtualizaTipoLista(List<TelaInicialCards> mList){
         /*Tipos de lista:
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
@@ -245,7 +247,9 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
             adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
             mRecyclerView.setAdapter(adapter);
         }else if(tipoLista == 1){
-
+            ListaResumidaTelaInicialAdapter adapter = new ListaResumidaTelaInicialAdapter(getActivity(), mList);
+            adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+            mRecyclerView.setAdapter(adapter);
         }else{
             ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
             adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.

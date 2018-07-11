@@ -1,5 +1,8 @@
 package com.aperam.kryslan.praticaspadrao;
 
+import android.app.AlarmManager;
+import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -11,9 +14,15 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
+import com.aperam.kryslan.praticaspadrao.adapters.CardTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaResumidaTelaInicialAdapter;
+import com.aperam.kryslan.praticaspadrao.adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
@@ -82,8 +91,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        return super.onOptionsItemSelected(item);  //Quando clicar nos itens do menu.
+    public boolean onOptionsItemSelected(MenuItem item){  //Quando clicar nos itens do menu.
+        int id = item.getItemId();
+        if(id == R.id.action_list_type){
+            new MaterialDialog.Builder(c)
+                    .title(R.string.selecioneTipoLista)
+                    .items(R.array.tipoLista)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            int tabSelecionada = viewPager.getCurrentItem();
+                            for (int i = 0; i < 3 ; i++) {
+                                BdLite.atualizaTipoLista(i, which);  //Define todas as listas como o parâmetro passado.
+                            }
+                            viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetTabsBd(c)));
+                            viewPager.setCurrentItem(tabSelecionada);
+                        }
+                    })
+                    .show();
+        }
+        return true;
     }
 
     @Override

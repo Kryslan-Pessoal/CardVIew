@@ -37,6 +37,7 @@
         <string name="SegundaTela">Segunda tela</string>
         <string name="sim">sim</string>
         <string name="selecioneTipoLista">Selecione o tipo de lista</string>
+    <string name="TipoDeListaGeral">Definir todas as listas</string>
 
     <!-- T -->
 

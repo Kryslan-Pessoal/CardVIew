@@ -12,7 +12,7 @@
         android:layout_height="70dp"
         android:contentDescription="desc"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"/>
 
     <TextView
         android:id="@+id/tituloListaResumidaTelaInicial"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
         android:layout_below="@+id/ivTelaInicialResumida"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorDivider" />
+        android:background="@color/colorDivider"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

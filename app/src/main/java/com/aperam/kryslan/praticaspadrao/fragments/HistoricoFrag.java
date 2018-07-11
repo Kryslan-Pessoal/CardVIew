@@ -18,11 +18,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.DocumentoDrive;
+import com.aperam.kryslan.praticaspadrao.tools.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
@@ -120,14 +123,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
         rfaBtn = view.findViewById(R.id.autorFAB);
         SetFloatingActionButton();
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();  //Corrige a posição do FAB, pois com o "layout_scrollFlags", ele fica em posição errada, abaixo do que deveria.
-        WindowManager windowmanager = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
-        if (windowmanager != null) {  //Para evitar erros, redimenciona a imagem apenas se o windowmanager exista.
-            windowmanager.getDefaultDisplay().getMetrics(displayMetrics);  //Pega o tamanho da tela do celular.
-        }
-        int alturaDispositivo = displayMetrics.heightPixels;
-        Double alturaFabAux = (alturaDispositivo * (-0.05));
-        alturaFab = alturaFabAux.intValue();
+        alturaFab = Utils.AlturaFabCorrigida(c);
         fabView.setY(alturaFab);
 
         return view;
@@ -188,13 +184,38 @@ public class HistoricoFrag extends AreaEmitenteFrag implements RapidFloatingActi
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        Toast.makeText(getContext(), "clicked label: " + position, Toast.LENGTH_SHORT).show();
-        rfabHelper.toggleContent();
+        if(position == 0){
+            DialogoDelete();
+        }else if(position == 1){
+//            DialogList();
+        }
     }
 
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        Toast.makeText(getContext(), "clicked icon: " + position, Toast.LENGTH_SHORT).show();
-        rfabHelper.toggleContent();
+        if(position == 0){
+            DialogoDelete();
+        }
+    }
+
+    private void DialogoDelete(){  //Cria o Dialog.
+        new MaterialDialog.Builder(c)
+                .title(R.string.deletarTudo)
+                .positiveText(R.string.sim)
+                .negativeText(R.string.nao)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        bd.deletarTudo();
+
+                        mList = bd.buscar();
+                        ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
+                        mRecyclerView.setAdapter(adapter);
+
+                        rfabHelper.collapseContent();
+                        //CONFIGURAR PARA RECOLHER MENU DO FAB NO FINAL DA TAREFA***
+                    }
+                })
+                .show();
     }
 }

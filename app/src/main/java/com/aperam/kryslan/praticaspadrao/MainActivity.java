@@ -2,7 +2,6 @@ package com.aperam.kryslan.praticaspadrao;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +12,11 @@ import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
-import com.aperam.kryslan.praticaspadrao.tools.Utils;
+import com.aperam.kryslan.praticaspadrao.tools.OnClearFromRecentService;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -31,19 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private Context c = this;
     public ViewPager viewPager;
 
-    private List<ListaPraticas> listPraticas;
-    private TabLayout tabLayout;
-    private int mItemDrawerSelected;
-    private int mProfileDrawerSelected;
-
-    private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){  //Listener do "Lista resumida" no drawer.
-        @Override
-        public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {}
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         //ANIMAÇÃO.
         TransitionInflater inflater = TransitionInflater.from(this);  //Recebe a animação quando está em outra activity e volta para esta.
         Transition transition = inflater.inflateTransition(R.transition.transitions);
@@ -54,15 +41,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*if(savedInstanceState != null){
-            mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
+//        if(savedInstanceState != null){
+//            mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
+//
+//        }else{
+//            listPraticas = getSetPraticasList(50);
+//        }
 
-        }else{
-            listPraticas = getSetPraticasList(50);
-        }*/
-
-        //SERVIÇO QUE AVISA QUANDO FAZ ALGUM SCREENSHOT.
-        new Utils().ScreenshotListener(c);  //Funciona em todas as activitys pois continua rodando.
+        //INICIA O SERVIÇO QUE OBSERVA SE O APP FOI FECHADO, SE SIM, MATA O LISTENER DE SCREENSHOT.
+        startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
 
         //TOOLBAR
         Toolbar mToolbar = findViewById(R.id.my_toolbar);
@@ -77,14 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setHorizontalFadingEdgeEnabled(true);  //Aplica efeito de fadding suave no rolamento do tabLayout na parte da esquerda.
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {}
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
-        });
 
         //HEADER
         DrawerCreator drawerClass = new DrawerCreator();
@@ -108,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //SERVIÇO QUE AVISA QUANDO FAZ ALGUM SCREENSHOT.
+        new OnClearFromRecentService().ScreenshotListener(c);  //Funciona em todas as activitys.
     }
 
     @Override
@@ -123,14 +105,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    /*@Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("mItemDrawerSelected", mItemDrawerSelected);
-        outState.putInt("mProfileDrawerSelected", mProfileDrawerSelected);
-        outState.putParcelableArrayList("listCars", (ArrayList<Car>) listCars);
-        outState = navigationDrawerLeft.saveInstanceState(outState);
-        outState = headerNavigationLeft.saveInstanceState(outState);
-        super.onSaveInstanceState(outState);
-    }*/
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        outState.putInt("mItemDrawerSelected", mItemDrawerSelected);
+//        outState.putInt("mProfileDrawerSelected", mProfileDrawerSelected);
+//        outState.putParcelableArrayList("listCars", (ArrayList<Car>) listCars);
+//        outState = navigationDrawerLeft.saveInstanceState(outState);
+//        outState = headerNavigationLeft.saveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
+//    }
 }

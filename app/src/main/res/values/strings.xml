@@ -18,6 +18,7 @@
 
     <!-- D -->
     <string name="favoritos">Favoritos</string>
+    <string name="deletarTudo">Tem certeza que quer deletar tudo?</string>
 
     <!--H-->
         <string name="historico">Histórico</string>
@@ -25,12 +26,16 @@
     <!-- I -->
         <string name="informacoesDaPpa">Informações da PPA</string>
 
+    <!--N-->
+    <string name="nao">NÃO</string>
+
     <!-- P -->
         <string name="pesquisaAvancada">Pesquisa Avançada…</string>
+        <string name="pesquisar">Pesquisar…</string>
 
     <!-- S -->
         <string name="SegundaTela">Segunda tela</string>
-        <string name="pesquisar">Pesquisar…</string>
+        <string name="sim">sim</string>
 
     <!-- T -->
 </resources>

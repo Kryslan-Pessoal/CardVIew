@@ -32,11 +32,14 @@ public class BdLite {
     public void deletar(ListaPraticas pratica){
         bd.delete("pratica", "_id = ? " , new String[]{"" + pratica.getNumeroId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
     }
+    public void deletarTudo(){
+        bd.execSQL("delete from "+ "pratica");
+    }
 
     public List<ListaPraticas> buscar(){
         List<ListaPraticas> list = new ArrayList<ListaPraticas>();
         String[] colunas = new String[]{"_id", "nome", "numero", "autor", "data"};
-        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id ASC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id DESC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
 
         if(cursor.getCount() > 0){
             cursor.moveToFirst();

@@ -47,12 +47,6 @@ public class DocumentoDrive extends MainActivity{
 
         ListaPraticas informacoesDaPratica = getIntent().getExtras().getParcelable("praticascards");
 
-        if (toolbar != null) {  //Mudas o nome do título da Tollbar para o nome da prática.
-           /* setSupportActionBar(toolbar);
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(informacoesDaPratica.getTitulo());*/
-        }
-
         TextView textViewTitulo = findViewById(R.id.tvDocumentoDriveTitulo);
         textViewTitulo.setText(informacoesDaPratica.getTitulo());
 

@@ -27,4 +27,13 @@
         <!-- Customize color of navigation drawer icon and back arrow -->
         <item name="colorControlNormal">@color/md_white_1000</item>
     </style>
+
+    <style name="MaterialSearchViewStyle">
+        <!-- Background for the search bar -->
+        <item name="searchBackground">@color/colorPrimary</item>
+
+        <!-- Change hint text color for edit text -->
+        <item name="android:textColorHint">@color/md_white_1000</item>
+
+    </style>
 </resources>

@@ -31,6 +31,7 @@
 
     <!-- P -->
         <string name="pesquisaAvancada">Pesquisa Avançada…</string>
+        <string name="pesquisaAvancadaSemPontos">Pesquisa Avançada</string>
         <string name="pesquisar">Pesquisar…</string>
 
     <!-- S -->

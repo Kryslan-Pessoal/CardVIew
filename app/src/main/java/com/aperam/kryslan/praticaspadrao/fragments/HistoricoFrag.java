@@ -85,7 +85,6 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
         mRecyclerView.setAdapter(adapter);
 
         ((DragScrollBar) view.findViewById(R.id.dragScrollBar))
-                .setIndicator(new AlphabetIndicator(view.getContext()), true)
                 .setHandleColour(getResources().getColor(R.color.colorPrimary));  //CONFIGURAR O SAVEDINSTANCESTATE***.
 
         mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(view.getContext(), mRecyclerView, this));  //Ativa o longPress.

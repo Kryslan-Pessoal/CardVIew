@@ -1,8 +1,13 @@
 package com.aperam.kryslan.praticaspadrao;
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,10 +17,12 @@ import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
+import com.aperam.kryslan.praticaspadrao.interfaces.SearchActivity;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
 import com.aperam.kryslan.praticaspadrao.tools.OnClearFromRecentService;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -25,6 +32,9 @@ import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetT
 public class MainActivity extends AppCompatActivity {
     private Context c = this;
     public ViewPager viewPager;
+    private Menu menu;
+
+    private Activity a = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);  //Inserindo as opções na toolbar.
+        this.menu = menu;
+
         return true;
     }
 
@@ -96,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     })
                     .show();
+        }else if(id == R.id.pesquisaAvancada){
+            //CHAMA ACTIVITY DE PESQUISA.
+            Intent intent = new Intent(c, SearchActivity.class);
+            a.startActivityForResult(intent, 1);
         }
         return true;
     }

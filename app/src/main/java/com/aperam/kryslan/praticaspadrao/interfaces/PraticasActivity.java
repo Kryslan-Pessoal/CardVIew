@@ -132,7 +132,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //NAVIGATIONDRAWER
         drawerClass.DrawerBodyBuilder(this, savedInstanceState, mToolbar, null, this, headerDrawer);
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Ela faz com que na AppBar, no canto esquerdo fique uma seta de voltar, e não as 3 linhas de abrir o Drawer.
         //TRATAR A FUNÇÃO DE VOLTAR.
 
@@ -226,21 +225,18 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         }else{
             DataAdapter adapter = new DataAdapter(CriaMesExpansivel());
             recyclerView.setAdapter(adapter);
-
-
             /*Mes = Genre
             Artist = Dia*/
-
         }
 
-       /* // FAB
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(PraticasActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
-            }
-        });*/
+//        // FAB
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(PraticasActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         //MATERIAL SCROLLBAR
         if(!telaInicialCards.getGrupo().equals("Data de Vigência")){  //ScrollBar não funciona com ExpandableListView.
@@ -273,8 +269,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         searchView.setMenuItem(searchItem);
 
         return true;
-
-
     }
 
     @Override
@@ -325,7 +319,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                 .show();
     }
 
-    private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {  //Ao clicar nos itens lança um Listener, para fazer a animação.
+    protected static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {  //Ao clicar nos itens lança um Listener, para fazer a animação.
         private Context mContext;  //Pega várias informações do app no tempo de execução para usar essas informações.
         private GestureDetector mGestureDetector;
         private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;

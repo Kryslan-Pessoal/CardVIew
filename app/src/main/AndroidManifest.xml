@@ -28,6 +28,8 @@
                 android:value="com.aperam.kryslan.praticaspadrao.MainActivity"/>
         </activity>
         <activity android:name=".interfaces.DocumentoDrive" />
+        <activity android:name=".interfaces.SearchActivity" />
+
         <service android:name=".tools.OnClearFromRecentService" android:stopWithTask="false"/> <!--Ativa o serviço que limpa o app da memória quando ele é fechado (para parar o Listener de Screenshot-->
     </application>
 

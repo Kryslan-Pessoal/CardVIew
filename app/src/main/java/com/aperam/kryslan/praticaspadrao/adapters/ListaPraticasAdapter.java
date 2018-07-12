@@ -18,17 +18,13 @@ import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
 import java.util.List;
 
-public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdapter.MyViewHolder>{
+public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdapter.MyViewHolder> implements INameableAdapter{
     private List<ListaPraticas> mList;
     private LayoutInflater mLayoutInflater;
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-    private Context c;
-    private boolean comLixeira;
-
 
     public ListaPraticasAdapter(Context c, List<ListaPraticas> lista){
-        this.c = c;
         mList = lista;
         mLayoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -84,5 +80,14 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
 
     public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack r){
         mRecyclerViewOnClickListenerHack = r;  //Está adicionando o parâmetro de clique de entrada ao hack para ativar o click.
+    }
+
+    @Override
+    public Character getCharacterForElement(int element) {
+        Character c = mList.get(element).getTitulo().charAt(0);
+        if(Character.isDigit(c)) {
+            c = '#';
+        }
+        return c;
     }
 }

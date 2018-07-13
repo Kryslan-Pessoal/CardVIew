@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         //Se o resultado == 2 quer dizer que acabou de fechar outra Activity e que na mesma, foi clicado em algum item do drawer, fechando-a e setando a tab certa.
         if(resultCode==2) {  //Só será dois, se for fechado pelas activitys Frag, passando o comando de voltar passando informações: startActivityForResult.
             int i = data.getIntExtra("tabSelecionada", 2);  //Retorna o valor do intent como 2, e a tab selecionada.
-            if (i < 10) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
+            if (i < 8) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
                 viewPager.setCurrentItem(i - 1);
             }else{  //Se for maior do que o número de tabs existentes, ele retorna para a tab um, mas IMPLEMENTAR FUTURAMENTE.
                 viewPager.setCurrentItem(0);

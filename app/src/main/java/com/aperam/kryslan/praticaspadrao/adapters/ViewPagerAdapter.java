@@ -38,11 +38,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
                 return new NivelFrag();
             case 5:
                 return new ProcessoFrag();
+//            case 6:
+//                return new RestritoFrag();
+//            case 7:
+//                return new FavoritosFrag();
             case 6:
-                return new RestritoFrag();
-            case 7:
-                return new FavoritosFrag();
-            case 8:
                 return new HistoricoFrag();
         }
 

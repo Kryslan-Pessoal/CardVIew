@@ -70,7 +70,7 @@ public class DrawerCreator {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, final int i, IDrawerItem drawerItem) {
-                        if (i < 10) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
+                        if (i < 8) {  //Para não dar erro, pois se selecionar configurações no drawer por exemplo, ele vai dar erro pois não existe essa tab.
                             viewPager.setCurrentItem(i - 1);  //muda a posição da Tab e página selecionada sempre que mudar a posição no DrawerCreator.
                         }
                         return false;  //Faz o drawer fechar ou não. (false fecha)
@@ -142,8 +142,8 @@ public class DrawerCreator {
                 R.drawable.data_de_vigencia,
                 R.drawable.nivel,
                 R.drawable.processo,
-                R.drawable.restrito,
-                R.drawable.estrela_cheia,
+//                R.drawable.restrito,
+//                R.drawable.estrela_cheia,
                 R.drawable.historico};
         int[] iconsSelected = new int[]{
                 R.drawable.area_eminente_selected,
@@ -152,8 +152,8 @@ public class DrawerCreator {
                 R.drawable.data_de_vigencia_selected,
                 R.drawable.nivel_selected,
                 R.drawable.processo_selected,
-                R.drawable.restrito_selected,
-                R.drawable.estrela_cheia,
+//                R.drawable.restrito_selected,
+//                R.drawable.estrela_cheia,
                 R.drawable.historico_selected};
         List<PrimaryDrawerItem> list = new ArrayList<>();
 

@@ -23,8 +23,8 @@ public class BdMainActivity {
                 c.getResources().getString(R.string.dataDeVigencia),
                 c.getResources().getString(R.string.nivel),
                 c.getResources().getString(R.string.processo),
-                c.getResources().getString(R.string.restrito),
-                c.getResources().getString(R.string.favoritos),
+//                c.getResources().getString(R.string.restrito),
+//                c.getResources().getString(R.string.favoritos),
                 c.getResources().getString(R.string.historico)};
     }
 

@@ -20,6 +20,7 @@ import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -34,6 +35,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
     private MaterialSearchView searchView;
     private RecyclerView recyclerView;
     private List<ListaPraticas> mList, filterList = new ArrayList<>();
+    TelaInicialCards pesquisaBdSalva = new TelaInicialCards();
 
 
     private Context c = this;
@@ -49,21 +51,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
         //TOOLBAR
         Toolbar mToolbar = findViewById(R.id.tb_main_search);
         setSupportActionBar(mToolbar);  //Cria a Toolbar.
-
-        //SEARCHVIEW
-        searchView = findViewById(R.id.search_view);
-        searchView.setVisibility(View.GONE);  //Para o título aparecer e não ser tampado pela caixa do searchView, ele fica oculto por padrão.
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                searchView.setVisibility(View.VISIBLE);  //Mas ao abrir ele, ele volta a aparecer.
-            }
-            @Override
-            public void onSearchViewClosed() {
-                searchView.setVisibility(View.GONE);  //E ao fechar ele some novamente.
-            }
-        });
-        searchView.setHint("Procura");
 
         //HEADER
         DrawerCreator drawerClass = new DrawerCreator();
@@ -86,13 +73,15 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
                 searchView.setVisibility(View.GONE);  //E ao fechar ele some novamente.
             }
         });
-        searchView.setHint("Procura");  //NÃO FUNCIONA*****
-        searchView.setSuggestions(getTituloAreaEmitenteBd());
+//        String[] a = getHistoricoPesquisa();
+//        searchView.setSuggestions(a);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(!TextUtils.isEmpty(query)){
                     queryDePesquisaSubmit = query;
+//                    pesquisaBdSalva.setTextoPrincipal(query);
+//                    BdLite.inserirHistoricoPesquisa(pesquisaBdSalva);
                 }
                 return false;  //Define se o teclado irá fechar ou não (false fecha).
             }
@@ -119,7 +108,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
                 return true;
             }
         });
-        searchView.setOnClickListener(new MaterialSearchView.OnClickListener() {
+        /*searchView.setOnClickListener(new MaterialSearchView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filterList.clear();
@@ -127,7 +116,8 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
                 ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, filterList);
                 recyclerView.setAdapter(adapter);
             }
-        });  //TESTAR E FAZER FUNCIONAR.
+        });  //TESTAR E FAZER FUNCIONAR.*/
+        searchView.setHint("Procura");  //NÃO FUNCIONA*****
 
         //RECYCLER VIEW.
         recyclerView = findViewById(R.id.rv_list_search);
@@ -147,6 +137,16 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
         ((DragScrollBar) findViewById(R.id.dragScrollBarSearch))
                 .setHandleColour(getResources().getColor(R.color.colorPrimary));  //CONFIGURAR O SAVEDINSTANCESTATE.
 
+    }
+
+    private String[] getHistoricoPesquisa() {  //Vai pegar do banco a tabela com o histórico de pesquisa.
+        List<TelaInicialCards> listaHistorico = BdLite.buscarHistoricoPesquisa();
+        String[] textoPrincipal = new String[listaHistorico.size()];
+        for (int i = 0; i < listaHistorico.size(); i++) {
+            textoPrincipal[i] = listaHistorico.get(i).getTextoPrincipal();  //Vai pegar apenas o texto, e não a List completa que o banco retorna.
+        }
+
+        return textoPrincipal;
     }
 
     @Override

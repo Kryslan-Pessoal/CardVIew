@@ -153,7 +153,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
             }
         });
         searchView.setHint("Procura");
-        searchView.setSuggestions(getTituloAreaEmitenteBd());
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -307,7 +306,6 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     @Override
     public void onLongPressClickListener(View view, int position) {
-
         String[] corpoDialog = new String[4];
         corpoDialog[0] = "TÍTULO: " + mList.get(position).getTitulo();
         corpoDialog[1] = "Nº: " + mList.get(position).getNumero();
@@ -384,15 +382,15 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         //outState.putParcelable("praticasCards", praticasCards);
     }
 
-    /*@Override
-    public void onBackPressed() {
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
-            TransitionManager.beginDelayedTransition(mRoot, new Slide());
-            tvDescription.setVisibility( View.INVISIBLE );
-        }
-
-        super.onBackPressed();
-    }*/
+//    @Override
+//    public void onBackPressed() {
+//        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+//            TransitionManager.beginDelayedTransition(mRoot, new Slide());
+//            tvDescription.setVisibility( View.INVISIBLE );
+//        }
+//
+//        super.onBackPressed();
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){

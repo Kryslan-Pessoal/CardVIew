@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
+import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,40 @@ public class BdLite {
 
         bd.insert("pratica", null, valores);
     }
+
+    public static void inserirHistoricoPesquisa(TelaInicialCards historicoSearch){
+        ContentValues valores = new ContentValues();
+        valores.put("texto", historicoSearch.getTextoPrincipal());
+
+        bd.insert("historicoPesquisa", null, valores);
+    }
+
+    public static List<TelaInicialCards> buscarHistoricoPesquisa(){
+        List<TelaInicialCards> list = new ArrayList<>();
+        String[] colunas = new String[]{"_id", "texto"};
+        @SuppressLint("Recycle") Cursor cursor = bd.query("historicoPesquisa", colunas , null, null, null, null, "_id DESC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            do{
+                TelaInicialCards p = new TelaInicialCards();
+                p.setId(cursor.getInt(0));
+                p.setTextoPrincipal(cursor.getString(1));
+                list.add(p);
+            }while(cursor.moveToNext());
+        }
+
+        return(list);
+    }
+
+    public void deletarHistoricoPesquisa(TelaInicialCards historicoSearch){
+        bd.delete("historicoPesquisa", "_id = ? " , new String[]{"" + historicoSearch.getId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+    }
+    public void deletarTudoHistoricoPesquisa(){
+        bd.execSQL("delete from "+ "historicoPesquisa");
+    }
+
 
     public void deletar(ListaPraticas pratica){
         bd.delete("pratica", "_id = ? " , new String[]{"" + pratica.getNumeroId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.

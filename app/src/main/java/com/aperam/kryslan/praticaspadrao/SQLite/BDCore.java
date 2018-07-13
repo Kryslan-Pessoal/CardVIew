@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BDCore extends SQLiteOpenHelper {
     private static final String NOME_BD = "bancoApp";
-    private static final int VERSAO_BD = 2;
+    private static final int VERSAO_BD = 3;
 
     //Essa chamada faz: Se o banco existir, ele chama ele, se não existir, ele irá criar um novo, se tiver uma varsão nova do BdLite
     //Ele vai destruir e reconstruir o banco
@@ -19,11 +19,11 @@ public class BDCore extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase bd) {
         bd.execSQL("create table pratica(_id integer primary key autoincrement, nome text not null, numero text not null, autor text not null, data text not null);");
         bd.execSQL("create table tipoListaFrags(_id integer primary key, fragments text not null, tipoLista integer not null);");
+        bd.execSQL("create table historicoPesquisa(_id integer primary key autoincrement, texto text not null);");
         /*Tipos de lista:
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
         2 = Lista resumida sem imagens.*/
-
         PreencheColunasTipoListaFrags(bd);
     }
 
@@ -31,6 +31,7 @@ public class BDCore extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase bd, int oldVersion, int newVersion) {
         bd.execSQL("drop table pratica");
         bd.execSQL("drop table tipoListaFrags");
+        bd.execSQL("drop table historicoPesquisa");
         onCreate(bd);
     }
 

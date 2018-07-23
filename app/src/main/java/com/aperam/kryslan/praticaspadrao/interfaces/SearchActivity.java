@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.BancoDeDados.BdSearchActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
@@ -94,7 +95,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
                     filterList.clear();
                     for(int i = 0; i < mList.size(); i++)
                     {
-                        if(mList.get(i).getTitulo().toLowerCase().contains(newText)||mList.get(i).getNumero().toLowerCase().contains(newText)){
+                        if(mList.get(i).getTitulo().toLowerCase().contains(newText) ||
+                                mList.get(i).getNumero().toLowerCase().contains(newText) ||
+                                mList.get(i).getAutor().toLowerCase().contains(newText) ||
+                                mList.get(i).getData().toLowerCase().contains(newText)){
                             filterList.add(mList.get(i));
                         }
                     }
@@ -174,7 +178,21 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
 
     @Override
     public void onLongPressClickListener(View view, int position) {
-
+        List<ListaPraticas> mListAux;
+        if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
+            mListAux = filterList;
+        }else {
+            mListAux = mList;
+        }
+        String[] corpoDialog = new String[4];
+        corpoDialog[0] = "TÍTULO: " + mListAux.get(position).getTitulo();
+        corpoDialog[1] = "Nº: " + mListAux.get(position).getNumero();
+        corpoDialog[2] = "AUTOR: " + mListAux.get(position).getAutor();
+        corpoDialog[3] = "DATA: " + mListAux.get(position).getData();
+        new MaterialDialog.Builder(this)  //Cria um Dialog com informações da PPA clicada.
+                .title(R.string.informacoesDaPpa)
+                .items(corpoDialog)
+                .show();
     }
 
     @Override

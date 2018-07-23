@@ -1,7 +1,7 @@
 <!--    <string name=""></string>    -->
 <resources>
 
-    <string name="app_name">(Sou + Seguro)</string>
+    <string name="app_name">Trabalho Correto (Sou + Seguro)</string>
 
     <!-- A -->
         <string name="areaEminente">Área Emitente</string>

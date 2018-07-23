@@ -18,7 +18,7 @@ public class BDCore extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase bd) {
         bd.execSQL("create table pratica(_id integer primary key autoincrement, nome text not null, numero text not null, autor text not null, data text not null);");
-        bd.execSQL("create table tipoListaFrags(_id integer primary key, fragments text not null, tipoLista integer not null);");
+        bd.execSQL("create table tipoListaFrags(_id integer primary key, fragments text not null, tipoLista integer not null);");  //Define to tipo de lista em cada Frigamento.
         bd.execSQL("create table historicoPesquisa(_id integer primary key autoincrement, texto text not null);");
         /*Tipos de lista:
         0 = Lista com imgaens grandes.

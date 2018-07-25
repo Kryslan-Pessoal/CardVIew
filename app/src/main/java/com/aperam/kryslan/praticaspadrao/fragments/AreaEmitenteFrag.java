@@ -61,13 +61,14 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        final View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o fragment.
+        final View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o XML do fragment.
 
         c = view.getContext();
 
         mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
+        //LISTENER SCROLL
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -84,17 +85,15 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
             }
         });
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), mRecyclerView, this));
+        mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), mRecyclerView, this));  //Chama o Listener de Click em cada Card, (configuração continua na classe do Adapter).
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-//        boolean formatoLista = getArguments().getBoolean("formatoLista");
-
-        if(mList == null){
+//        if(mList == null){
             mList = GetAreaEmitenteMainActivity();
-        }
+//        }
 
         //DEFINE O TIPO DE LISTA.
         AtualizaTipoLista(mList);
@@ -104,11 +103,10 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         mSearchView.setSearchHint("Pesquisa de Área Emitente...");
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {  //Ao mudar o texto na barra de pesquisa.
                 queryPesquisa = newQuery;
-                mSearchView.showProgress();
                 filterList.clear();
-                if(TextUtils.isEmpty(newQuery)){
+                if(TextUtils.isEmpty(newQuery)){  //Se o que for digitado for == " ".
                     filterList.addAll(mList);
                 }else{
                     for(int i = 0; i < mList.size(); i++)
@@ -120,7 +118,6 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
                 }
                 AtualizaTipoLista(filterList);
                 //mSearchView.swapSuggestions(newSuggestions); Futuras implementações com Approximate string matching.
-                mSearchView.hideProgress();
             }
         });
 

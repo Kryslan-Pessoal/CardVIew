@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
@@ -21,12 +20,12 @@ import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
 import java.util.List;
 
-public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicialAdapter.MyViewHolder> implements INameableAdapter{
-    private List<TelaInicialCards> mList;
-    private LayoutInflater mLayoutInflater;
-    private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
-
+public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicialAdapter.MyViewHolder> implements INameableAdapter{  //INameableAdapter é responsável pelas letras que aparecerão na barra de rolagem (DragScrollBar) indicando o índice.
     private Context c;
+
+    private List<TelaInicialCards> mList;
+    private LayoutInflater mLayoutInflater;  //Vai inflar (desenhar) os Cards.
+    private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;  //Listener de clique nos cards.
 
     public CardTelaInicialAdapter(Context c, List<TelaInicialCards> lista){
         this.c = c;
@@ -36,17 +35,13 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //só é chamado na hora de criar uma nova view.
-        View v = mLayoutInflater.inflate(R.layout.item_tela_inicial_card, viewGroup, false);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View v = mLayoutInflater.inflate(R.layout.item_tela_inicial_card, viewGroup, false);  //Vincula o XML que contém o desenho e formato do card com uma View.
         return new MyViewHolder(v);
     }
 
-    /*public void removeListItem(int position){  //APLICAR AOS FAVORITOS
-        mList.remove(position);
-        notifyItemRemoved(position);
-    }*/
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{  //Responsável por controlar os cardViews, deletando os que não aparecem na tela para preservar memória
+        //Views dos itens dentro do card.
         private ImageView imagemIlustrativa;
         private CardView cardView;
         private TextView nomeNoCard;
@@ -58,7 +53,7 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
             cardView = itemView.findViewById(R.id.card_view_adapter);
             nomeNoCard = itemView.findViewById(R.id.tituloCard);
 
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);  //Ativa o Listener de Clique cada vez que cria um Card (card por card).
         }
         @Override
         public void onClick(View v) {
@@ -82,16 +77,16 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
             if(larguraDispositivo < 1080){
                 larguraFrag = larguraDispositivo;
             }else{
-                larguraFrag = 1080;  //Caso o dispositivo seja muito grande (maior que 720pixels) os tamanhos dos cards e imagens não irão passar de 720, para não esticar demais a imagem.
+                larguraFrag = 1080;  //Caso o dispositivo seja muito grande (maior que 1080 pixels) os tamanhos dos cards e imagens não irão passar de 1080, para não esticar demais a imagem.
             }
         }else{
-            Toast toast = Toast.makeText(c,"Tamanho da tela indefinido. \n(Talvez as imagens não fiquem bem ajustadas).",Toast.LENGTH_LONG);
-            toast.show();
-            larguraFrag = 1080;
+//            Toast toast = Toast.makeText(c,"Tamanho da tela indefinido. \n(Talvez as imagens não fiquem bem ajustadas).",Toast.LENGTH_LONG);
+//            toast.show();
+            larguraFrag = 1080;  //Se o tamanho não for identificado, o app pegará como medida padrão 1080p.
         }
 
-        //Dimensões das imgens.
-        Double larguraImagemAux = (larguraFrag*0.926);  //A imagem deve ser +-7% menor do que o fragment.
+        //DIMENSÕES DAS IMAGENS.
+        Double larguraImagemAux = (larguraFrag*0.926);  //A imagem deve ser +-7% menor do que o fragment que o envolve.
         int larguraImagem = larguraImagemAux.intValue();
         Double alturaImagemAux = (larguraImagem * 0.55);  //A largura da imagem é equivalente a 55% de sua altura (para ficar melhor ajustada).
         int alturaImagem = alturaImagemAux.intValue();
@@ -99,24 +94,19 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
 
         layoutParamsImagem.width = larguraImagem;
         layoutParamsImagem.height = alturaImagem;
-        myViewHolder.imagemIlustrativa.setLayoutParams(layoutParamsImagem);
+        myViewHolder.imagemIlustrativa.setLayoutParams(layoutParamsImagem);  //Seta os parâmetros de largura e altura no viewHolder.
 
-        //Dimensões dos cards.
+        //DIMENSÕES DOS CARDS.
         Double larguraCardAux = (larguraImagem*0.9745);  //O card deve ser +-3% menor do que a imagem.
         int larguraCard = larguraCardAux.intValue();
         ViewGroup.LayoutParams layoutParamsCard = myViewHolder.cardView.getLayoutParams();
         layoutParamsCard.width = larguraCard;
 
-        DisplayMetrics realmetrics = new DisplayMetrics();
         Float valor = displayMetrics.xdpi;
 
-        Double valorFinalAux = valor * 0.36;
+        Double valorFinal = valor * 0.36;
 
-        int valorFinal = valorFinalAux.intValue();
-        if (windowmanager != null) {
-            windowmanager.getDefaultDisplay().getRealMetrics(realmetrics);
-        }
-        layoutParamsCard.height = valorFinal;
+        layoutParamsCard.height = valorFinal.intValue();
         myViewHolder.cardView.setLayoutParams(layoutParamsCard);
 
         Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
@@ -125,7 +115,7 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
                 .centerCrop()
                 .into(myViewHolder.imagemIlustrativa);
 
-        myViewHolder.nomeNoCard.setText(mList.get(positionList).getTextoPrincipal());  //Está fora pois é chamado em todos os casos.
+        myViewHolder.nomeNoCard.setText(mList.get(positionList).getTextoPrincipal());
 
        /* try {
             YoYo.with(Techniques.FadeInUp)  //Defina a animação na hora de carregar cada Card.
@@ -142,11 +132,11 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
     }
 
     public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack r){
-        mRecyclerViewOnClickListenerHack = r;  //Está adicionando o parâmetro de clique de entrada ao hack para ativar o click.
+        mRecyclerViewOnClickListenerHack = r;
     }
 
     @Override
-    public Character getCharacterForElement(int element) {
+    public Character getCharacterForElement(int element) {  //como o "INameableAdapter" (início do código), é responsável pelas letras que aparecerão na barra de rolagem (DragScrollBar) indicando o índice.
         Character c = mList.get(element).getTextoPrincipal().charAt(0);
         if(Character.isDigit(c)) {
             c = '#';

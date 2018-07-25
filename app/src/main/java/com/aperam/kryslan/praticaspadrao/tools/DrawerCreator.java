@@ -30,6 +30,7 @@ import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetT
 public class DrawerCreator {
     private Context c;
 
+    //HEADER
     public AccountHeader DraweHeaderBuilder(Activity a, Bundle savedInstanceState) {
         return new AccountHeaderBuilder()
                 .withActivity(a)  //Contexto da activity onde o drawer será criado.
@@ -46,14 +47,13 @@ public class DrawerCreator {
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean current) {
-                        //Toast.makeText(MainActivity.this, "mudança de profile" + profile, Toast.LENGTH_SHORT).show();
-                        //caso eu mude de conta.
                         return false;  //false: fecha o drawe. Verdadeiro: não fecha.
                     }
                 })
                 .build();
     }
 
+    //DRAWER
     public void DrawerBodyBuilder(final Activity a, Bundle savedInstanceState, Toolbar mToolbar, final ViewPager viewPager, final Context c, AccountHeader headerDrawer){
         this.c = c;
         Drawer drawer;

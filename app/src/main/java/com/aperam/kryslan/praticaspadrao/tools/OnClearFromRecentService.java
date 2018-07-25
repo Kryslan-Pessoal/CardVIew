@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.List;
 
 
-public class OnClearFromRecentService extends Service {
+public class OnClearFromRecentService extends Service {  //Responsável por iniciar e matar o processo do Listener de Screenshot.
 
     boolean appExit = false;
     @Override
@@ -25,21 +25,20 @@ public class OnClearFromRecentService extends Service {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy() {  //Quando o app é destruído em qualquer sentido.
         appExit = true;
         super.onDestroy();
     }
 
     @Override
-    public void onTaskRemoved(Intent rootIntent) {  //Quando removemos o app da lista de apps recentes na memória.
+    public void onTaskRemoved(Intent rootIntent) {  //Quando removemos o app da lista de apps recentes na memória (Operação disparada sempre pelo usuário).
         appExit = true;
         stopSelf();
     }
 
     public void ScreenshotListener(final Context c) {
         final ActivityManager am = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
-
-        if (am != null) {
+        if (am != null) {  //Confere se alguma Activity do App está rodando.
             final Handler h = new Handler();
             final int delay = 3000; //milesegundos
             h.postDelayed(new Runnable() {

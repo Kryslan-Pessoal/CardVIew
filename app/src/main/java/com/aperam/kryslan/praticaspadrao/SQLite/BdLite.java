@@ -25,24 +25,58 @@ public class BdLite {
         bd = auxBd.getWritableDatabase();
     }
 
-    public void inserirNoHistorico(ListaPraticas pratica){
-        ContentValues valores = new ContentValues();
-        valores.put("nome", pratica.getTitulo());
-        valores.put("numero", pratica.getNumero());
-        valores.put("autor", pratica.getNumero());
-        valores.put("data", pratica.getNumero());
+    //region SELECT
+    //PRATICA
+    public List<ListaPraticas> SelectPratica(){
+        List<ListaPraticas> list = new ArrayList<>();
+        String[] colunas = new String[]{"_id", "nome", "numero", "autor", "data"};
+        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id DESC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
 
-        bd.insert("pratica", null, valores);
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            do{
+                ListaPraticas p = new ListaPraticas();
+                p.setNumeroId(cursor.getInt(0));
+                p.setTitulo(cursor.getString(1));
+                p.setNumero(cursor.getString(2));
+                list.add(p);
+            }while(cursor.moveToNext());
+        }
+        return(list);
     }
 
-    public static void inserirHistoricoPesquisa(TelaInicialCards historicoSearch){
-        ContentValues valores = new ContentValues();
-        valores.put("texto", historicoSearch.getTextoPrincipal());
+    //CATEGORIAS
+    @SuppressLint("Recycle")
+    public static List<TelaInicialCards> SelectCategoria(String categoria){
+        List<TelaInicialCards> list = new ArrayList<>();
+        String[] colunas;
+        @SuppressLint("Recycle") Cursor cursor;
+        if(categoria.equals("areaEmitente") || categoria.equals("areasRelacionadas") || categoria.equals("nivel") ||
+                categoria.equals("processo")){  //Se for essas categorias é porque tem imagem.
+            colunas = new String[]{"_id", "nome", "imagem"};
+            cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+        }else{
+            colunas = new String[]{"_id", "nome"};
+            cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+        }
 
-        bd.insert("historicoPesquisa", null, valores);
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+            do{
+                TelaInicialCards p = new TelaInicialCards();
+                p.setId(cursor.getInt(0));
+                p.setTextoPrincipal(cursor.getString(1));
+                p.setFotoUrl(cursor.getString(2));
+                p.setGrupo(categoria);
+                list.add(p);
+            }while(cursor.moveToNext());
+        }
+        return(list);
     }
 
-    public static List<TelaInicialCards> buscarHistoricoPesquisa(){
+    //HISTÓRICO DE PESQUISA
+    public static List<TelaInicialCards> SelectHistoricoPesquisa(){
         List<TelaInicialCards> list = new ArrayList<>();
         String[] colunas = new String[]{"_id", "texto"};
         @SuppressLint("Recycle") Cursor cursor = bd.query("historicoPesquisa", colunas , null, null, null, null, "_id DESC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
@@ -61,6 +95,38 @@ public class BdLite {
         return(list);
     }
 
+    //TIPO LISTA
+    public static int SelectTipoLista(int idFrag){
+        @SuppressLint("Recycle") Cursor cursor = bd.rawQuery("SELECT tipoLista FROM tipoLista WHERE _id=?", new String[] {idFrag + ""});
+        int idTipoLista = 0;
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            idTipoLista = cursor.getInt(cursor.getColumnIndex("tipoLista"));
+        }
+        return idTipoLista;
+    }
+
+    //endregion
+
+    public void InsertHistorico(ListaPraticas pratica){
+        ContentValues valores = new ContentValues();
+        valores.put("nome", pratica.getTitulo());
+        valores.put("numero", pratica.getNumero());
+        valores.put("autor", pratica.getNumero());
+        valores.put("data", pratica.getNumero());
+
+        bd.insert("pratica", null, valores);
+    }
+
+    public static void inserirHistoricoPesquisa(TelaInicialCards historicoSearch){
+        ContentValues valores = new ContentValues();
+        valores.put("texto", historicoSearch.getTextoPrincipal());
+
+        bd.insert("historicoPesquisa", null, valores);
+    }
+
+
+
     public void deletarHistoricoPesquisa(TelaInicialCards historicoSearch){
         bd.delete("historicoPesquisa", "_id = ? " , new String[]{"" + historicoSearch.getId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
     }
@@ -69,31 +135,11 @@ public class BdLite {
     }
 
 
-    public void deletar(ListaPraticas pratica){
+    public void DeletaPratica(ListaPraticas pratica){
         bd.delete("pratica", "_id = ? " , new String[]{"" + pratica.getNumeroId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
     }
     public void deletarTudo(){
         bd.execSQL("delete from "+ "pratica");
-    }
-
-    public List<ListaPraticas> buscar(){
-        List<ListaPraticas> list = new ArrayList<ListaPraticas>();
-        String[] colunas = new String[]{"_id", "nome", "numero", "autor", "data"};
-        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id DESC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
-
-        if(cursor.getCount() > 0){
-            cursor.moveToFirst();
-
-            do{
-                ListaPraticas p = new ListaPraticas();
-                p.setNumeroId(cursor.getInt(0));
-                p.setTitulo(cursor.getString(1));
-                p.setNumero(cursor.getString(2));
-                list.add(p);
-            }while(cursor.moveToNext());
-        }
-
-        return(list);
     }
 
     public static void atualizaTipoLista(int idFragment, int tipoLista){
@@ -106,58 +152,9 @@ public class BdLite {
 
         valores.put("tipoLista", tipoLista);
 
-        bd.update("tipoListaFrags", valores, "_id = ?",  new String[]{""+idFragment});
-    }
-    public static int buscaTipoLista(int idFrag){
-        @SuppressLint("Recycle") Cursor cursor = bd.rawQuery("SELECT tipoLista FROM tipoListaFrags WHERE _id=?", new String[] {idFrag + ""});
-        int idTipoLista = 0;
-        if(cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            idTipoLista = cursor.getInt(cursor.getColumnIndex("tipoLista"));
-        }
-
-        return idTipoLista;
+        bd.update("tipoLista", valores, "_id = ?",  new String[]{""+idFragment});
     }
 
-    public static int executandoComandosSql(Context c, int arquivoSql) throws IOException {  //Executa comandos SQL apartir de um arquivo .sql
-        int qtdInsercoes = 0;
 
-        //ABRINDO O ARQUIVO
-        InputStream insertsStream = c.getResources().openRawResource(arquivoSql);
-        BufferedReader insertReader = new BufferedReader(new InputStreamReader(insertsStream));
 
-        //Assumindo que o arquivo vai ter cada comando separado por quebras de linha.
-        while (insertReader.ready()) {
-            String insertStmt = insertReader.readLine();
-            bd.execSQL(insertStmt);
-            qtdInsercoes++;
-        }
-        insertReader.close();
-
-        //retorna a quantidade de linhas de comandos.
-        return qtdInsercoes;
-    }
-
-    public static List<TelaInicialCards> buscarSubCategoria(int idCategoria){
-        List<TelaInicialCards> list = new ArrayList<>();
-        String[] colunas = new String[]{"_id", "nome", "imagem"};
-        @SuppressLint("Recycle") Cursor cursor = bd.query("subCategoria", colunas , "categoria_id = ?", new String[]{""+idCategoria}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
-
-        /*select p._id, p.nome, s.nome from pratica p join subCategoria_pratica sp on p._id = sp.pratica_id join subCategoria s
-        on s._id = sp.subCategoria_id where sp.subCategoria_id = 1;*/   //IMPLEMENTAR************
-        if(cursor.getCount() > 0){
-            cursor.moveToFirst();
-
-            do{
-                TelaInicialCards p = new TelaInicialCards();
-                p.setId(cursor.getInt(0));
-                p.setTextoPrincipal(cursor.getString(1));
-                p.setFotoUrl(cursor.getString(2));
-                p.setGrupo("Área Emitente");
-                list.add(p);
-            }while(cursor.moveToNext());
-        }
-
-        return(list);
-    }
 }

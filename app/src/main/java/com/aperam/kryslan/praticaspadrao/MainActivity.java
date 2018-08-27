@@ -47,14 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         new BdLite(c);  //Se o BD não existe, cria ele.
 
-        /*try {
-            int insertCount = BdLite.executandoComandosSql(c, R.raw.ppas_bd);
-            Toast.makeText(c, "Rows loaded from file= " + insertCount, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(c, e.toString(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }*/
-
         /*if(savedInstanceState != null){
             mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
 

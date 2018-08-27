@@ -36,8 +36,7 @@ import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSepar
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAreaEmitenteMainActivity;
-import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.buscarSubCategoria;
+import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectCategoria;
 
 public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack, OnRapidFloatingButtonSeparateListener {
     private Context c;
@@ -93,7 +92,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         mRecyclerView.setLayoutManager(lm);
 
 //        if(mList == null){
-        mList = buscarSubCategoria(1);
+        mList = SelectCategoria("areaEmitente");
 //        }
 
         //DEFINE O TIPO DE LISTA.
@@ -224,16 +223,16 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
     private void DialogTipoLista(Context contextLocal){
         new MaterialDialog.Builder(contextLocal)
-                .title(R.string.selecioneTipoLista)
-                .items(R.array.tipoLista)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        BdLite.atualizaTipoLista(0, which);
-                        AtualizaTipoLista(mList);
-                    }
-                })
-                .show();
+            .title(R.string.selecioneTipoLista)
+            .items(R.array.tipoLista)
+            .itemsCallback(new MaterialDialog.ListCallback() {
+                @Override
+                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                    BdLite.atualizaTipoLista(0, which);
+                    AtualizaTipoLista(mList);
+                }
+            })
+            .show();
     }
 
     private void AtualizaTipoLista(List<TelaInicialCards> mList){
@@ -241,7 +240,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
         2 = Lista resumida sem imagens.*/
-//        int tipoLista = BdLite.buscaTipoLista(0);
+//        int tipoLista = BdLite.SelectTipoLista(0);
         int tipoLista = 0;
         if(tipoLista == 0){
             CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);

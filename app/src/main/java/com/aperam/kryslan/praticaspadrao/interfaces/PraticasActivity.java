@@ -295,7 +295,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
             //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
             BdLite bd = new BdLite(activity);
-            bd.inserirNoHistorico(mList.get(position));
+            bd.InsertHistorico(mList.get(position));
         }
     }
 

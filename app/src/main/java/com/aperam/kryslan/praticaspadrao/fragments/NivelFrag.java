@@ -127,7 +127,7 @@ public class NivelFrag extends AreaEmitenteFrag {
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
         2 = Lista resumida sem imagens.*/
-        int tipoLista = BdLite.buscaTipoLista(2);
+        int tipoLista = BdLite.SelectTipoLista(2);
         if(tipoLista == 0){
             CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
             adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.

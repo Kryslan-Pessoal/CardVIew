@@ -142,7 +142,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
     }
 
     private String[] getHistoricoPesquisa() {  //Vai pegar do banco a tabela com o histórico de pesquisa.
-        List<TelaInicialCards> listaHistorico = BdLite.buscarHistoricoPesquisa();
+        List<TelaInicialCards> listaHistorico = BdLite.SelectHistoricoPesquisa();
         String[] textoPrincipal = new String[listaHistorico.size()];
         for (int i = 0; i < listaHistorico.size(); i++) {
             textoPrincipal[i] = listaHistorico.get(i).getTextoPrincipal();  //Vai pegar apenas o texto, e não a List completa que o banco retorna.
@@ -171,7 +171,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
 
         //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
         BdLite bd = new BdLite(activity);
-        bd.inserirNoHistorico(mList.get(position));
+        bd.InsertHistorico(mList.get(position));
     }
 
     @Override

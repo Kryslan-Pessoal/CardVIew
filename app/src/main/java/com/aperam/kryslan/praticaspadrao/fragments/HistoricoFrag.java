@@ -23,13 +23,10 @@ import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.DocumentoDrive;
 import com.aperam.kryslan.praticaspadrao.tools.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
-import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
-import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
 
 import java.util.ArrayList;
@@ -79,7 +76,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
         mRecyclerView.setLayoutManager(lm);
 
         bd = new BdLite(getContext());
-        mList = bd.buscar();
+        mList = bd.SelectPratica();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);
@@ -147,7 +144,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
 
     @Override
     public void onLongPressClickListener(View view, int position) {
-        bd.deletar(mList.get(position));  //Deleta do banco de dados o item da lista clicado da tab histórico
+        bd.DeletaPratica(mList.get(position));  //Deleta do banco de dados o item da lista clicado da tab histórico
 
         mList.remove(position);  //Remove do List.
         mRecyclerView.getAdapter().notifyItemRemoved(position);  //Notifica ao RecyclerView que ele foi removido para fazer uma animação suave do item sumindo.
@@ -169,7 +166,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
                     public void onClick(MaterialDialog dialog, DialogAction which) {
                         bd.deletarTudo();
 
-                        mList = bd.buscar();
+                        mList = bd.SelectPratica();
                         ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
                         mRecyclerView.setAdapter(adapter);
 

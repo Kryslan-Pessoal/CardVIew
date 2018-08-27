@@ -109,7 +109,8 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
         layoutParamsCard.height = valorFinal.intValue();
         myViewHolder.cardView.setLayoutParams(layoutParamsCard);
 
-        Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
+        if(!mList.get(positionList).getFotoUrl().equals(""))
+            Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
                 .getFotoUrl())
                 .resize(1280, 720)
                 .centerCrop()

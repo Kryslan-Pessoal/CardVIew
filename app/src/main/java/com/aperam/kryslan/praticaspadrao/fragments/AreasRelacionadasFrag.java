@@ -30,8 +30,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAreasRelacionadasMainActivity;
-import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.buscarSubCategoria;
+import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectCategoria;
 
 public class AreasRelacionadasFrag extends AreaEmitenteFrag {
     Context c;
@@ -70,7 +69,7 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = buscarSubCategoria(2);
+        mList = SelectCategoria("areasRelacionadas");
         AtualizaTipoLista(mList);
         /*CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
@@ -160,7 +159,7 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
         2 = Lista resumida sem imagens.*/
-//        int tipoLista = BdLite.buscaTipoLista(1);
+//        int tipoLista = BdLite.SelectTipoLista(1);
         int tipoLista=0;
         if(tipoLista == 0){
             CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);

@@ -21,10 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -39,7 +36,6 @@ import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.squareup.picasso.Picasso;
-import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
 
 import java.util.ArrayList;
@@ -51,7 +47,6 @@ import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetAutorPraticasActivity;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetNivelPraticasActivity;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetProcessoPraticasActivity;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.getTituloAreaEmitenteBd;
 
 public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private Context c = this;
@@ -300,7 +295,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
             //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
             BdLite bd = new BdLite(activity);
-            bd.inserir(mList.get(position));
+            bd.inserirNoHistorico(mList.get(position));
         }
     }
 

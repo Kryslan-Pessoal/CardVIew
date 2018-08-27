@@ -13,6 +13,7 @@ import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
@@ -21,6 +22,8 @@ import com.aperam.kryslan.praticaspadrao.interfaces.SearchActivity;
 import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
 import com.aperam.kryslan.praticaspadrao.tools.OnClearFromRecentService;
 import com.mikepenz.materialdrawer.AccountHeader;
+
+import java.io.IOException;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetTabsBd;
 
@@ -43,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new BdLite(c);  //Se o BD não existe, cria ele.
+
+        /*try {
+            int insertCount = BdLite.executandoComandosSql(c, R.raw.ppas_bd);
+            Toast.makeText(c, "Rows loaded from file= " + insertCount, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(c, e.toString(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }*/
 
         /*if(savedInstanceState != null){
             mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);

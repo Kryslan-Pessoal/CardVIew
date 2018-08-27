@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAreaEmitenteMainActivity;
+import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.buscarSubCategoria;
 
 public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack, OnRapidFloatingButtonSeparateListener {
     private Context c;
@@ -92,7 +93,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         mRecyclerView.setLayoutManager(lm);
 
 //        if(mList == null){
-            mList = GetAreaEmitenteMainActivity();
+        mList = buscarSubCategoria(1);
 //        }
 
         //DEFINE O TIPO DE LISTA.
@@ -240,7 +241,8 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
         2 = Lista resumida sem imagens.*/
-        int tipoLista = BdLite.buscaTipoLista(0);
+//        int tipoLista = BdLite.buscaTipoLista(0);
+        int tipoLista = 0;
         if(tipoLista == 0){
             CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
             adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.

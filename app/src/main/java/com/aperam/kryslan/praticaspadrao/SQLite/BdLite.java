@@ -10,6 +10,10 @@ import android.widget.Toast;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +25,7 @@ public class BdLite {
         bd = auxBd.getWritableDatabase();
     }
 
-    public void inserir(ListaPraticas pratica){
+    public void inserirNoHistorico(ListaPraticas pratica){
         ContentValues valores = new ContentValues();
         valores.put("nome", pratica.getTitulo());
         valores.put("numero", pratica.getNumero());
@@ -113,5 +117,47 @@ public class BdLite {
         }
 
         return idTipoLista;
+    }
+
+    public static int executandoComandosSql(Context c, int arquivoSql) throws IOException {  //Executa comandos SQL apartir de um arquivo .sql
+        int qtdInsercoes = 0;
+
+        //ABRINDO O ARQUIVO
+        InputStream insertsStream = c.getResources().openRawResource(arquivoSql);
+        BufferedReader insertReader = new BufferedReader(new InputStreamReader(insertsStream));
+
+        //Assumindo que o arquivo vai ter cada comando separado por quebras de linha.
+        while (insertReader.ready()) {
+            String insertStmt = insertReader.readLine();
+            bd.execSQL(insertStmt);
+            qtdInsercoes++;
+        }
+        insertReader.close();
+
+        //retorna a quantidade de linhas de comandos.
+        return qtdInsercoes;
+    }
+
+    public static List<TelaInicialCards> buscarSubCategoria(int idCategoria){
+        List<TelaInicialCards> list = new ArrayList<>();
+        String[] colunas = new String[]{"_id", "nome", "imagem"};
+        @SuppressLint("Recycle") Cursor cursor = bd.query("subCategoria", colunas , "categoria_id = ?", new String[]{""+idCategoria}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+
+        /*select p._id, p.nome, s.nome from pratica p join subCategoria_pratica sp on p._id = sp.pratica_id join subCategoria s
+        on s._id = sp.subCategoria_id where sp.subCategoria_id = 1;*/   //IMPLEMENTAR************
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            do{
+                TelaInicialCards p = new TelaInicialCards();
+                p.setId(cursor.getInt(0));
+                p.setTextoPrincipal(cursor.getString(1));
+                p.setFotoUrl(cursor.getString(2));
+                p.setGrupo("Área Emitente");
+                list.add(p);
+            }while(cursor.moveToNext());
+        }
+
+        return(list);
     }
 }

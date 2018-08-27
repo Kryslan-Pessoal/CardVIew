@@ -30,8 +30,6 @@ import com.turingtechnologies.materialscrollbar.DragScrollBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.getTituloAreaEmitenteBd;
-
 public class SearchActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack{
     private MaterialSearchView searchView;
     private RecyclerView recyclerView;
@@ -173,7 +171,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
 
         //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
         BdLite bd = new BdLite(activity);
-        bd.inserir(mList.get(position));
+        bd.inserirNoHistorico(mList.get(position));
     }
 
     @Override

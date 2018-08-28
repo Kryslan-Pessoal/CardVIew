@@ -93,10 +93,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
                     filterList.clear();
                     for(int i = 0; i < mList.size(); i++)
                     {
-                        if(mList.get(i).getTitulo().toLowerCase().contains(newText) ||
+                        if(mList.get(i).getNome().toLowerCase().contains(newText) ||
                                 mList.get(i).getNumero().toLowerCase().contains(newText) ||
-                                mList.get(i).getAutor().toLowerCase().contains(newText) ||
-                                mList.get(i).getData().toLowerCase().contains(newText)){
+                                //mList.get(i).getAutor().toLowerCase().contains(newText) ||
+                                mList.get(i).getDataVersao().toLowerCase().contains(newText)){
                             filterList.add(mList.get(i));
                         }
                     }
@@ -129,7 +129,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         recyclerView.setLayoutManager(lm);
 
-        mList = BdSearchActivity.GetTodasAsPraticas();
+        //mList = BdSearchActivity.GetTodasAsPraticas();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
         recyclerView.setAdapter(adapter);
 
@@ -183,10 +183,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
             mListAux = mList;
         }
         String[] corpoDialog = new String[4];
-        corpoDialog[0] = "TÍTULO: " + mListAux.get(position).getTitulo();
+        corpoDialog[0] = "TÍTULO: " + mListAux.get(position).getNome();
         corpoDialog[1] = "Nº: " + mListAux.get(position).getNumero();
         corpoDialog[2] = "AUTOR: " + mListAux.get(position).getAutor();
-        corpoDialog[3] = "DATA: " + mListAux.get(position).getData();
+        corpoDialog[3] = "DATA: " + mListAux.get(position).getDataVersao();
         new MaterialDialog.Builder(this)  //Cria um Dialog com informações da PPA clicada.
                 .title(R.string.informacoesDaPpa)
                 .items(corpoDialog)

@@ -99,7 +99,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
                 }else{
                     for(int i = 0; i < mList.size(); i++)
                     {
-                        if(mList.get(i).getTitulo().toLowerCase().contains(newQuery)||mList.get(i).getNumero().toLowerCase().contains(newQuery)){
+                        if(mList.get(i).getNome().toLowerCase().contains(newQuery)||mList.get(i).getNumero().toLowerCase().contains(newQuery)){
                             filterList.add(mList.get(i));
                         }
                     }

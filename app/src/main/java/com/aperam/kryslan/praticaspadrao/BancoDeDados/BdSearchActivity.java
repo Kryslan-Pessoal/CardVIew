@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BdSearchActivity {
 
-    public static List<ListaPraticas> GetTodasAsPraticas() {
+    /*public static List<ListaPraticas> GetTodasAsPraticas() {
         String[] numero = getNumeroTodasAsPraticasBd();
         String[] titulo = getTituloAreaEmitenteBd();
         String[] autor = getAutorTodasAsPraticasBd();
@@ -28,7 +28,7 @@ public class BdSearchActivity {
             listAux.add(p);
         }
         return listAux;
-    }
+    }*/
 
     private static String[] getNumeroTodasAsPraticasBd() {
         return new String[]{

@@ -5,15 +5,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +32,8 @@ public class BdLite {
 
             do{
                 ListaPraticas p = new ListaPraticas();
-                p.setNumeroId(cursor.getInt(0));
-                p.setTitulo(cursor.getString(1));
+                p.setId(cursor.getInt(0));
+                p.setNome(cursor.getString(1));
                 p.setNumero(cursor.getString(2));
                 list.add(p);
             }while(cursor.moveToNext());
@@ -69,6 +64,35 @@ public class BdLite {
                 p.setTextoPrincipal(cursor.getString(1));
                 p.setFotoUrl(cursor.getString(2));
                 p.setGrupo(categoria);
+                list.add(p);
+            }while(cursor.moveToNext());
+        }
+        return(list);
+    }
+
+    //LISTA DE PRÁTICAS
+    @SuppressLint("Recycle")
+    public static List<ListaPraticas> SelectListPraticas(String categoria, int idCategoria) {
+        List<ListaPraticas> list = new ArrayList<>();
+        String[] colunas = new String[]{"_id", "nome", "numero", "linkDocumento", "faseDocumento", "dataVersao", "treinamento", "revisorTecnico",
+                "revisorSstMa", "aprovador"};
+        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , categoria + " == ?", new String[]{"" + idCategoria}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+            do{
+                ListaPraticas p = new ListaPraticas();
+
+                p.setId(cursor.getInt(0));
+                p.setNome(cursor.getString(1));
+                p.setNumero(cursor.getString(2));
+                p.setLinkDocumento(cursor.getString(3));
+                p.setFaseDocumento(cursor.getString(4));
+                p.setDataVersao(cursor.getString(5));
+                p.setTreinamento(cursor.getString(6));
+                p.setRevisorTecnico(cursor.getString(7));
+                p.setRevisorSstMa(cursor.getString(8));
+                p.setAprovador(cursor.getString(9));
                 list.add(p);
             }while(cursor.moveToNext());
         }
@@ -110,7 +134,7 @@ public class BdLite {
 
     public void InsertHistorico(ListaPraticas pratica){
         ContentValues valores = new ContentValues();
-        valores.put("nome", pratica.getTitulo());
+        valores.put("nome", pratica.getNome());
         valores.put("numero", pratica.getNumero());
         valores.put("autor", pratica.getNumero());
         valores.put("data", pratica.getNumero());
@@ -136,7 +160,7 @@ public class BdLite {
 
 
     public void DeletaPratica(ListaPraticas pratica){
-        bd.delete("pratica", "_id = ? " , new String[]{"" + pratica.getNumeroId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+        bd.delete("pratica", "_id = ? " , new String[]{"" + pratica.getId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
     }
     public void deletarTudo(){
         bd.execSQL("delete from "+ "pratica");

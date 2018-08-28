@@ -96,7 +96,7 @@
                 app:srcCompat="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/titulo"
+                android:id="@+id/nome"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

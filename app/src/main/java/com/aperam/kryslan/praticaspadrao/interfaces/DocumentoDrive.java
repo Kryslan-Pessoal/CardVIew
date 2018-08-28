@@ -1,15 +1,12 @@
 package com.aperam.kryslan.praticaspadrao.interfaces;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
@@ -48,7 +45,7 @@ public class DocumentoDrive extends MainActivity{
         ListaPraticas informacoesDaPratica = getIntent().getExtras().getParcelable("praticascards");
 
         TextView textViewTitulo = findViewById(R.id.tvDocumentoDriveTitulo);
-        textViewTitulo.setText(informacoesDaPratica.getTitulo());
+        textViewTitulo.setText(informacoesDaPratica.getNome());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -60,7 +57,7 @@ public class DocumentoDrive extends MainActivity{
             getSupportFragmentManager().beginTransaction().add(R.id.container, frag).commit();
         }*/
 
-        final String linkPratica = informacoesDaPratica.getUrlDocumento();
+        final String linkPratica = informacoesDaPratica.getLinkDocumento();
 
         webview = findViewById(R.id.webview);
         progress = findViewById(R.id.progress);

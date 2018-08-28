@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BdPraticasActivity {
 
-    public static List<ListaPraticas> GetAreaEmitentePraticasActivity() {
+    /*public static List<ListaPraticas> GetAreaEmitentePraticasActivity() {
         String[] numero = getNumeroAreaEmitenteBd();
         String[] titulo = getTituloAreaEmitenteBd();
         String[] autor = getAutorAreaEmitenteBd();
@@ -28,7 +28,7 @@ public class BdPraticasActivity {
             listAux.add(p);
         }
         return listAux;
-    }
+    }*/
     private static String[] getNumeroAreaEmitenteBd() {
         return new String[]{
                 "PPA40-0096 - v.2" ,
@@ -312,9 +312,9 @@ public class BdPraticasActivity {
                 "29/03/2018"};
     }
 
-    public static List<ListaPraticas> GetAreasRelacionadasPraticasActivity() {
+    /*public static List<ListaPraticas> GetAreasRelacionadasPraticasActivity() {
         String[] numero = getNumeroAreasRelacionadasBd();
-        String[] titulo = getTituloAreasRelacionadasBd();
+        String[] nome = getTituloAreasRelacionadasBd();
         String[] autor = getAutorAreasRelacionadasBd();
         String[] urlDocumento = getUrlDocumentoBd(6, "https://drive.google.com/open?id=14i1SPHMbykOxU4EkXJmGkdOY9KrE2woz7YMRBsJk25o");
         String[] data = getDataAreasRelacionadasBd();
@@ -324,7 +324,7 @@ public class BdPraticasActivity {
         for (int i = 0; i < id.length; i++) {
             ListaPraticas p = new ListaPraticas(
                     numero[i % numero.length],
-                    titulo[i % titulo.length],
+                    nome[i % nome.length],
                     autor[i % autor.length],
                     urlDocumento[i % urlDocumento.length],
                     data[i % data.length],
@@ -332,7 +332,7 @@ public class BdPraticasActivity {
             listAux.add(p);
         }
         return listAux;
-    }
+    }*/
     private static String[] getNumeroAreasRelacionadasBd(){
         return new String[]{
                 "PPA01-0031 - v.9" ,
@@ -435,7 +435,7 @@ public class BdPraticasActivity {
 
     }
 
-    public static List<ListaPraticas> GetAutorPraticasActivity() {
+    /*public static List<ListaPraticas> GetAutorPraticasActivity() {
         String[] numero = getNumeroAutorBd();
         String[] titulo = getTituloAutorBd();
         String[] autor = getAutorAutorBd();
@@ -456,7 +456,7 @@ public class BdPraticasActivity {
             listAux.add(p);
         }
         return listAux;
-    }  //REVISAR NO DOCNIX!!!!
+    }  //REVISAR NO DOCNIX!!!!*/
     private static String[] getNumeroAutorBd(){
         return new String[]{
                 "PPA01-0031 - v.9" ,
@@ -495,7 +495,7 @@ public class BdPraticasActivity {
 
     }
 
-    public static List<ListaPraticas> GetDataPraticasActivity() {
+    /*public static List<ListaPraticas> GetDataPraticasActivity() {
         String[] numero = getNumeroDataBd();
         String[] titulo = getTituloDataBd();
         String[] autor = getAutorDataBd();
@@ -516,7 +516,7 @@ public class BdPraticasActivity {
             listAux.add(p);
         }
         return listAux;
-    }  //REVISAR LISTA DUPLA
+    }  //REVISAR LISTA DUPLA*/
     private static String[] getNumeroDataBd(){
         return new String[]{
                 "PPA01-0031 - v.9" ,
@@ -555,7 +555,7 @@ public class BdPraticasActivity {
 
     }
 
-    public static List<ListaPraticas> GetNivelPraticasActivity() {
+    /*public static List<ListaPraticas> GetNivelPraticasActivity() {
         String[] numero = getNumeroNivelBd();
         String[] titulo = getTituloNivelBd();
         String[] autor = getAutorNivelBd();
@@ -576,7 +576,7 @@ public class BdPraticasActivity {
             listAux.add(p);
         }
         return listAux;
-    }  //REVISAR NO DOCNIX!!!!
+    }  //REVISAR NO DOCNIX!!!!*/
     private static String[] getNumeroNivelBd(){
         return new String[]{
                 "PPA01-0031 - v.9" ,
@@ -616,7 +616,7 @@ public class BdPraticasActivity {
 
     }
 
-    public static List<ListaPraticas> GetProcessoPraticasActivity() {
+    /*public static List<ListaPraticas> GetProcessoPraticasActivity() {
         String[] numero = getNumeroProcessoBd();
         String[] titulo = getTituloProcessoBd();
         String[] autor = getAutorProcessoBd();
@@ -637,7 +637,7 @@ public class BdPraticasActivity {
             listAux.add(p);
         }
         return listAux;
-    }
+    }*/
     private static String[] getNumeroProcessoBd(){
         return new String[]{
                 "PPA19-0465 - v.6" ,

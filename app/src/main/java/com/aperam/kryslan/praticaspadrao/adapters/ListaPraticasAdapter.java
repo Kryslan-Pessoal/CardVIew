@@ -6,12 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aperam.kryslan.praticaspadrao.R;
-import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.interfaces.RecyclerViewOnClickListenerHack;
 import com.turingtechnologies.materialscrollbar.INameableAdapter;
@@ -67,9 +64,7 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
 
     @Override
     public void onBindViewHolder(@NonNull ListaPraticasAdapter.MyViewHolder myViewHolder, int positionList) {  //Vincula nossos dados com a view. (Seta o valor de cada 'mList' com uma view)
-
-//        if(areaEmitente){
-        myViewHolder.titulo.setText(mList.get(positionList).getTitulo());
+        myViewHolder.titulo.setText(mList.get(positionList).getNome());
         myViewHolder.subtitulo.setText(mList.get(positionList).getNumero());
     }
 
@@ -84,7 +79,7 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
 
     @Override
     public Character getCharacterForElement(int element) {
-        Character c = mList.get(element).getTitulo().charAt(0);
+        Character c = mList.get(element).getNome().charAt(0);
         if(Character.isDigit(c)) {
             c = '#';
         }

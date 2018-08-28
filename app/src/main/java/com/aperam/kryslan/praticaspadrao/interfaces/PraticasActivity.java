@@ -25,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
 import com.aperam.kryslan.praticaspadrao.adapters.DataAdapter;
@@ -43,15 +42,11 @@ import java.util.List;
 
 import static android.graphics.Color.WHITE;
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdExpandableList.CriaMesExpansivel;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetAreasRelacionadasPraticasActivity;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetAutorPraticasActivity;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetNivelPraticasActivity;
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdPraticasActivity.GetProcessoPraticasActivity;
 
 public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private Context c = this;
     private Toolbar mToolbar;
-    private TelaInicialCards telaInicialCards;
+    private TelaInicialCards informacoesSubCategoria;
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
@@ -84,7 +79,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_praticas);
 
-        telaInicialCards = getIntent().getExtras().getParcelable("praticascards");
+        informacoesSubCategoria = getIntent().getExtras().getParcelable("praticascards");
 
         //CONFIGURA O TOOLBAR.
         mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
@@ -92,7 +87,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(ColorStateList.valueOf(WHITE));
 
         mToolbar = findViewById(R.id.tb_main);
-        mToolbar.setTitle(telaInicialCards.getTextoPrincipal());
+        mToolbar.setTitle(informacoesSubCategoria.getTextoPrincipal());
         setSupportActionBar(mToolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -103,9 +98,9 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
 
         String fotoUrl = "";
-        int valor = telaInicialCards.getId();  //Pelo Id, vai pegar a imagem que aparecetá na tollbar na tela inicial.
+        int valor = informacoesSubCategoria.getId();  //Pelo Id, vai pegar a imagem que aparecetá na tollbar na tela inicial.
         if(valor == 0) {  //Vazio.
-            fotoUrl = telaInicialCards.getFotoUrl();
+            fotoUrl = informacoesSubCategoria.getFotoUrl();
         }else if(valor == 1){  //Autor
             fotoUrl = "https://drive.google.com/uc?id=1pZxi73hIl5wU4jU8_P2eO8aGZ9QOzhDO";
         }else if(valor == 2){
@@ -165,7 +160,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                     filterList.clear();
                     for(int i = 0; i < mList.size(); i++)
                     {
-                        if(mList.get(i).getTitulo().toLowerCase().contains(newText)||mList.get(i).getNumero().toLowerCase().contains(newText)){
+                        if(mList.get(i).getNome().toLowerCase().contains(newText)||mList.get(i).getNumero().toLowerCase().contains(newText)){
                             filterList.add(mList.get(i));
                         }
                     }
@@ -213,7 +208,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 //        mList = BdPraticasActivity.GetAreaEmitentePraticasActivity();
         TipoDeLista();
 
-        if(!telaInicialCards.getGrupo().equals("Data de Vigência")) {  //Data de vigência irá usar uma lista composta.
+        if(!informacoesSubCategoria.getGrupo().equals("Data de Vigência")) {  //Data de vigência irá usar uma lista composta.
             ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
             recyclerView.setAdapter(adapter);
         }else{
@@ -233,24 +228,25 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 //        });
 
         //MATERIAL SCROLLBAR
-        if(!telaInicialCards.getGrupo().equals("Data de Vigência")){  //ScrollBar não funciona com ExpandableListView.
+        if(!informacoesSubCategoria.getGrupo().equals("Data de Vigência")){  //ScrollBar não funciona com ExpandableListView.
             ((DragScrollBar) findViewById(R.id.dragScrollBarActivityPraticas))
                     .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
         }
     }
 
     private void TipoDeLista(){  //Define o tipo de lista que terá na tela de práticas.
-        if (telaInicialCards.getGrupo().equals("Área Emitente")) {
-            mList = BdPraticasActivity.GetAreaEmitentePraticasActivity();
-        }else if(telaInicialCards.getGrupo().equals("Áreas Relacionadas")) {
-            mList = GetAreasRelacionadasPraticasActivity();
-        }else if(telaInicialCards.getGrupo().equals("Autor")) {
-            mList = GetAutorPraticasActivity();
-        }else if(telaInicialCards.getGrupo().equals("Data de Vigência")) {
-        }else if(telaInicialCards.getGrupo().equals("Nível")) {
-            mList = GetNivelPraticasActivity();
-        }else if(telaInicialCards.getGrupo().equals("Processo")) {
-            mList = GetProcessoPraticasActivity();
+        int idCategoria = informacoesSubCategoria.getId();
+        if (informacoesSubCategoria.getGrupo().equals("areaEmitente")) {
+            mList = BdLite.SelectListPraticas("id_areaEmitente", idCategoria);
+        }else if(informacoesSubCategoria.getGrupo().equals("areasRelacionadas")) {
+            BdLite.SelectListPraticas("id_areasRelacionadas", idCategoria);
+        }else if(informacoesSubCategoria.getGrupo().equals("autor")) {
+            mList = BdLite.SelectListPraticas("id_autor", idCategoria);
+        }else if(informacoesSubCategoria.getGrupo().equals("dataDeVigencia")) {
+        }else if(informacoesSubCategoria.getGrupo().equals("nivel")) {
+            mList = BdLite.SelectListPraticas("id_nivel", idCategoria);
+        }else if(informacoesSubCategoria.getGrupo().equals("processo")) {
+            mList = BdLite.SelectListPraticas("id_processo", idCategoria);
         }
     }
 
@@ -276,7 +272,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
     @Override
     public void onClickListener(View view, int position) {
-        if(!telaInicialCards.getGrupo().equals("Data de Vigência")) { //Quando é ExpandableListView, o OnClickListener, não dever ser chamado aqui.
+        if(!informacoesSubCategoria.getGrupo().equals("Data de Vigência")) { //Quando é ExpandableListView, o OnClickListener, não dever ser chamado aqui.
             //CHAMANDO PRÓXIMA ACTIVITY (DocumentoDrive).
             Intent intent = new Intent(view.getContext(), DocumentoDrive.class);
             if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
@@ -302,10 +298,10 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     @Override
     public void onLongPressClickListener(View view, int position) {
         String[] corpoDialog = new String[4];
-        corpoDialog[0] = "TÍTULO: " + mList.get(position).getTitulo();
+        corpoDialog[0] = "TÍTULO: " + mList.get(position).getNome();
         corpoDialog[1] = "Nº: " + mList.get(position).getNumero();
         corpoDialog[2] = "AUTOR: " + mList.get(position).getAutor();
-        corpoDialog[3] = "DATA: " + mList.get(position).getData();
+        corpoDialog[3] = "DATA: " + mList.get(position).getDataVersao();
         new MaterialDialog.Builder(this)  //Cria um Dialog com informações da PPA clicada.
                 .title(R.string.informacoesDaPpa)
                 .items(corpoDialog)

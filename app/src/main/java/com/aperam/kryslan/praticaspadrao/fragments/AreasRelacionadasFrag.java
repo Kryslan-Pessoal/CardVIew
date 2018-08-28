@@ -30,7 +30,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectCategoria;
+import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectSubCategoria;
 
 public class AreasRelacionadasFrag extends AreaEmitenteFrag {
     Context c;
@@ -69,7 +69,7 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = SelectCategoria("areasRelacionadas");
+        mList = SelectSubCategoria("areasRelacionadas");
         AtualizaTipoLista(mList);
         /*CardTelaInicialAdapter adapter = new CardTelaInicialAdapter(getActivity(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.

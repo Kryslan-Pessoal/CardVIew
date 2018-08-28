@@ -97,16 +97,13 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         ImageView ivCar = findViewById(R.id.iv_imagem_ilustrativa);
 //        SimpleDraweeView ivCar = findViewById(R.id.iv_car);
 
-        String fotoUrl = "";
-        int valor = informacoesSubCategoria.getId();  //Pelo Id, vai pegar a imagem que aparecetá na tollbar na tela inicial.
-        if(valor == 0) {  //Vazio.
+        String fotoUrl;
+        try{
             fotoUrl = informacoesSubCategoria.getFotoUrl();
-        }else if(valor == 1){  //Autor
-            fotoUrl = "https://drive.google.com/uc?id=1pZxi73hIl5wU4jU8_P2eO8aGZ9QOzhDO";
-        }else if(valor == 2){
-            fotoUrl = "https://drive.google.com/uc?id=16lpe02o7gj4f1foQ6iSRJU2oBjT0mXlw";
-        }else if(valor == 3){
-            fotoUrl = "https://drive.google.com/uc?id=10qBgvIQGIl3oGg0fzBo876NKs1VDVKXy";
+            if(fotoUrl.equals(""))  //Vazio.
+                fotoUrl = "https://drive.google.com/uc?id=10W-D9UAY5v9mp0fbysn9cVpAkE51NFzD";
+        }catch (Exception e){
+            fotoUrl = "https://drive.google.com/uc?id=10W-D9UAY5v9mp0fbysn9cVpAkE51NFzD";  //Se vier como null, coloca uma imagem qualquer.
         }
 
         Picasso.get().load(fotoUrl)  //Pega a imagem da internet e coloca no ImageView.
@@ -239,7 +236,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         if (informacoesSubCategoria.getGrupo().equals("areaEmitente")) {
             mList = BdLite.SelectListPraticas("id_areaEmitente", idCategoria);
         }else if(informacoesSubCategoria.getGrupo().equals("areasRelacionadas")) {
-            BdLite.SelectListPraticas("id_areasRelacionadas", idCategoria);
+            mList = BdLite.SelectListPraticas("id_areasRelacionadas", idCategoria);
         }else if(informacoesSubCategoria.getGrupo().equals("autor")) {
             mList = BdLite.SelectListPraticas("id_autor", idCategoria);
         }else if(informacoesSubCategoria.getGrupo().equals("dataDeVigencia")) {
@@ -291,17 +288,21 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
             //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
             BdLite bd = new BdLite(activity);
-            bd.InsertHistorico(mList.get(position));
+            bd.InsertHistorico(mList.get(position).getId());
         }
     }
 
     @Override
     public void onLongPressClickListener(View view, int position) {
-        String[] corpoDialog = new String[4];
+        String[] corpoDialog = new String[8];
         corpoDialog[0] = "TÍTULO: " + mList.get(position).getNome();
         corpoDialog[1] = "Nº: " + mList.get(position).getNumero();
         corpoDialog[2] = "AUTOR: " + mList.get(position).getAutor();
         corpoDialog[3] = "DATA: " + mList.get(position).getDataVersao();
+        corpoDialog[4] = "FASE DO DOC: " + mList.get(position).getFaseDocumento();
+        corpoDialog[5] = "REVISOR SST MA: " + mList.get(position).getRevisorSstMa();
+        corpoDialog[6] = "REVISOR TÉCNICO: " + mList.get(position).getRevisorTecnico();
+        corpoDialog[7] = "APROVADOR: " + mList.get(position).getAprovador();
         new MaterialDialog.Builder(this)  //Cria um Dialog com informações da PPA clicada.
                 .title(R.string.informacoesDaPpa)
                 .items(corpoDialog)

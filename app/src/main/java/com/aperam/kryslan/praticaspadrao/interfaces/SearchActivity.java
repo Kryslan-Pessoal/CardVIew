@@ -129,7 +129,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         recyclerView.setLayoutManager(lm);
 
-        //mList = BdSearchActivity.GetTodasAsPraticas();
+        mList = BdLite.SelectTodasAsPraticas();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
         recyclerView.setAdapter(adapter);
 
@@ -171,7 +171,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewOnC
 
         //SALVANDO NO BANCO DE DADOS ESSE ITEM PARA EXIBI-LO NO HISTÓRICO.
         BdLite bd = new BdLite(activity);
-        bd.InsertHistorico(mList.get(position));
+        bd.InsertHistorico(mList.get(position).getId());
     }
 
     @Override

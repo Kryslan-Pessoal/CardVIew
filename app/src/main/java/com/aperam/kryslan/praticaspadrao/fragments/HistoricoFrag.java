@@ -76,7 +76,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
         mRecyclerView.setLayoutManager(lm);
 
         bd = new BdLite(getContext());
-        mList = bd.SelectPratica();
+        mList = BdLite.SelectHistorico();
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

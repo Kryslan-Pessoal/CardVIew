@@ -36,7 +36,7 @@ import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSepar
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectCategoria;
+import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectSubCategoria;
 
 public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickListenerHack, OnRapidFloatingButtonSeparateListener {
     private Context c;
@@ -92,7 +92,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         mRecyclerView.setLayoutManager(lm);
 
 //        if(mList == null){
-        mList = SelectCategoria("areaEmitente");
+        mList = SelectSubCategoria("areaEmitente");
 //        }
 
         //DEFINE O TIPO DE LISTA.

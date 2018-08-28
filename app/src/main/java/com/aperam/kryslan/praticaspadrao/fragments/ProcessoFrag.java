@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetProcessoMainActivity;
+import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectSubCategoria;
 
 public class ProcessoFrag extends AreaEmitenteFrag {
     List<TelaInicialCards> mList, filterList = new ArrayList<>();
@@ -54,7 +55,7 @@ public class ProcessoFrag extends AreaEmitenteFrag {
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = GetProcessoMainActivity();  //Se for maior do que a lista, começa a repetir os itens. Mas não da erro.
+        mList = SelectSubCategoria("processo");
         ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

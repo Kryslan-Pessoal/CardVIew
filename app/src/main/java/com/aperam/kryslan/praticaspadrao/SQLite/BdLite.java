@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.aperam.kryslan.praticaspadrao.domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.domain.TelaInicialCards;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class BdLite {
 
     //CATEGORIAS
     @SuppressLint("Recycle")
-    public static List<TelaInicialCards> SelectCategoria(String categoria){
+    public static List<TelaInicialCards> SelectSubCategoria(String categoria){
         List<TelaInicialCards> list = new ArrayList<>();
         String[] colunas;
         @SuppressLint("Recycle") Cursor cursor;
@@ -51,21 +52,30 @@ public class BdLite {
                 categoria.equals("processo")){  //Se for essas categorias é porque tem imagem.
             colunas = new String[]{"_id", "nome", "imagem"};
             cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    TelaInicialCards p = new TelaInicialCards();
+                    p.setId(cursor.getInt(0));
+                    p.setTextoPrincipal(cursor.getString(1));
+                    p.setFotoUrl(cursor.getString(2));
+                    p.setGrupo(categoria);
+                    list.add(p);
+                } while (cursor.moveToNext());
+            }
         }else{
             colunas = new String[]{"_id", "nome"};
             cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
-        }
-
-        if(cursor.getCount() > 0){
-            cursor.moveToFirst();
-            do{
-                TelaInicialCards p = new TelaInicialCards();
-                p.setId(cursor.getInt(0));
-                p.setTextoPrincipal(cursor.getString(1));
-                p.setFotoUrl(cursor.getString(2));
-                p.setGrupo(categoria);
-                list.add(p);
-            }while(cursor.moveToNext());
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    TelaInicialCards p = new TelaInicialCards();
+                    p.setId(cursor.getInt(0));
+                    p.setTextoPrincipal(cursor.getString(1));
+                    p.setGrupo(categoria);
+                    list.add(p);
+                } while (cursor.moveToNext());
+            }
         }
         return(list);
     }
@@ -83,13 +93,18 @@ public class BdLite {
             do{
                 ListaPraticas p = new ListaPraticas();
 
+                String treinamento;  //Converte treinamento de inteiro para String.
+                if(cursor.getString(6).equals("1"))
+                    treinamento = "Não";
+                else treinamento = "Sim";
+
                 p.setId(cursor.getInt(0));
                 p.setNome(cursor.getString(1));
                 p.setNumero(cursor.getString(2));
                 p.setLinkDocumento(cursor.getString(3));
                 p.setFaseDocumento(cursor.getString(4));
                 p.setDataVersao(cursor.getString(5));
-                p.setTreinamento(cursor.getString(6));
+                p.setTreinamento(treinamento);
                 p.setRevisorTecnico(cursor.getString(7));
                 p.setRevisorSstMa(cursor.getString(8));
                 p.setAprovador(cursor.getString(9));
@@ -98,6 +113,74 @@ public class BdLite {
         }
         return(list);
     }
+
+    //TODAS AS PRÁTICAS
+    public static List<ListaPraticas> SelectTodasAsPraticas() {
+        List<ListaPraticas> list = new ArrayList<>();
+        String[] colunas = new String[]{"_id", "nome", "numero", "linkDocumento", "faseDocumento", "dataVersao", "treinamento", "revisorTecnico",
+                "revisorSstMa", "aprovador"};
+        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , null, null, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+            do{
+                ListaPraticas p = new ListaPraticas();
+
+                String treinamento;  //Converte treinamento de inteiro para String.
+                if(cursor.getString(6).equals("1"))
+                    treinamento = "Não";
+                else treinamento = "Sim";
+
+                p.setId(cursor.getInt(0));
+                p.setNome(cursor.getString(1));
+                p.setNumero(cursor.getString(2));
+                p.setLinkDocumento(cursor.getString(3));
+                p.setFaseDocumento(cursor.getString(4));
+                p.setDataVersao(cursor.getString(5));
+                p.setTreinamento(treinamento);
+                p.setRevisorTecnico(cursor.getString(7));
+                p.setRevisorSstMa(cursor.getString(8));
+                p.setAprovador(cursor.getString(9));
+                list.add(p);
+            }while(cursor.moveToNext());
+        }
+        return(list);
+    }
+
+    //HISTÓRICO
+    @SuppressLint("Recycle")
+    public static List<ListaPraticas> SelectHistorico() {
+        List<ListaPraticas> list = new ArrayList<>();
+        String query = "select p._id, nome, numero, linkDocumento, faseDocumento, dataVersao, treinamento, revisorTecnico," +
+                " revisorSstMa, aprovador from pratica p join historico h on p._id = h.id_pratica;";
+        @SuppressLint("Recycle") Cursor cursor = bd.rawQuery(query, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+            do{
+                ListaPraticas p = new ListaPraticas();
+
+                String treinamento;  //Converte treinamento de inteiro para String.
+                if(cursor.getString(6).equals("1"))
+                    treinamento = "Não";
+                else treinamento = "Sim";
+
+                p.setId(cursor.getInt(0));
+                p.setNome(cursor.getString(1));
+                p.setNumero(cursor.getString(2));
+                p.setLinkDocumento(cursor.getString(3));
+                p.setFaseDocumento(cursor.getString(4));
+                p.setDataVersao(cursor.getString(5));
+                p.setTreinamento(treinamento);
+                p.setRevisorTecnico(cursor.getString(7));
+                p.setRevisorSstMa(cursor.getString(8));
+                p.setAprovador(cursor.getString(9));
+                list.add(p);
+            }while(cursor.moveToNext());
+        }
+        return(list);
+    }
+
 
     //HISTÓRICO DE PESQUISA
     public static List<TelaInicialCards> SelectHistoricoPesquisa(){
@@ -132,14 +215,11 @@ public class BdLite {
 
     //endregion
 
-    public void InsertHistorico(ListaPraticas pratica){
+    public void InsertHistorico(int idPratica){
         ContentValues valores = new ContentValues();
-        valores.put("nome", pratica.getNome());
-        valores.put("numero", pratica.getNumero());
-        valores.put("autor", pratica.getNumero());
-        valores.put("data", pratica.getNumero());
+        valores.put("id_pratica", idPratica);
 
-        bd.insert("pratica", null, valores);
+        bd.insert("historico", null, valores);
     }
 
     public static void inserirHistoricoPesquisa(TelaInicialCards historicoSearch){
@@ -178,7 +258,4 @@ public class BdLite {
 
         bd.update("tipoLista", valores, "_id = ?",  new String[]{""+idFragment});
     }
-
-
-
 }

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetAutorMainActivity;
+import static com.aperam.kryslan.praticaspadrao.SQLite.BdLite.SelectSubCategoria;
 
 public class AutorFrag extends AreaEmitenteFrag{
     List<TelaInicialCards> mList, filterList = new ArrayList<>();
@@ -59,7 +60,7 @@ public class AutorFrag extends AreaEmitenteFrag{
         lm.setOrientation(LinearLayoutManager.VERTICAL);  //Define que o layout da lista será na vertical.
         mRecyclerView.setLayoutManager(lm);
 
-        mList = GetAutorMainActivity();
+        mList = SelectSubCategoria("autor");
         ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(container.getContext(), mList);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
         mRecyclerView.setAdapter(adapter);

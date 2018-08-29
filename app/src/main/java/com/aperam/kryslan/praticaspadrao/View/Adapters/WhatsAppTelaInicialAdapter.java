@@ -112,11 +112,17 @@ public class WhatsAppTelaInicialAdapter extends RecyclerView.Adapter<WhatsAppTel
         layoutParamsCard.height = valorFinal;
         myViewHolder.cardView.setLayoutParams(layoutParamsCard);*/
 
-        Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
+        if(!mList.get(positionList).getFotoUrl().equals(""))
+            Picasso.get().load(mList.get(positionList)  //Pega a imagem da internet e coloca no ImageView.
                 .getFotoUrl())
                 .resize(1280, 720)
                 .centerCrop()
                 .into(myViewHolder.imagemIlustrativa);
+        else  //Se esse item não tiver image, uma imagem padrão será usada
+            Picasso.get().load("https://drive.google.com/uc?id=10W-D9UAY5v9mp0fbysn9cVpAkE51NFzD")
+                    .resize(1280, 720)
+                    .centerCrop()
+                    .into(myViewHolder.imagemIlustrativa);
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getTextoPrincipal());  //Está fora pois é chamado em todos os casos.
 

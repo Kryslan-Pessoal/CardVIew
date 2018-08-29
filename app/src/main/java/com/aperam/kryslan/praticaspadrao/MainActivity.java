@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onSelection(MaterialDialog dialog, View view, int itemSelecionado, CharSequence text) {  //Listener do Dialog disparado ao selecionar o tipo de lista.
                     int tabSelecionada = viewPager.getCurrentItem();
                     for (int fragment = 0; fragment < 3 ; fragment++) {
-                        BdLite.atualizaTipoLista(fragment, itemSelecionado);  //Define todas as listas com o parâmetro passado.
+                        BdLite.atualizaTipoLista(itemSelecionado);  //Define todas as listas com o parâmetro passado.
                     }
                     viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetNomeTabs(c)));  //Reinicia os fragments para mostrar a lista nova.
                     viewPager.setCurrentItem(tabSelecionada);  //Após reiniciar os fragments, deixa no fragment que já estava selecionado.

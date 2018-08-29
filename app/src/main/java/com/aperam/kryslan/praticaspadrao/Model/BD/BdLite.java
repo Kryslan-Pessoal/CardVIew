@@ -238,7 +238,7 @@ public class BdLite {
     //endregion
 
     //region UPDATE
-    public static void atualizaTipoLista(int idFragment, int tipoLista){
+    public static void atualizaTipoLista(int tipoLista){
         /*Tipos de lista (Id Fragment):
         0 = Lista com imgaens grandes.
         1 = Lista com imagens, mas resumida
@@ -248,7 +248,7 @@ public class BdLite {
 
         valores.put("tipoLista", tipoLista);
 
-        bd.update("tipoLista", valores, "_id = ?",  new String[]{""+idFragment});
+        bd.update("tipoLista", valores, null,  null);
     }
     //endregion
 }

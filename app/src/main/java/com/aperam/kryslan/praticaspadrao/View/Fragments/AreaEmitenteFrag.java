@@ -228,8 +228,8 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
             .items(R.array.tipoLista)
             .itemsCallback(new MaterialDialog.ListCallback() {
                 @Override
-                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                    BdLite.atualizaTipoLista(0, which);
+                public void onSelection(MaterialDialog dialog, View view, int itemSelecionado, CharSequence text) {
+                    BdLite.atualizaTipoLista(itemSelecionado);
                     AtualizaTipoLista(mList);
                 }
             })

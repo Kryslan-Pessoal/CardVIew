@@ -113,6 +113,11 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
                 .resize(1280, 720)
                 .centerCrop()
                 .into(myViewHolder.imagemIlustrativa);
+        else  //Se esse item não tiver image, uma imagem padrão será usada
+            Picasso.get().load("https://drive.google.com/uc?id=10W-D9UAY5v9mp0fbysn9cVpAkE51NFzD")
+                    .resize(1280, 720)
+                    .centerCrop()
+                    .into(myViewHolder.imagemIlustrativa);
 
         myViewHolder.nomeNoCard.setText(mList.get(positionList).getTextoPrincipal());
 

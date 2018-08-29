@@ -192,14 +192,14 @@ public class BdLite {
     }
 
     //TIPO LISTA
-    public static int SelectTipoLista(int idFrag){
-        @SuppressLint("Recycle") Cursor cursor = bd.rawQuery("SELECT tipoLista FROM tipoLista WHERE _id=?", new String[] {idFrag + ""});
-        int idTipoLista = 0;
+    public static int SelectTipoLista(){
+        @SuppressLint("Recycle") Cursor cursor = bd.rawQuery("SELECT tipoLista FROM tipoLista", null);
+        int tipoLista = 0;
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
-            idTipoLista = cursor.getInt(cursor.getColumnIndex("tipoLista"));
+            tipoLista = cursor.getInt(cursor.getColumnIndex("tipoLista"));
         }
-        return idTipoLista;
+        return tipoLista;
     }
 
     //endregion

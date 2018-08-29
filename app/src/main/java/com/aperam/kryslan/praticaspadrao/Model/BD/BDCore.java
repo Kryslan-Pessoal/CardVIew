@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.Model.BD;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,7 +16,7 @@ import java.io.InputStreamReader;
 public class BDCore extends SQLiteOpenHelper {
     //GLOBAIS
     private static final String NOME_BD = "bancoApp";
-    private static final int VERSAO_BD = 8;
+    private static final int VERSAO_BD = 9;
 
     private Context c;
 
@@ -75,11 +76,11 @@ public class BDCore extends SQLiteOpenHelper {
                 "`nome`INTEGER NOT NULL," +
                 "`imagem`TEXT);");
 
-        bd.execSQL("CREATE TABLE `tipoLista` (`_id`INTEGER NOT NULL," +
-                "`tipoLista`INTEGER NOT NULL," +
-                "`id_categorias`INTEGER NOT NULL," +  ///CORRIGIR PQ AGR NÃO TEM MAIS "id_categorias"
-                "FOREIGN KEY(`id_categorias`) REFERENCES `categoria`(`_id`)," +
-                "PRIMARY KEY(`_id`));");
+        bd.execSQL("CREATE TABLE `tipoLista` (`tipoLista`INTEGER NOT NULL);");
+        /*Tipos de lista:
+        0 = Lista com imgaens grandes.
+        1 = Lista com imagens, mas resumida
+        2 = Lista resumida sem imagens.*/
 
         bd.execSQL("CREATE TABLE `historico` (`_id`INTEGER NOT NULL PRIMARY KEY," +
                 "`id_pratica`INTEGER NOT NULL," +
@@ -90,11 +91,8 @@ public class BDCore extends SQLiteOpenHelper {
         } catch (IOException e) {
             Toast.makeText(c, "Erro ao popular o banco: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
-        /*Tipos de lista:
-        0 = Lista com imgaens grandes.
-        1 = Lista com imagens, mas resumida
-        2 = Lista resumida sem imagens.*/
-//      PreencheColunasTipoListaFrags(bd);
+
+      PreencheColunasTipoListaFrags(bd);  //Ao criar o banco de dados, seta os tipos de listas como 0 (imagem grande e texto).
     }
 
     @Override
@@ -124,29 +122,9 @@ public class BDCore extends SQLiteOpenHelper {
         insertReader.close();
     }
 
-    /*private void PreencheColunasTipoListaFrags(SQLiteDatabase bd){
-        ContentValues valores = new ContentValues();
-        valores.put("_id", 0);
-        valores.put("fragments", "areaEmitente");
-        valores.put("tipoLista", 0);
-        bd.insert("tipoListaFrags", null, valores);
-
-        valores.clear();
-        valores.put("_id", 1);
-        valores.put("fragments", "areasRelacionadas");
-        valores.put("tipoLista", 0);
-        bd.insert("tipoListaFrags", null, valores);
-
-        valores.clear();
-        valores.put("_id", 2);
-        valores.put("fragments", "nivel");
-        valores.put("tipoLista", 0);
-        bd.insert("tipoListaFrags", null, valores);
-
-        valores.clear();
-        valores.put("_id", 3);
-        valores.put("fragments", "historico");
-        valores.put("tipoLista", 0);
-        bd.insert("tipoListaFrags", null, valores);
-    }*/
+    private void PreencheColunasTipoListaFrags(SQLiteDatabase bd){
+        ContentValues valor = new ContentValues();
+        valor.put("tipoLista", 0);
+        bd.insert("tipoLista", null, valor);
+    }
 }

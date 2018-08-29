@@ -20,17 +20,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".interfaces.PraticasActivity"
+            android:name=".View.Telas.PraticasActivity"
             android:label="Segunda Activity"
             android:parentActivityName="com.aperam.kryslan.praticaspadrao.MainActivity">
 
             <meta-dataVersao android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aperam.kryslan.praticaspadrao.MainActivity"/>
         </activity>
-        <activity android:name=".interfaces.DocumentoDrive" />
-        <activity android:name=".interfaces.SearchActivity" />
+        <activity android:name=".View.Telas.DocumentoDrive" />
+        <activity android:name=".View.Telas.SearchActivity" />
 
-        <service android:name=".tools.OnClearFromRecentService" android:stopWithTask="false"/> <!--Ativa o serviço que limpa o app da memória quando ele é fechado (para parar o Listener de Screenshot-->
+        <service android:name=".Controller.Tools.OnClearFromRecentService" android:stopWithTask="false"/> <!--Ativa o serviço que limpa o app da memória quando ele é fechado (para parar o Listener de Screenshot-->
     </application>
 
 </manifest>

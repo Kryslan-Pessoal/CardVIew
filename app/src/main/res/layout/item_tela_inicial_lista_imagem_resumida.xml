@@ -6,7 +6,7 @@
     android:paddingLeft="16dp"
     android:paddingTop="20dp">
 
-    <com.aperam.kryslan.praticaspadrao.tools.RoundedImageView
+    <com.aperam.kryslan.praticaspadrao.Controller.Tools.RoundedImageView
         android:id="@+id/ivTelaInicialResumida"
         android:layout_width="70dp"
         android:layout_height="70dp"

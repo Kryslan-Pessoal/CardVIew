@@ -13,24 +13,19 @@ import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.aperam.kryslan.praticaspadrao.SQLite.BdLite;
-import com.aperam.kryslan.praticaspadrao.adapters.ViewPagerAdapter;
-import com.aperam.kryslan.praticaspadrao.interfaces.SearchActivity;
-import com.aperam.kryslan.praticaspadrao.tools.DrawerCreator;
-import com.aperam.kryslan.praticaspadrao.tools.OnClearFromRecentService;
+import com.aperam.kryslan.praticaspadrao.Model.BD.BdLite;
+import com.aperam.kryslan.praticaspadrao.View.Adapters.ViewPagerAdapter;
+import com.aperam.kryslan.praticaspadrao.View.Telas.SearchActivity;
+import com.aperam.kryslan.praticaspadrao.Controller.Tools.DrawerCreator;
+import com.aperam.kryslan.praticaspadrao.Controller.Tools.OnClearFromRecentService;
 import com.mikepenz.materialdrawer.AccountHeader;
 
-import java.io.IOException;
-
-import static com.aperam.kryslan.praticaspadrao.BancoDeDados.BdMainActivity.GetTabsBd;
-
 public class MainActivity extends AppCompatActivity {
+    //GLOBAIS
     private Context c = this;
     private Activity a = this;
-
     public ViewPager viewPager;
 
     @Override
@@ -47,12 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         new BdLite(c);  //Se o BD não existe, cria ele.
 
+        //region savedInstanceState
         /*if(savedInstanceState != null){
             mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
 
         }else{
             listPraticas = getSetPraticasList(50);
         }*/
+        //endregion
 
         //LISTENER DE CloseApp.
         startService(new Intent(getBaseContext(), OnClearFromRecentService.class));  //Inicia o serviço que observa se o app foi fechado, se sim, mata o listener de screenshot.
@@ -65,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.pager);
         TabLayout tabLayout = findViewById(R.id.tab);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetTabsBd(c)));  //Criando as Tabs com seus nomes baseado no BdLite.
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetNomeTabs(c)));  //Criando as Tabs com seus nomes baseado no BdLite.
         tabLayout.setupWithViewPager(viewPager);  //Vinculando o viewPager com o tabLayout.
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);  //Permite que as Tabs sejam roladas verticalmente.
@@ -90,20 +87,20 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id == R.id.action_list_type){  //Define o tipo de lista para Todos os fragments.
             new MaterialDialog.Builder(c)  //Cria o Material Dialog com as opções de tipo de lista.
-                    .title(R.string.selecioneTipoLista)
-                    .items(R.array.tipoLista)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(MaterialDialog dialog, View view, int itemSelecionado, CharSequence text) {  //Listener do Dialog disparado ao selecionar o tipo de lista.
-                            int tabSelecionada = viewPager.getCurrentItem();
-                            for (int fragment = 0; fragment < 3 ; fragment++) {
-                                BdLite.atualizaTipoLista(fragment, itemSelecionado);  //Define todas as listas com o parâmetro passado.
-                            }
-                            viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetTabsBd(c)));  //Reinicia os fragments para mostrar a lista nova.
-                            viewPager.setCurrentItem(tabSelecionada);  //Após reiniciar os fragments, deixa no fragment que já estava selecionado.
-                        }
-                    })
-                    .show();  //Mostra o Dialog.
+                .title(R.string.selecioneTipoLista)
+                .items(R.array.tipoLista)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int itemSelecionado, CharSequence text) {  //Listener do Dialog disparado ao selecionar o tipo de lista.
+                    int tabSelecionada = viewPager.getCurrentItem();
+                    for (int fragment = 0; fragment < 3 ; fragment++) {
+                        BdLite.atualizaTipoLista(fragment, itemSelecionado);  //Define todas as listas com o parâmetro passado.
+                    }
+                    viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), GetNomeTabs(c)));  //Reinicia os fragments para mostrar a lista nova.
+                    viewPager.setCurrentItem(tabSelecionada);  //Após reiniciar os fragments, deixa no fragment que já estava selecionado.
+                    }
+                })
+                .show();  //Mostra o Dialog.
         }else if(id == R.id.pesquisaAvancada){
             //CHAMA ACTIVITY DE PESQUISA AVANÇADA.
             Intent intent = new Intent(c, SearchActivity.class);
@@ -132,13 +129,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        outState.putInt("mItemDrawerSelected", mItemDrawerSelected);
-//        outState.putInt("mProfileDrawerSelected", mProfileDrawerSelected);
-//        outState.putParcelableArrayList("listCars", (ArrayList<Car>) listCars);
-//        outState = navigationDrawerLeft.saveInstanceState(outState);
-//        outState = headerNavigationLeft.saveInstanceState(outState);
-//        super.onSaveInstanceState(outState);
-//    }
+
+    //TABS
+    public static String[] GetNomeTabs(Context c){
+        return new String[]{
+                c.getResources().getString(R.string.areaEminente),
+                c.getResources().getString(R.string.areasRelacionadas),
+                c.getResources().getString(R.string.autor),
+                c.getResources().getString(R.string.dataDeVigencia),
+                c.getResources().getString(R.string.nivel),
+                c.getResources().getString(R.string.processo),
+                //c.getResources().getString(R.string.favoritos),
+                c.getResources().getString(R.string.historico)};
+    }
+
+    //region onSaveInstanceState
+    /*@Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("mItemDrawerSelected", mItemDrawerSelected);
+        outState.putInt("mProfileDrawerSelected", mProfileDrawerSelected);
+        outState.putParcelableArrayList("listCars", (ArrayList<Car>) listCars);
+        outState = navigationDrawerLeft.saveInstanceState(outState);
+        outState = headerNavigationLeft.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }*/
+    //endregion
 }

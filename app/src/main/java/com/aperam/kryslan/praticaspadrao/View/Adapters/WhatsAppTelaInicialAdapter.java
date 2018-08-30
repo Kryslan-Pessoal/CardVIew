@@ -32,7 +32,7 @@ public class WhatsAppTelaInicialAdapter extends RecyclerView.Adapter<WhatsAppTel
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //só é chamado na hora de criar uma nova view.
-            View v = mLayoutInflater.inflate(R.layout.item_tela_inicial_lista_imagem_resumida, viewGroup, false);
+            View v = mLayoutInflater.inflate(R.layout.adapter_lista_whatsapp_main_activity, viewGroup, false);
             return new MyViewHolder(v);
         }
 

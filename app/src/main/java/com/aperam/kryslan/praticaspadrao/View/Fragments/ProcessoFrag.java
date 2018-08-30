@@ -1,6 +1,7 @@
 package com.aperam.kryslan.praticaspadrao.View.Fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.Model.Domain.TelaInicialCards;
@@ -32,10 +34,13 @@ public class ProcessoFrag extends AreaEmitenteFrag {
     List<TelaInicialCards> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
     RecyclerViewOnClickListenerHack thisFrag = this;
+    RapidFloatingActionLayout fabView;
+    Context c;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_praticas_com_scrool_bar, container, false);  //pegando o fragment.
+        final View view = inflater.inflate(R.layout.fragment_processo_scrool_bar, container, false);  //pegando o fragment.
 
+        c = view.getContext();
         final RecyclerView mRecyclerView = view.findViewById(R.id.rv_list_processo);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
@@ -47,6 +52,11 @@ public class ProcessoFrag extends AreaEmitenteFrag {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0){  //Quando rola o recyclerView para baixo
+                    fabView.animate().translationY(view.getHeight());  //Esconde o Fab.
+                }else if (dy < 0) {  //Quando rola o recyclerView para cima
+                    fabView.animate().translationY(alturaFab);  //Mostra o Fab.
+                }
             }
         });
 
@@ -88,10 +98,13 @@ public class ProcessoFrag extends AreaEmitenteFrag {
                 mSearchView.hideProgress();
             }
         });
+        //FAB
+        //FLOATING ACTION BUTTOM
+        fabView = view.findViewById(R.id.fabContainerAutorHistorico);
 
-        //FAZ O FAB DESAPARECER NESTA LISTA.
-        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fragsLFAB);
-        rfaLayout.setVisibility(View.GONE);
+        //CORRIGE A ALTURA DO FAB
+        alturaFab = Utils.AlturaFabCorrigida(c);
+        fabView.setY(alturaFab);
 
         return view;
     }

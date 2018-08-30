@@ -62,7 +62,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        final View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o XML do fragment.
+        final View view = inflater.inflate(R.layout.fragment_data_nivel_area_areas, container, false);  //pegando o XML do fragment.
 
         c = view.getContext();
 

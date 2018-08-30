@@ -97,15 +97,15 @@ public class BDCore extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase bd, int oldVersion, int newVersion) {
-        bd.execSQL("drop table pratica");
-        bd.execSQL("drop table areaEmitente");
-        bd.execSQL("drop table areasRelacionadas");
-        bd.execSQL("drop table autor");
-        bd.execSQL("drop table dataPratica");
-        bd.execSQL("drop table processo");
-        bd.execSQL("drop table nivel");
-        bd.execSQL("drop table tipoLista");
-        bd.execSQL("drop table historico");
+        bd.execSQL("DROP TABLE IF EXISTS pratica");
+        bd.execSQL("DROP TABLE IF EXISTS areaEmitente");
+        bd.execSQL("DROP TABLE IF EXISTS areasRelacionadas");
+        bd.execSQL("DROP TABLE IF EXISTS autor");
+        bd.execSQL("DROP TABLE IF EXISTS dataPratica");
+        bd.execSQL("DROP TABLE IF EXISTS processo");
+        bd.execSQL("DROP TABLE IF EXISTS nivel");
+        bd.execSQL("DROP TABLE IF EXISTS tipoLista");
+        bd.execSQL("DROP TABLE IF EXISTS historico");
         onCreate(bd);
     }
 

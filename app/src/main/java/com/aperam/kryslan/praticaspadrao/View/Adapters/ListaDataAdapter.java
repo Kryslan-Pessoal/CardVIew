@@ -22,13 +22,13 @@ public class ListaDataAdapter extends ExpandableRecyclerViewAdapter<MesViewHolde
 
     @Override
     public MesViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_expandable_lista, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_expandable_mes_lista, parent, false);
         return new MesViewHolder(view);
     }
 
     @Override
     public DiaViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_expandable_dia_lista, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_expandable_dia_lista, parent, false);
         return new DiaViewHolder(view);
     }
 

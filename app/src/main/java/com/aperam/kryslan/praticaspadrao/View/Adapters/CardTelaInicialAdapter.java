@@ -36,7 +36,7 @@ public class CardTelaInicialAdapter extends RecyclerView.Adapter<CardTelaInicial
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View v = mLayoutInflater.inflate(R.layout.item_tela_inicial_card, viewGroup, false);  //Vincula o XML que contém o desenho e formato do card com uma View.
+        View v = mLayoutInflater.inflate(R.layout.adapter_cards_main_activity, viewGroup, false);  //Vincula o XML que contém o desenho e formato do card com uma View.
         return new MyViewHolder(v);
     }
 

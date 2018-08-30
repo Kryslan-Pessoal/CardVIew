@@ -31,7 +31,7 @@ public class ListaTelaInicialAdapter extends RecyclerView.Adapter<ListaTelaInici
     @NonNull
     @Override
     public ListaTelaInicialAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //Vai inflar o layout de cada item da listas.
-        View v = mLayoutInflater.inflate(R.layout.item_tela_inicial_lista, viewGroup, false);
+        View v = mLayoutInflater.inflate(R.layout.adapter_lista_main_activity, viewGroup, false);
 
         return new ListaTelaInicialAdapter.MyViewHolder(v);
     }

@@ -19,8 +19,7 @@
         app:floatingSearch_searchHint="Pesquisa de Categoria..."
         app:floatingSearch_showSearchKey="false"
         app:floatingSearch_suggestionsListAnimDuration="250" />
-    <!--app:floatingSearch_menu="@menu/menu_main"-->
-
+        <!--app:floatingSearch_menu="@menu/menu_main"-->
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/floating_search_view"
@@ -67,69 +66,31 @@
             rfab:rfab_shadow_dy="5dp"/>
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
 
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-
-        android:layout_toStartOf="@+id/dragScrollBar"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:layout_anchorGravity="bottom|end"
-        fab:menu_colorNormal="@color/primary"
-        fab:menu_colorPressed="@color/primary"
-        fab:menu_icon="@drawable/ic_plus"
-        fab:menu_labels_ellipsize="end"
-        fab:menu_labels_singleLine="true"
-        android:layout_marginBottom="100dp">
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab1"
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+        xmlns:rfal="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fabContainerAutorHistorico"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        rfal:rfal_frame_color="#ffffff"
+        rfal:rfal_frame_alpha="0.7"
+        >
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
+            xmlns:rfab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fabAutorHistorico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/primary"
-            fab:fab_colorPressed="@color/colorFABPressed"
-            fab:fab_label="Facebook"
-            fab:fab_size="mini" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/primary"
-            fab:fab_colorPressed="@color/colorFABPressed"
-            fab:fab_label="Google Plus"
-            fab:fab_size="mini" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/primary"
-            fab:fab_colorPressed="@color/colorFABPressed"
-            fab:fab_label="YouTube"
-            fab:fab_size="mini" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/primary"
-            fab:fab_colorPressed="@color/colorFABPressed"
-            fab:fab_label="LinkedIn"
-            fab:fab_size="mini" />
-
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/primary"
-            fab:fab_colorPressed="@color/colorFABPressed"
-            fab:fab_label="WhatsApp"
-            fab:fab_size="mini" />
-
-    </android.support.design.widget.FloatingActionButton>-->
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:padding="8dp"
+            rfab:rfab_size="normal"
+            rfab:rfab_drawable="@drawable/filtrar_lista"
+            rfab:rfab_color_normal="@color/primary"
+            rfab:rfab_color_pressed="@color/primary_dark"
+            rfab:rfab_shadow_radius="7dp"
+            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_dx="0dp"
+            rfab:rfab_shadow_dy="5dp"/>
+    </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
 </RelativeLayout>

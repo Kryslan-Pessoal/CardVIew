@@ -39,7 +39,7 @@ public class NivelFrag extends AreaEmitenteFrag {
     int alturaFab = 0;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_praticas_main_activity, container, false);  //pegando o fragment.
+        View view = inflater.inflate(R.layout.fragment_data_nivel_area_areas, container, false);  //pegando o fragment.
         c = view.getContext();
 
         mRecyclerView = view.findViewById(R.id.rv_list);

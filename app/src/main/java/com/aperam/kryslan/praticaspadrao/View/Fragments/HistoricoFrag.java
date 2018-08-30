@@ -48,7 +48,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        final View view = inflater.inflate(R.layout.fragment_praticas_autor, container, false);  //pegando o fragment.
+        final View view = inflater.inflate(R.layout.fragment_autor_historico, container, false);  //pegando o fragment.
 
         c = view.getContext();
         mRecyclerView = view.findViewById(R.id.rv_list_autor);
@@ -113,7 +113,10 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
 
         //FLOATING ACTION BUTTOM
         fabView = view.findViewById(R.id.fragsLFAB);
-        rfaBtn = view.findViewById(R.id.fragsFAB);
+
+        //FAZ O FAB DE ORGANIZAR LISTA OCULTO.
+        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fabContainerAutorHistorico);
+        rfaLayout.setVisibility(View.GONE);
 
         alturaFab = Utils.AlturaFabCorrigida(c);
         fabView.setY(alturaFab);

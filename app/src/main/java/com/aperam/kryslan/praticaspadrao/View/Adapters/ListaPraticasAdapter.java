@@ -30,7 +30,7 @@ public class ListaPraticasAdapter extends RecyclerView.Adapter<ListaPraticasAdap
     @NonNull
     @Override
     public ListaPraticasAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {   //só é chamado na hora de criar uma nova view.
-        View v = mLayoutInflater.inflate(R.layout.item_lista_praticas, viewGroup, false);
+        View v = mLayoutInflater.inflate(R.layout.adapter_lista_praticas, viewGroup, false);
 
         return new ListaPraticasAdapter.MyViewHolder(v);
     }

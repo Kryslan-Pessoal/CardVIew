@@ -41,15 +41,23 @@ public class BdLite {
     }
 
     //CATEGORIAS
-    @SuppressLint("Recycle")
     public static List<TelaInicialCards> SelectSubCategoria(String categoria){
+        return SelectSubCategoria(categoria, true);
+    }
+    @SuppressLint("Recycle")
+    public static List<TelaInicialCards> SelectSubCategoria(String categoria, boolean ordenar){
         List<TelaInicialCards> list = new ArrayList<>();
         String[] colunas;
         @SuppressLint("Recycle") Cursor cursor;
+
+        String orderBy;
+        if(ordenar) orderBy = "nome ASC";
+        else orderBy = " nome DESC";
+
         if(categoria.equals("areaEmitente") || categoria.equals("areasRelacionadas") || categoria.equals("nivel") ||
                 categoria.equals("processo")){  //Se for essas categorias é porque tem imagem.
             colunas = new String[]{"_id", "nome", "imagem"};
-            cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+            cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, orderBy);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
             if(cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
@@ -63,7 +71,7 @@ public class BdLite {
             }
         }else{
             colunas = new String[]{"_id", "nome"};
-            cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, null);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+            cursor = bd.query(categoria, colunas , "_id != ?", new String[]{"1"}, null, null, orderBy);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
             if(cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {

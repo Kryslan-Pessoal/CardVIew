@@ -58,7 +58,7 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         mSearchView.setVisibility(View.GONE);  //São poucas datas, portanto não precisa de barra de pesquisa.
 
         //FAZ O FAB DESAPARECER NESTA LISTA.
-        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fragsLFAB);
+        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fabContainerDataNivelAreaAreas);
         rfaLayout.setVisibility(View.GONE);
 
         return view;

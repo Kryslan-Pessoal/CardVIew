@@ -39,9 +39,7 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
     BdLite bd = null;
     RecyclerView mRecyclerView = null;
 
-    private RapidFloatingActionLayout fabView;
-    private RapidFloatingActionButton rfaBtn;
-    private RapidFloatingActionHelper rfabHelper;
+    private RapidFloatingActionButton fabView;
 
     int alturaFab = 0;
     Context c = null;
@@ -112,16 +110,14 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
         });
 
         //FLOATING ACTION BUTTOM
-        fabView = view.findViewById(R.id.fragsLFAB);
+        fabView = view.findViewById(R.id.fabAutorHistorico);
 
         //FAZ O FAB DE ORGANIZAR LISTA OCULTO.
-        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fabContainerAutorHistorico);
-        rfaLayout.setVisibility(View.GONE);
+        fabView.setVisibility(View.GONE);
 
         alturaFab = Utils.AlturaFabCorrigida(c);
         fabView.setY(alturaFab);
-        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
-        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
 
         return view;
     }

@@ -19,7 +19,7 @@ public class Utils {
         return alturaFabAux.intValue();
     }
 
-    public static void RodaFab(RapidFloatingActionButton fab){
+    public static void GiraFab(RapidFloatingActionButton fab){
         //RODA O FAB
         if (fab.getRotation() != 0) {  //Se ele já estiver virado.
             fab.animate().rotation(0).start();

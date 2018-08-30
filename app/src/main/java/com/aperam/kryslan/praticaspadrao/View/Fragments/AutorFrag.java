@@ -29,7 +29,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.RodaFab;
+import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.GiraFab;
 import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectSubCategoria;
 
 public class AutorFrag extends AreaEmitenteFrag{
@@ -37,6 +37,7 @@ public class AutorFrag extends AreaEmitenteFrag{
     private FloatingSearchView mSearchView;
     RapidFloatingActionLayout fabViewContaioner;
     RapidFloatingActionButton fabView;
+    RecyclerView mRecyclerView;
 
     RecyclerViewOnClickListenerHack thisFrag = this;
     Context c = null;
@@ -46,7 +47,7 @@ public class AutorFrag extends AreaEmitenteFrag{
         final View view = inflater.inflate(R.layout.fragment_autor_historico, container, false);  //pegando o fragment.
 
         c = view.getContext();
-        final RecyclerView mRecyclerView = view.findViewById(R.id.rv_list_autor);
+        mRecyclerView = view.findViewById(R.id.rv_list_autor);
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -103,15 +104,14 @@ public class AutorFrag extends AreaEmitenteFrag{
             }
         });
         //FLOATING ACTION BUTTOM
-        fabViewContaioner = view.findViewById(R.id.fabContainerAutorHistorico);
+        //FAZ O FAB DE DELETE FICAR OCULTO.
+        RapidFloatingActionButton fabLixeira = view.findViewById(R.id.fabAutorHistoricoLixeira);
+        fabLixeira.setVisibility(View.GONE);
 
-        //FAZ O FAB DE DELET FICAR OCULTO.
-        RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fragsLFAB);
-        rfaLayout.setVisibility(View.GONE);
-
-        alturaFab = Utils.AlturaFabCorrigida(c);
-        fabViewContaioner.setY(alturaFab);
         fabView = view.findViewById(R.id.fabAutorHistorico);
+        alturaFab = Utils.AlturaFabCorrigida(c);
+        fabView.setY(alturaFab);  //Corrige a altura do Fab.
+
         fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
 
         return view;
@@ -119,7 +119,17 @@ public class AutorFrag extends AreaEmitenteFrag{
 
     @Override
     public void onRFABClick() {
-        RodaFab(fabView);
+        GiraFab(fabView);
+
+        //ORGANIZANDO A LISTA ALFABETICAMENTE
+        if(fabView.getRotation() == 0)
+            mList = SelectSubCategoria("autor", false);
+        else
+            mList = SelectSubCategoria("autor");
+        //RECRIA A LISTA
+        ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setRecyclerViewOnClickListenerHack(thisFrag);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
     }
 
 

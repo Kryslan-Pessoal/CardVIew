@@ -20,6 +20,7 @@ import com.aperam.kryslan.praticaspadrao.View.Adapters.CardTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.View.Adapters.WhatsAppTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaTelaInicialAdapter;
 import com.aperam.kryslan.praticaspadrao.Model.Domain.TelaInicialCards;
+import com.aperam.kryslan.praticaspadrao.View.Telas.DocumentoDrive;
 import com.aperam.kryslan.praticaspadrao.View.Telas.PraticasActivity;
 import com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -28,6 +29,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.GiraFab;
 import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectSubCategoria;
 
 public class NivelFrag extends AreaEmitenteFrag {
@@ -35,7 +37,7 @@ public class NivelFrag extends AreaEmitenteFrag {
     List<TelaInicialCards> mList;
     RecyclerView mRecyclerView;
 
-    private RapidFloatingActionLayout fabView;
+    private RapidFloatingActionButton fabView;
     int alturaFab = 0;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
@@ -71,19 +73,26 @@ public class NivelFrag extends AreaEmitenteFrag {
         mSearchView.setVisibility(View.GONE);  //Tira o searchView desse fragment.
 
         //FLOATING ACTION BUTTOM
-        fabView = view.findViewById(R.id.fragsLFAB);
+        fabView = view.findViewById(R.id.fabDataNivelAreaAreas);
 
         alturaFab = Utils.AlturaFabCorrigida(c);
         fabView.setY(alturaFab);
-        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
-        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
 
         return view;
     }
 
     @Override
     public void onRFABClick() {
-        DialogTipoLista(c);
+        GiraFab(fabView);
+
+        //ORGANIZANDO A LISTA ALFABETICAMENTE
+        if(fabView.getRotation() == 0)
+            mList = SelectSubCategoria("nivel", false);
+        else
+            mList = SelectSubCategoria("nivel");
+        //RECRIA A LISTA
+        AtualizaTipoLista(mList);
     }
 
     @SuppressLint("RestrictedApi")

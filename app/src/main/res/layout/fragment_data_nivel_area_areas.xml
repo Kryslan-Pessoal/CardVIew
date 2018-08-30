@@ -34,7 +34,7 @@
 
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
         xmlns:rfal="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/fragsLFAB"
+        android:id="@+id/fabContainerDataNivelAreaAreas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         rfal:rfal_frame_color="#ffffff"
@@ -42,7 +42,7 @@
         >
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
         xmlns:rfab="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/fragsFAB"
+        android:id="@+id/fabDataNivelAreaAreas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

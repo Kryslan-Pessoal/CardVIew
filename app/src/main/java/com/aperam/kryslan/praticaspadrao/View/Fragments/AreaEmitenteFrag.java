@@ -36,6 +36,7 @@ import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSepar
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.GiraFab;
 import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectSubCategoria;
 import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectTipoLista;
 
@@ -46,7 +47,7 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
     private FloatingSearchView mSearchView;
     private String queryPesquisa;
 
-    private RapidFloatingActionLayout fabView;
+    private RapidFloatingActionButton fabView;
     int alturaFab = 0;
 
     @Override
@@ -123,14 +124,26 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
         });
 
         //FLOATING ACTION BUTTOM
-        fabView = view.findViewById(R.id.fragsLFAB);
+        fabView = view.findViewById(R.id.fabDataNivelAreaAreas);
 
         alturaFab = Utils.AlturaFabCorrigida(c);
-        fabView.setY(alturaFab);
-        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
-        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+        fabView.setY(alturaFab);  //Corrige altura do FAB
+        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
 
         return view;
+    }
+
+    @Override
+    public void onRFABClick() {
+        GiraFab(fabView);
+
+        //ORGANIZANDO A LISTA ALFABETICAMENTE
+        if(fabView.getRotation() == 0)
+            mList = SelectSubCategoria("areaEmitente", false);
+        else
+            mList = SelectSubCategoria("areaEmitente");
+        //RECRIA A LISTA
+        AtualizaTipoLista(mList);
     }
 
     @SuppressLint("RestrictedApi")
@@ -163,12 +176,6 @@ public class AreaEmitenteFrag extends Fragment implements RecyclerViewOnClickLis
 
 //        CardTelaInicialAdapter adapter = (CardTelaInicialAdapter) mRecyclerView.getAdapter();
 //        adapter.removeListItem(position);  //Ao clicar no item, remove ele da lista.
-    }
-
-
-    @Override
-    public void onRFABClick() {
-        DialogTipoLista(c);
     }
 
     public static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener{  //Ao clicar nos itens lança um Listener, para fazer a animação.

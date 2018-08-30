@@ -23,25 +23,27 @@ import com.aperam.kryslan.praticaspadrao.View.Telas.RecyclerViewOnClickListenerH
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
-import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.GiraFab;
 import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectSubCategoria;
 
 public class ProcessoFrag extends AreaEmitenteFrag {
     List<TelaInicialCards> mList, filterList = new ArrayList<>();
     private FloatingSearchView mSearchView;
     RecyclerViewOnClickListenerHack thisFrag = this;
-    RapidFloatingActionLayout fabView;
+    RapidFloatingActionButton fabView;
+    RecyclerView mRecyclerView;
     Context c;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
         final View view = inflater.inflate(R.layout.fragment_processo_scrool_bar, container, false);  //pegando o fragment.
 
         c = view.getContext();
-        final RecyclerView mRecyclerView = view.findViewById(R.id.rv_list_processo);  //Pegando o recyclerView.
+        mRecyclerView = view.findViewById(R.id.rv_list_processo);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -100,17 +102,35 @@ public class ProcessoFrag extends AreaEmitenteFrag {
         });
         //FAB
         //FLOATING ACTION BUTTOM
-        fabView = view.findViewById(R.id.fabContainerAutorHistorico);
+        fabView = view.findViewById(R.id.fabProcessoScroolBar);
 
         //CORRIGE A ALTURA DO FAB
         alturaFab = Utils.AlturaFabCorrigida(c);
         fabView.setY(alturaFab);
 
+        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+
         return view;
     }
+    //CLIQUE FAB
+    @Override
+    public void onRFABClick() {
+        GiraFab(fabView);
+
+        //ORGANIZANDO A LISTA ALFABETICAMENTE
+        if(fabView.getRotation() == 0)
+            mList = SelectSubCategoria("processo", false);
+        else
+            mList = SelectSubCategoria("processo");
+        //RECRIA A LISTA
+        ListaTelaInicialAdapter adapter = new ListaTelaInicialAdapter(getActivity(), mList);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setRecyclerViewOnClickListenerHack(thisFrag);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
-    public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
+    public void onClickListener(View view, int position) {  //Clique em cada card.
         Intent intent = new Intent(getActivity(), PraticasActivity.class);
         if(!filterList.isEmpty()){  //Se filterList não estiver vazio, quer dizer que está exibindo apenas os itens pesquisados, então pega a posição do filterList, e não do mList.
             intent.putExtra("praticascards", filterList.get(position));

@@ -30,6 +30,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.GiraFab;
 import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectSubCategoria;
 import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectTipoLista;
 
@@ -39,7 +40,7 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
     private FloatingSearchView mSearchView;
     RecyclerView mRecyclerView;
 
-    private RapidFloatingActionLayout fabView;
+    private RapidFloatingActionButton fabView;
     int alturaFab = 0;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
@@ -101,19 +102,26 @@ public class AreasRelacionadasFrag extends AreaEmitenteFrag {
         });
 
         //FLOATING ACTION BUTTOM
-        fabView = view.findViewById(R.id.fragsLFAB);
+        fabView = view.findViewById(R.id.fabDataNivelAreaAreas);
 
         alturaFab = Utils.AlturaFabCorrigida(c);
         fabView.setY(alturaFab);
-        RapidFloatingActionButton rfab = view.findViewById(R.id.fragsFAB);
-        rfab.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
 
         return view;
     }
 
     @Override
     public void onRFABClick() {
-        DialogTipoLista(c);
+        GiraFab(fabView);
+
+        //ORGANIZANDO A LISTA ALFABETICAMENTE
+        if(fabView.getRotation() == 0)
+            mList = SelectSubCategoria("areasRelacionadas", false);
+        else
+            mList = SelectSubCategoria("areasRelacionadas");
+        //RECRIA A LISTA
+        AtualizaTipoLista(mList);
     }
 
     @SuppressLint("RestrictedApi")

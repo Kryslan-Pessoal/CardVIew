@@ -39,7 +39,8 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
     BdLite bd = null;
     RecyclerView mRecyclerView = null;
 
-    private RapidFloatingActionButton fabView;
+    private RapidFloatingActionButton fabViewAutor;
+    private RapidFloatingActionButton fabViewDelete;
 
     int alturaFab = 0;
     Context c = null;
@@ -62,9 +63,9 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0){  //Quando rola o recyclerView para baixo
-                    fabView.animate().translationY(view.getHeight());  //Esconde o Fab.
+                    fabViewDelete.animate().translationY(view.getHeight());  //Esconde o Fab.
                 }else if (dy < 0) {  //Quando rola o recyclerView para cima
-                    fabView.animate().translationY(alturaFab);  //Mostra o Fab.
+                    fabViewDelete.animate().translationY(alturaFab);  //Mostra o Fab.
                 }
             }
         });
@@ -110,14 +111,15 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
         });
 
         //FLOATING ACTION BUTTOM
-        fabView = view.findViewById(R.id.fabAutorHistorico);
+        fabViewDelete = view.findViewById(R.id.fabAutorHistoricoLixeira);
 
-        //FAZ O FAB DE ORGANIZAR LISTA OCULTO.
-        fabView.setVisibility(View.GONE);
+        //OCULTA FAB DE ORGANIZAR LISTA.
+        fabViewAutor = view.findViewById(R.id.fabAutorHistorico);
+        fabViewAutor.setVisibility(View.GONE);
 
         alturaFab = Utils.AlturaFabCorrigida(c);
-        fabView.setY(alturaFab);
-        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+        fabViewDelete.setY(alturaFab);
+        fabViewDelete.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
 
         return view;
     }
@@ -157,20 +159,20 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
 
     private void DialogDelete(){  //Cria o Dialog.
         new MaterialDialog.Builder(c)
-                .title(R.string.deletarTudo)
-                .positiveText(R.string.sim)
-                .negativeText(R.string.nao)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(MaterialDialog dialog, DialogAction which) {
-                        bd.deletarTudo();
+            .title(R.string.deletarTudo)
+            .positiveText(R.string.sim)
+            .negativeText(R.string.nao)
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(MaterialDialog dialog, DialogAction which) {
+                    bd.deletarTudo();
 
-                        mList = bd.SelectPratica();
-                        ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
-                        mRecyclerView.setAdapter(adapter);
+                    mList = bd.SelectPratica();
+                    ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
+                    mRecyclerView.setAdapter(adapter);
 
-                    }
-                })
-                .show();
+                }
+            })
+            .show();
     }
 }

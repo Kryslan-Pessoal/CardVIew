@@ -103,7 +103,6 @@ public class NivelFrag extends AreaEmitenteFrag {
         intent.putExtra("praticascards", telaInicialCards);
 
         // TRANSITIONS, CRIANDO ANIMAÇÃO.
-        // TRANSITIONS, CRIANDO ANIMAÇÃO.
         View imagePratica = view.findViewById(R.id.imagem_ilustrativa);  //Primeiro tenta pegar o imageView do estilo Card...
         if(imagePratica == null){  //Se não achar o ImageView Card...
             imagePratica = view.findViewById(R.id.ivTelaInicialResumida);  //procura pelo ImageView da lista resumida.
@@ -115,20 +114,6 @@ public class NivelFrag extends AreaEmitenteFrag {
         }else{  //cancela a animação para não dar erro.
             getActivity().startActivityForResult(intent, 1);
         }
-    }
-
-    protected void DialogTipoLista(Context contextLocal){
-        new MaterialDialog.Builder(contextLocal)
-                .title(R.string.selecioneTipoLista)
-                .items(R.array.tipoLista)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int itemSelecionado, CharSequence text) {
-                        BdLite.atualizaTipoLista(itemSelecionado);
-                        AtualizaTipoLista(mList);
-                    }
-                })
-                .show();
     }
 
     private void AtualizaTipoLista(List<TelaInicialCards> mList){

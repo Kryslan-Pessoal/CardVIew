@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.Model.BD.BdLite;
 import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaDataAdapter;
@@ -32,23 +34,29 @@ import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.Model.Domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.Model.Domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.Controller.Tools.DrawerCreator;
+import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaTelaInicialAdapter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.squareup.picasso.Picasso;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.Color.WHITE;
+import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.GiraFab;
+import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectSubCategoria;
 import static com.aperam.kryslan.praticaspadrao.Model.BancoProvisorioFalso.BdExpandableList.CriaMesExpansivel;
 
-public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
+public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack ,OnRapidFloatingButtonSeparateListener {
     private Context c = this;
     private Toolbar mToolbar;
     private TelaInicialCards informacoesSubCategoria;
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private RapidFloatingActionButton fabView;
 
     Activity activity = this;
 
@@ -202,49 +210,41 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
 
         //DEFINE O TIPO DE LISTA QUE SERÁ MONTADO.
-//        mList = BdPraticasActivity.GetAreaEmitentePraticasActivity();
-        TipoDeLista();
-
-        if(!informacoesSubCategoria.getGrupo().equals("Data de Vigência")) {  //Data de vigência irá usar uma lista composta.
+        int idCategoria = informacoesSubCategoria.getId();
+        if(!informacoesSubCategoria.getGrupo().equals("dataDeVigencia")) {  //Data de vigência gera uma lista diferente.
+            mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria);
             ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
             recyclerView.setAdapter(adapter);
-        }else{
+        }else {  //Se for data, será uma lista composta.
             ListaDataAdapter adapter = new ListaDataAdapter(CriaMesExpansivel());
             recyclerView.setAdapter(adapter);
-            /*Mes = Genre
-            Artist = Dia*/
         }
-
-//        // FAB
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(PraticasActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         //MATERIAL SCROLLBAR
         if(!informacoesSubCategoria.getGrupo().equals("Data de Vigência")){  //ScrollBar não funciona com ExpandableListView.
             ((DragScrollBar) findViewById(R.id.dragScrollBarActivityPraticas))
                     .setHandleColour(c.getResources().getColor(R.color.colorPrimary));
         }
+
+        //FAB
+        fabView = findViewById(R.id.fabPraticas);
+        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
     }
 
-    private void TipoDeLista(){  //Define o tipo de lista que terá na tela de práticas.
+    @Override
+    public void onRFABClick() {
+        GiraFab(fabView);
+
+        //ORGANIZANDO A LISTA ALFABETICAMENTE
         int idCategoria = informacoesSubCategoria.getId();
-        if (informacoesSubCategoria.getGrupo().equals("areaEmitente")) {
-            mList = BdLite.SelectListPraticas("id_areaEmitente", idCategoria);
-        }else if(informacoesSubCategoria.getGrupo().equals("areasRelacionadas")) {
-            mList = BdLite.SelectListPraticas("id_areasRelacionadas", idCategoria);
-        }else if(informacoesSubCategoria.getGrupo().equals("autor")) {
-            mList = BdLite.SelectListPraticas("id_autor", idCategoria);
-        }else if(informacoesSubCategoria.getGrupo().equals("dataDeVigencia")) {
-        }else if(informacoesSubCategoria.getGrupo().equals("nivel")) {
-            mList = BdLite.SelectListPraticas("id_nivel", idCategoria);
-        }else if(informacoesSubCategoria.getGrupo().equals("processo")) {
-            mList = BdLite.SelectListPraticas("id_processo", idCategoria);
-        }
+        if(fabView.getRotation() == 0)
+            mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, true);
+        else
+            mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, false);
+        //RECRIA A LISTA
+        ListaPraticasAdapter adapter = new ListaPraticasAdapter(activity, mList);
+        recyclerView.setAdapter(adapter);
+        adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
     }
 
     @Override
@@ -304,9 +304,9 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         corpoDialog[6] = "REVISOR TÉCNICO: " + mList.get(position).getRevisorTecnico();
         corpoDialog[7] = "APROVADOR: " + mList.get(position).getAprovador();
         new MaterialDialog.Builder(this)  //Cria um Dialog com informações da PPA clicada.
-                .title(R.string.informacoesDaPpa)
-                .items(corpoDialog)
-                .show();
+            .title(R.string.informacoesDaPpa)
+            .items(corpoDialog)
+            .show();
     }
 
     protected static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {  //Ao clicar nos itens lança um Listener, para fazer a animação.

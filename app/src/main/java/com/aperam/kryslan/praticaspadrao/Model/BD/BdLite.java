@@ -88,19 +88,15 @@ public class BdLite {
 
     //LISTA DE PRÁTICAS
     public static List<ListaPraticas> SelectListPraticas(String categoria, int idCategoria) {
-        return SelectListPraticas(categoria, idCategoria, true);
+        return SelectListPraticas(categoria, idCategoria, " nome ASC ");
     }
     @SuppressLint("Recycle")
-    public static List<ListaPraticas> SelectListPraticas(String categoria, int idCategoria, boolean ordenar) {
+    public static List<ListaPraticas> SelectListPraticas(String categoria, int idCategoria, String ordenar) {
         List<ListaPraticas> list = new ArrayList<>();
         String[] colunas = new String[]{"_id", "nome", "numero", "linkDocumento", "faseDocumento", "dataVersao", "treinamento", "revisorTecnico",
                 "revisorSstMa", "aprovador"};
 
-        String orderBy;
-        if(ordenar) orderBy = "nome ASC";
-        else orderBy = " nome DESC";
-
-        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , categoria + " == ?", new String[]{"" + idCategoria}, null, null, orderBy);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
+        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , categoria + " == ?", new String[]{"" + idCategoria}, null, null, ordenar);  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
         if(cursor.getCount() > 0){
             cursor.moveToFirst();
             do{

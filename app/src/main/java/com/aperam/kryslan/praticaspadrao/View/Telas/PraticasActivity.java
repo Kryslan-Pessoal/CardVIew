@@ -51,7 +51,7 @@ import java.util.List;
 import static android.graphics.Color.WHITE;
 import static com.aperam.kryslan.praticaspadrao.Model.BancoProvisorioFalso.BdExpandableList.CriaMesExpansivel;
 
-public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
+public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     private Context c = this;
     private Toolbar mToolbar;
     private TelaInicialCards informacoesSubCategoria;
@@ -61,6 +61,10 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     private RapidFloatingActionLayout fabLayout;
     private RapidFloatingActionButton fabView;
     private RapidFloatingActionHelper fabHelper;
+    List<RFACLabelItem> items;
+
+    //Para saber se está organizado alfabeticamente ou numericamente e se está crescente ou decrescente.
+    boolean letraCrescenteAtivado = true, numeroCrescenteAtivado = false, letraCrescente = true, numeroCrescente = true;
 
     Activity activity = this;
 
@@ -234,11 +238,17 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         fabLayout = findViewById(R.id.fabContainerPraticas);
         fabView = findViewById(R.id.fabPlus);
 
+        CriaItensFab();
+        letraCrescente = true; numeroCrescente = true;
+    }
+
+    private void CriaItensFab(){
         //Listener
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(c);
-        //rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
 
-        List<RFACLabelItem> items = new ArrayList<>();
+        items = new ArrayList<>();
+
         items.add(new RFACLabelItem<Integer>()
                 .setLabel("Organizar alfabeticamente")
                 .setResId(R.drawable.filtrar_lista)
@@ -272,24 +282,102 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
                 fabView,
                 rfaContent
         ).build();
-        //fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
     }
 
-    /*@Override
-    public void onRFABClick() {
-        GiraFab(fabView);
+    //region FABClick
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        int idCategoria = informacoesSubCategoria.getId();
+        if(position == 0){  //Seleciona opção organizar alfabeticamente.
+            if(letraCrescenteAtivado){  //Se verdadeiro então a lista está organizada alfabeticamente.
+                if(letraCrescente) {  //Se verdadeiro então está organizado de forma crescente.
+                    //Vai organizar de forma decrescente.
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, " nome DESC ");
+                    letraCrescente = false;
+                }
+                else {
+                    //Vai organizar de forma crescente.
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria);
+                    letraCrescente = true;
+                }
+                letraCrescenteAtivado = true; numeroCrescenteAtivado = false;
+            }else{  //Organizado numericamente.
+                if(letraCrescente){
+                    //Deixa decrescente numericamente
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, " nome ASC");
+                    letraCrescente = true;
+                }else{
+                    //Deixa crescente numericamente
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, " nome DESC");
+                    letraCrescente = false;
+                }
+                letraCrescenteAtivado = true; numeroCrescenteAtivado = false;
+            }
+        }else{  //Seleciona opção organizar numericamente.
+            if(letraCrescenteAtivado){  //Se verdadeiro então a lista está organizada alfabeticamente.
+                if(numeroCrescente) {  //Se verdadeiro então está organizado de forma crescente.
+                    //Vai organizar de forma decrescente.
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, " numero ASC ");
+                    numeroCrescente = true;
+                }
+                else {
+                    //Vai organizar de forma crescente.
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, " numero DESC ");
+                    numeroCrescente = false;
+                }
+                letraCrescenteAtivado = false; numeroCrescenteAtivado = true;
+            }else{  //Organizado numericamente.
+                if(numeroCrescente){
+                    //Deixa decrescente numericamente
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, " numero DESC");
+                    numeroCrescente = false;
+                }else{
+                    //Deixa crescente numericamente
+                    mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, " numero ASC");
+                    numeroCrescente = true;
+                }
+                letraCrescenteAtivado = false; numeroCrescenteAtivado = true;
+            }
+        }
 
+        //DEFINE SE O DESENHO ESTÁ VIRADO OU NÃO.
+        int desenhoAlfabeto, desenhoNumerico;
+        if(letraCrescente) desenhoAlfabeto = R.drawable.filtrar_lista;
+        else desenhoAlfabeto = R.drawable.filtrar_lista_reverse;
+        items.get(0).setResId(desenhoAlfabeto);
+
+        if(numeroCrescente) desenhoNumerico = R.drawable.organiza_por_numero;
+        else desenhoNumerico = R.drawable.organiza_por_numero_reverse;
+        items.get(1).setResId(desenhoNumerico);
+
+        ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
+        recyclerView.setAdapter(adapter);
+
+        fabHelper.toggleContent();
+
+        fabHelper.build();  //TALVEZ REMOVER POIS TRAVA A LISTA.***************************************************
+        fabHelper.toggleContent();
+        fabHelper.toggleContent();
+    }
+    //endregion
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        //CriaItensFab(1,0);
+    }
+
+    private void OrganizaAlfabeticamente() {
         //ORGANIZANDO A LISTA ALFABETICAMENTE
         int idCategoria = informacoesSubCategoria.getId();
         if(fabView.getRotation() == 0)
-            mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, true);
+            mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria);
         else
-            mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, false);
+            mList = BdLite.SelectListPraticas("id_" + informacoesSubCategoria.getGrupo(), idCategoria, "nome DESC");
         //RECRIA A LISTA
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(activity, mList);
         recyclerView.setAdapter(adapter);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

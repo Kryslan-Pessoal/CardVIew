@@ -61,7 +61,7 @@
             rfab:rfab_color_normal="@color/primary"
             rfab:rfab_color_pressed="@color/primary_dark"
             rfab:rfab_shadow_radius="7dp"
-            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_color="#efefef"
             rfab:rfab_shadow_dx="0dp"
             rfab:rfab_shadow_dy="5dp"/>
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
@@ -89,7 +89,7 @@
             rfab:rfab_color_normal="@color/primary"
             rfab:rfab_color_pressed="@color/primary_dark"
             rfab:rfab_shadow_radius="7dp"
-            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_color="#efefef"
             rfab:rfab_shadow_dx="0dp"
             rfab:rfab_shadow_dy="5dp"/>
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>

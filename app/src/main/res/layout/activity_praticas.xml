@@ -62,8 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="0dp"
-            android:paddingBottom="10dp"
-            />
+            android:paddingBottom="10dp"/>
 
         <com.turingtechnologies.materialscrollbar.DragScrollBar
             android:id="@+id/dragScrollBarActivityPraticas"
@@ -73,22 +72,31 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"/>
-
     </RelativeLayout>
 
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:clickable="true"
 
-        app:backgroundTint="@color/accent"
-        app:fabSize="mini"
-        app:borderWidth="0dp"
-        android:layout_marginBottom="@dimen/fab_margin_bottom"
-        android:layout_marginEnd="@dimen/fab_margin_right"
-        android:layout_marginRight="@dimen/fab_margin_right"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end"/>-->
-
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout xmlns:rfal="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fabContainerPraticas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        rfal:rfal_frame_alpha="0.7"
+        rfal:rfal_frame_color="#ffffff">
+            <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/fabPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                rfab:rfab_color_normal="@color/primary"
+                rfab:rfab_color_pressed="@color/primary_dark"
+                rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
+                rfab:rfab_identification_code="plus"
+                rfab:rfab_shadow_color="#efefef"
+                rfab:rfab_shadow_dx="0dp"
+                rfab:rfab_shadow_dy="5dp"
+                rfab:rfab_shadow_radius="7dp"
+                rfab:rfab_size="normal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="15dp"/>
+    </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
 </android.support.design.widget.CoordinatorLayout>

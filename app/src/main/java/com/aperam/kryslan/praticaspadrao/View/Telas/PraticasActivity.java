@@ -5,9 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.Model.BD.BdLite;
 import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaDataAdapter;
@@ -34,29 +33,34 @@ import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaPraticasAdapter;
 import com.aperam.kryslan.praticaspadrao.Model.Domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.Model.Domain.TelaInicialCards;
 import com.aperam.kryslan.praticaspadrao.Controller.Tools.DrawerCreator;
-import com.aperam.kryslan.praticaspadrao.View.Adapters.ListaTelaInicialAdapter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.squareup.picasso.Picasso;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
-import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+import com.wangjie.rapidfloatingactionbutton.util.RFABShape;
+import com.wangjie.rapidfloatingactionbutton.util.RFABTextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.Color.WHITE;
-import static com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils.GiraFab;
-import static com.aperam.kryslan.praticaspadrao.Model.BD.BdLite.SelectSubCategoria;
 import static com.aperam.kryslan.praticaspadrao.Model.BancoProvisorioFalso.BdExpandableList.CriaMesExpansivel;
 
-public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack ,OnRapidFloatingButtonSeparateListener {
+public class PraticasActivity extends AppCompatActivity implements RecyclerViewOnClickListenerHack {
     private Context c = this;
     private Toolbar mToolbar;
     private TelaInicialCards informacoesSubCategoria;
     List<ListaPraticas> mList, filterList = new ArrayList<>();
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    private RapidFloatingActionLayout fabLayout;
     private RapidFloatingActionButton fabView;
+    private RapidFloatingActionHelper fabHelper;
 
     Activity activity = this;
 
@@ -227,11 +231,51 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         }
 
         //FAB
-        fabView = findViewById(R.id.fabPraticas);
-        fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
+        fabLayout = findViewById(R.id.fabContainerPraticas);
+        fabView = findViewById(R.id.fabPlus);
+
+        //Listener
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(c);
+        //rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Organizar alfabeticamente")
+                .setResId(R.drawable.filtrar_lista)
+                .setIconNormalColor(Color.parseColor("#6b1f7c"))
+                .setIconPressedColor(Color.parseColor("#6b1f7c"))
+                .setLabelBackgroundDrawable(RFABShape.generateCornerShapeDrawable(0xaa000000, RFABTextUtil.dip2px(c, 4)))
+                .setLabelColor(Color.WHITE)
+                .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Organizar numericamente")
+                .setResId(R.drawable.organiza_por_numero)
+                .setIconNormalColor(Color.parseColor("#6b1f7c"))
+                .setIconPressedColor(Color.parseColor("#6b1f7c"))
+                .setLabelColor(Color.WHITE)
+                .setLabelSizeSp(14)
+                .setLabelBackgroundDrawable(RFABShape.generateCornerShapeDrawable(0xaa000000, RFABTextUtil.dip2px(c, 4)))
+                .setWrapper(1)
+        );
+
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(RFABTextUtil.dip2px(c, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(RFABTextUtil.dip2px(c, 5))
+        ;
+
+        fabHelper = new RapidFloatingActionHelper(
+                c,
+                fabLayout,
+                fabView,
+                rfaContent
+        ).build();
+        //fabView.setOnRapidFloatingButtonSeparateListener(this);  //Inicia o Listener de clice no FAB.
     }
 
-    @Override
+    /*@Override
     public void onRFABClick() {
         GiraFab(fabView);
 
@@ -245,7 +289,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(activity, mList);
         recyclerView.setAdapter(adapter);
         adapter.setRecyclerViewOnClickListenerHack(this);  //Pega o parâmetro passado em PraticasAdapter para o clique na lista.
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

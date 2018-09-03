@@ -28,9 +28,9 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saverdInstanceState){
-        View view = inflater.inflate(R.layout.fragment_data_nivel_area_areas, container, false);  //pegando o fragment.
+        View view = inflater.inflate(R.layout.blanck_activity, container, false);  //pegando o fragment.
 
-        final RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
+        /*final RecyclerView mRecyclerView = view.findViewById(R.id.rv_list);  //Pegando o recyclerView.
         mRecyclerView.setHasFixedSize(true);  //Vai garantir que o recyclerView não mude de tamanho.
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -60,13 +60,13 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         //FAZ O FAB DESAPARECER NESTA LISTA.
         RapidFloatingActionLayout rfaLayout = view.findViewById(R.id.fabContainerDataNivelAreaAreas);
         rfaLayout.setVisibility(View.GONE);
-
+*/
         return view;
     }
     @SuppressLint("RestrictedApi")
     @Override
     public void onClickListener(View view, int position) {  //Aqui define o que acontece ao clicar em cada card.
-        Intent intent = new Intent(getActivity(), PraticasActivity.class);
+        /*Intent intent = new Intent(getActivity(), PraticasActivity.class);
         TelaInicialCards telaInicialCards = mList.get(position);
         intent.putExtra("praticascards", telaInicialCards);
 
@@ -76,6 +76,6 @@ public class DataDeVigenciaFrag extends AreasRelacionadasFrag{
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 Pair.create(textoAutor, "element2"));
 
-        getActivity().startActivityForResult(intent, 1,options.toBundle());
+        getActivity().startActivityForResult(intent, 1,options.toBundle());*/
     }
 }

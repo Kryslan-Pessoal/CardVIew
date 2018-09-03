@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 public class BDCore extends SQLiteOpenHelper {
     //GLOBAIS
     private static final String NOME_BD = "bancoApp";
-    private static final int VERSAO_BD = 12;
+    private static final int VERSAO_BD = 14;
 
     private Context c;
 

@@ -236,7 +236,7 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         //FAB
         fabLayout = findViewById(R.id.fabContainerPraticas);
-        fabView = findViewById(R.id.fabPlus);
+        fabView = findViewById(R.id.fabTipoLista);
 
         CriaItensFab();
         letraCrescente = true; numeroCrescente = true;
@@ -287,6 +287,16 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
     //region FABClick
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        CliqueNoFab(position);
+    }
+
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        CliqueNoFab(position);
+    }
+
+    private void CliqueNoFab(int position){
         int idCategoria = informacoesSubCategoria.getId();
         if(position == 0){  //Seleciona opção organizar alfabeticamente.
             if(letraCrescenteAtivado){  //Se verdadeiro então a lista está organizada alfabeticamente.
@@ -342,30 +352,38 @@ public class PraticasActivity extends AppCompatActivity implements RecyclerViewO
 
         //DEFINE SE O DESENHO ESTÁ VIRADO OU NÃO.
         int desenhoAlfabeto, desenhoNumerico;
-        if(letraCrescente) desenhoAlfabeto = R.drawable.filtrar_lista;
-        else desenhoAlfabeto = R.drawable.filtrar_lista_reverse;
-        items.get(0).setResId(desenhoAlfabeto);
+        if(letraCrescenteAtivado) {
+            if (letraCrescente) {
+                desenhoAlfabeto = R.drawable.filtrar_lista;
+                Toast.makeText(c, "Organizado alfabeticamente crescente.", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                desenhoAlfabeto = R.drawable.filtrar_lista_reverse;
+                Toast.makeText(c, "Organizado alfabeticamente decrescente.", Toast.LENGTH_SHORT).show();
+            }
+            fabView.setButtonDrawable(getResources().getDrawable(desenhoAlfabeto));  //Seta o desenho do fab.
+        }
 
-        if(numeroCrescente) desenhoNumerico = R.drawable.organiza_por_numero;
-        else desenhoNumerico = R.drawable.organiza_por_numero_reverse;
-        items.get(1).setResId(desenhoNumerico);
+        if(numeroCrescenteAtivado) {
+            if (numeroCrescente) {
+                desenhoNumerico = R.drawable.organiza_por_numero;
+                Toast.makeText(c, "Organizado numericamente crescente.", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                desenhoNumerico = R.drawable.organiza_por_numero_reverse;
+                Toast.makeText(c, "Organizado numericamente decrescente.", Toast.LENGTH_SHORT).show();
+            }
+            fabView.setButtonDrawable(getResources().getDrawable(desenhoNumerico));  //Seta o desenho do fab.
+        }
 
         ListaPraticasAdapter adapter = new ListaPraticasAdapter(this, mList);
         recyclerView.setAdapter(adapter);
 
-        fabHelper.toggleContent();
+        fabHelper.toggleContent();  //Fecha os Fabs flutuantes.
 
-        fabHelper.build();  //TALVEZ REMOVER POIS TRAVA A LISTA.***************************************************
-        fabHelper.toggleContent();
-        fabHelper.toggleContent();
+        fabView.build();  //Redesenha o Fab.
     }
     //endregion
-
-    @Override
-    public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        //CriaItensFab(1,0);
-    }
-
     private void OrganizaAlfabeticamente() {
         //ORGANIZANDO A LISTA ALFABETICAMENTE
         int idCategoria = informacoesSubCategoria.getId();

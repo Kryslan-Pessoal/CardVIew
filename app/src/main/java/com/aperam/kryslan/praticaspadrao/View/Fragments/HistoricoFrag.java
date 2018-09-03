@@ -25,8 +25,6 @@ import com.aperam.kryslan.praticaspadrao.Controller.Tools.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
-import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
-import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
 
 import java.util.ArrayList;
@@ -165,9 +163,9 @@ public class HistoricoFrag extends AreaEmitenteFrag implements OnRapidFloatingBu
             .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override
                 public void onClick(MaterialDialog dialog, DialogAction which) {
-                    bd.deletarTudo();
+                    bd.DeletaHistorico();
 
-                    mList = bd.SelectPratica();
+                    mList = BdLite.SelectHistorico();
                     ListaPraticasAdapter adapter = new ListaPraticasAdapter(c, mList);
                     mRecyclerView.setAdapter(adapter);
 

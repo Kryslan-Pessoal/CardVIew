@@ -21,25 +21,6 @@ public class BdLite {
     }
 
     //region SELECT
-    //PRATICA
-    public List<ListaPraticas> SelectPratica(){
-        List<ListaPraticas> list = new ArrayList<>();
-        String[] colunas = new String[]{"_id", "nome", "numero", "autor", "data"};
-        @SuppressLint("Recycle") Cursor cursor = bd.query("pratica", colunas , null, null, null, null, "_id DESC");  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
-
-        if(cursor.getCount() > 0){
-            cursor.moveToFirst();
-            do{
-                ListaPraticas p = new ListaPraticas();
-                p.setId(cursor.getInt(0));
-                p.setNome(cursor.getString(1));
-                p.setNumero(cursor.getString(2));
-                list.add(p);
-            }while(cursor.moveToNext());
-        }
-        return(list);
-    }
-
     //CATEGORIAS
     public static List<TelaInicialCards> SelectSubCategoria(String categoria){
         return SelectSubCategoria(categoria, true);
@@ -244,8 +225,8 @@ public class BdLite {
     public void DeletaPratica(ListaPraticas pratica){
         bd.delete("pratica", "_id = ? " , new String[]{"" + pratica.getId()});  //A "?" do segundo parâmetro será substituído pelo terceiro parâmetro.
     }
-    public void deletarTudo(){
-        bd.execSQL("delete from "+ "pratica");
+    public void DeletaHistorico(){
+        bd.execSQL("delete from "+ "historico");
     }
     //endregion
 

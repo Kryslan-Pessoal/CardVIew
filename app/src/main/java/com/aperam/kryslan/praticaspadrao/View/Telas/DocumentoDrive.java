@@ -1,5 +1,6 @@
 package com.aperam.kryslan.praticaspadrao.View.Telas;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -9,6 +10,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -20,15 +23,19 @@ import com.aperam.kryslan.praticaspadrao.MainActivity;
 import com.aperam.kryslan.praticaspadrao.R;
 import com.aperam.kryslan.praticaspadrao.Model.Domain.ListaPraticas;
 import com.aperam.kryslan.praticaspadrao.Controller.Tools.DrawerCreator;
+import com.mikepenz.fastadapter.listeners.OnTouchListener;
 import com.mikepenz.materialdrawer.AccountHeader;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 
 public class DocumentoDrive extends MainActivity{
-    private WebView webview;
+    private WebView webView;
     private ProgressBar progress;
     private SwipeRefreshLayout swipeLayout;
 
     Activity c = this;
+    int escala = 2;  //Controla o zoom.
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
@@ -59,27 +66,26 @@ public class DocumentoDrive extends MainActivity{
 
         final String linkPratica = informacoesDaPratica.getLinkDocumento();
 
-        webview = findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
         progress = findViewById(R.id.progress);
-        setWebViewClient(webview);
-        //Abilita o zoom.
-//        webview.setInitialScale(200);  PARA IMPLEMENTAR O ZOOM MAIS TARDE.
+        setWebViewClient(webView);
+
         // Carrega a página
-        webview.loadUrl(linkPratica);
+        webView.loadUrl(linkPratica);
 
         // Swipe to Refresh
-        swipeLayout = findViewById(R.id.swipeToRefresh);
+        /*swipeLayout = findViewById(R.id.swipeToRefresh);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                webview.reload();
+                webView.reload();
             }
         });
-        // Cores da animação
+        //Core da animação
         swipeLayout.setColorSchemeResources(
                 R.color.colorPrimary,
                 R.color.colorAccent,
-                R.color.md_red_500);
+                R.color.md_red_500);*/
 
         //HEADER
         DrawerCreator drawerClass = new DrawerCreator();
@@ -88,6 +94,42 @@ public class DocumentoDrive extends MainActivity{
         ViewPager viewPager = null;
         //NAVIGATIONDRAWER
         drawerClass.DrawerBodyBuilder(c, savedInstanceState, toolbar, viewPager, c, headerDrawer);
+
+        //LISTENER ZOOM
+        RapidFloatingActionButton fabZoomIn = findViewById(R.id.fabZoomIn);
+        RapidFloatingActionButton fabZoomOut = findViewById(R.id.fabZoomOut);
+
+        fabZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(escala < 5) {  //Não permite que de mais do que 5 zooms
+                    escala++;
+
+                    webView.setInitialScale(escala * 100);  //A escala segue uma escala de 100.
+                    //IMPLEMENTAR SALVAR POSIÇÃO PARA O ZOOM NÃO TIRAR DO LOCAL QUE JÁ ESTAVA.
+                }
+            }
+        });
+        fabZoomOut.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(escala > 2) {  //(A escala já começa no 2).
+                    escala--;
+
+                    webView.setInitialScale(escala * 100);
+                }
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  //Só funciona da API 23 para cima.
+            webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    int a = 1;
+                }
+            });
+        }
+
     }
 
     private void setWebViewClient(WebView webview) {
@@ -104,7 +146,7 @@ public class DocumentoDrive extends MainActivity{
                 // Desliga o progress
                 progress.setVisibility(View.INVISIBLE);
                 // Termina a animação do Swipe to Refresh
-                swipeLayout.setRefreshing(false);
+                //swipeLayout.setRefreshing(false);
             }
 
             @Override

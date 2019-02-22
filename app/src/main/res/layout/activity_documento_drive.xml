@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar_documento_drive"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            android:elevation="6dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@android:color/white"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
+            <TextView
+                android:id="@+id/tvDocumentoDriveTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_white_1000"
+                android:textSize="24sp"
+                android:transitionName="element1"
+                />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">-->
+
+            <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <WebView
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v4.widget.NestedScrollView>
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fabZoomIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:padding="8dp"
+        rfab:layout_anchor="@+id/frameLayout"
+        rfab:layout_anchorGravity="right|bottom"
+        rfab:rfab_color_normal="@color/md_white_1000"
+        rfab:rfab_color_pressed="@color/md_white_1000"
+        rfab:rfab_drawable="@drawable/zoom_in"
+        rfab:rfab_shadow_color="#efefef"
+        rfab:rfab_shadow_dx="0dp"
+        rfab:rfab_shadow_dy="5dp"
+        rfab:rfab_shadow_radius="7dp"
+        rfab:rfab_size="mini" />
+
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fabZoomOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="70dp"
+        android:padding="8dp"
+        rfab:layout_anchor="@+id/frameLayout"
+        rfab:layout_anchorGravity="right|bottom"
+        rfab:rfab_color_normal="@color/md_white_1000"
+        rfab:rfab_color_pressed="@color/md_white_1000"
+        rfab:rfab_drawable="@drawable/zoom_out"
+        rfab:rfab_shadow_color="#efefef"
+        rfab:rfab_shadow_dx="0dp"
+        rfab:rfab_shadow_dy="5dp"
+        rfab:rfab_shadow_radius="7dp"
+        rfab:rfab_size="mini" />
+</android.support.design.widget.CoordinatorLayout>

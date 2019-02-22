@@ -21,7 +21,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -49,8 +49,26 @@ dependencies {
     }
     //Suporte para MaterialDrawer
     implementation "com.android.support:support-annotations:27.1.1"
-    implementation "com.android.support:design:27.1.1"
+    implementation "com.android.support:design:27.1.1"  //Também dá suporte para o RecycleView
 
     //MaterialDialog
     implementation "com.afollestad.material-dialogs:core:0.9.6.0"
+
+    //Expandable RecyclerView
+    implementation 'com.zaihuishou:expandablerecycleradapter:1.0.3'
+
+    //MaterialScrollBar
+    implementation 'com.github.turing-tech:MaterialScrollBar:11.2.0'
+
+    //SEARCHVIEW
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
+    //FLOAT SEARCHVIEW
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+
+    //EXPANDABLE RECYCLERVIEW
+    implementation 'com.thoughtbot:expandablerecyclerview:1.3'
+
+    //FAB
+    implementation 'com.github.wangjiegulu:rfab:2.0.0'
 }

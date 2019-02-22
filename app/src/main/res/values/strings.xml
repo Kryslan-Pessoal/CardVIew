@@ -1,22 +1,51 @@
 <!--    <string name=""></string>    -->
 <resources>
 
-    <string name="app_name">(Sou + Seguro)</string>
+    <string name="app_name">Trabalho Correto (Sou + Seguro)</string>
 
     <!-- A -->
-    <string name="areaEminente">Área Eminente</string>
-    <string name="areasRelacionadas">Áreas Relacionadas</string>
-    <string name="autor">Autor</string>
-    <string name="dataDeVigencia">Data de Vigência</string>
-    <string name="nivel">Nível</string>
-    <string name="processo">Processo</string>
-    <string name="restrito">Restrito</string>
+        <string name="areaEminente">Área Emitente</string>
+        <string name="areasRelacionadas">Áreas Relacionadas</string>
+        <string name="autor">Autor</string>
+        <string name="dataDeVigencia">Data de Vigência</string>
+        <string name="nivel">Nível</string>
+        <string name="processo">Processo</string>
+        <string name="restrito">Restrito</string>
 
     <!-- C -->
-    <string name="configuracao">Configuração</string>
-    <string name="configuracoes">Configurações</string>
+        <string name="configuracao">Configuração</string>
+        <string name="configuracoes">Configurações</string>
+
+    <!-- D -->
+    <string name="favoritos">Favoritos</string>
+    <string name="deletarTudo">Tem certeza que quer deletar tudo?</string>
+
+    <!--H-->
+        <string name="historico">Histórico</string>
+
+    <!-- I -->
+        <string name="informacoesDaPpa">Informações da PPA</string>
+
+    <!--N-->
+    <string name="nao">NÃO</string>
+
+    <!-- P -->
+        <string name="pesquisaAvancada">Pesquisa Avançada…</string>
+        <string name="pesquisaAvancadaSemPontos">Pesquisa Avançada</string>
+        <string name="pesquisar">Pesquisar…</string>
 
     <!-- S -->
-    <string name="SegundaTela">Segunda tela</string>
+        <string name="SegundaTela">Segunda tela</string>
+        <string name="sim">sim</string>
+        <string name="selecioneTipoLista">Selecione o tipo de lista</string>
+    <string name="TipoDeListaGeral">Definir todas as listas</string>
 
+    <!-- T -->
+
+    <!--ARRAY-->
+    <array name="tipoLista">
+        <item name="listaImagem">Imagem e texto</item>
+        <item name="listaImagemResumida">Imagem e texto resumidos</item>
+        <item name="listaImagemSemImagem">Apenas texto</item>
+    </array>
 </resources>

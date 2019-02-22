@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/tituloListaPraticas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/PrimaryText"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/subtituloListaSimples"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/tituloListaPraticas"
+
+        android:textColor="@color/SecondText"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/diveder"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/subtituloListaSimples"
+        android:background="@color/colorDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp" />
+
+</RelativeLayout>

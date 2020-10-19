@@ -87,7 +87,6 @@
                 android:layout_height="wrap_content"
                 rfab:rfab_color_normal="@color/primary"
                 rfab:rfab_color_pressed="@color/primary_dark"
-                rfab:rfab_drawable="@drawable/filtrar_lista"
                 rfab:rfab_identification_code="tipoLista"
                 rfab:rfab_shadow_color="#efefef"
                 rfab:rfab_shadow_dx="0dp"

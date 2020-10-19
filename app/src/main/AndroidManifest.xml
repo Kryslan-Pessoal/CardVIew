@@ -24,8 +24,7 @@
             android:label="Segunda Activity"
             android:parentActivityName="com.aperam.kryslan.praticaspadrao.MainActivity">
 
-            <meta-dataVersao android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aperam.kryslan.praticaspadrao.MainActivity"/>
+
         </activity>
         <activity android:name=".View.Telas.DocumentoDrive" />
         <activity android:name=".View.Telas.SearchActivity" />
